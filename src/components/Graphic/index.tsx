@@ -14,9 +14,9 @@ export type GraphicProps = {
 
 export type PossiblyEncodedGraphicProps =
   | {
-      allocations: string;
-      focuses: string;
-    }
+    allocations: string;
+    focuses: string;
+  }
   | GraphicProps;
 
 export const DEFAULT_PROPS = {

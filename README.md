@@ -1,10 +1,10 @@
-# elections-us2020-electoral-college
+# elections-us2024-electoral-college
 
-This repository contains the source code for the graphical and interactive components of the Story Lab's reporting on the US 2020 election, as well as tools used to help produce those stories.
+This repository contains the source code for the graphical and interactive components of the Story Lab's reporting on the US 2024 election, as well as tools used to help produce those stories.
 
 The latest release should be accessible via:
 
-[`https://www.abc.net.au/res/sites/news-projects/elections-us2020-electoral-college/latest/`](https://www.abc.net.au/res/sites/news-projects/elections-us2020-electoral-college/latest/)
+[`https://www.abc.net.au/res/sites/news-projects/elections-us2024-electoral-college/latest/`](https://www.abc.net.au/res/sites/news-projects/elections-us2024-electoral-college/latest/)
 
 ## Stories
 
@@ -40,10 +40,10 @@ Under the hood, webpack is building multiple source entry points into many distr
 
 All live results data comes from Andrew Kesper's live results service, which may not always be available.
 
-When releases are made, we also overwrite some documents at a consistent URL (`/elections-us2020-electoral-college/latest/`) to facilitate a simple redicret. This means producers don't need to update their URLs (for accessing the editor). Please ensure the following URL is cached-busted upon new releases:
+When releases are made, we also overwrite some documents at a consistent URL (`/elections-us2024-electoral-college/latest/`) to facilitate a simple redicret. This means producers don't need to update their URLs (for accessing the editor). Please ensure the following URL is cached-busted upon new releases:
 
 ```
-https://www.abc.net.au/res/sites/news-projects/elections-us2020-electoral-college/latest/index.js
+https://www.abc.net.au/res/sites/news-projects/elections-us2024-electoral-college/latest/index.js
 ```
 
 ## Authors

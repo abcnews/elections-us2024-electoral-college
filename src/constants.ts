@@ -652,6 +652,73 @@ export const PRESETS: Presets = {
     focuses: {},
     year: 2016
   },
+  2020: {
+    allocations: {
+      "AK": Allocation.GOP,
+      "AL": Allocation.GOP,
+      "AR": Allocation.GOP,
+      "AZ": Allocation.Dem,
+      "CA": Allocation.Dem,
+      "CO": Allocation.Dem,
+      "CT": Allocation.Dem,
+      "DC": Allocation.Dem,
+      "DE": Allocation.Dem,
+      "FL": Allocation.GOP,
+      "GA": Allocation.Dem,
+      "HI": Allocation.Dem,
+      "IA": Allocation.GOP,
+      "ID": Allocation.GOP,
+      "IL": Allocation.Dem,
+      "IN": Allocation.GOP,
+      "KS": Allocation.GOP,
+      "KY": Allocation.GOP,
+      "LA": Allocation.GOP,
+      "MA": Allocation.Dem,
+      "MD": Allocation.Dem,
+      "ME_0": Allocation.Dem,
+      "ME_1": Allocation.Dem,
+      "ME_2": Allocation.GOP,
+      "MI": Allocation.Dem,
+      "MN": Allocation.Dem,
+      "MO": Allocation.GOP,
+      "MS": Allocation.GOP,
+      "MT": Allocation.GOP,
+      "NC": Allocation.GOP,
+      "ND": Allocation.GOP,
+      "NE_0": Allocation.GOP,
+      "NE_1": Allocation.GOP,
+      "NE_2": Allocation.GOP,
+      "NE_3": Allocation.Dem,
+      "NH": Allocation.Dem,
+      "NJ": Allocation.Dem,
+      "NM": Allocation.Dem,
+      "NV": Allocation.Dem,
+      "NY": Allocation.Dem,
+      "OH": Allocation.GOP,
+      "OK": Allocation.GOP,
+      "OR": Allocation.Dem,
+      "PA": Allocation.Dem,
+      "RI": Allocation.Dem,
+      "SC": Allocation.GOP,
+      "SD": Allocation.GOP,
+      "TN": Allocation.GOP,
+      "TX": Allocation.GOP,
+      "UT": Allocation.GOP,
+      "VA": Allocation.Dem,
+      "VT": Allocation.Dem,
+      "WA": Allocation.Dem,
+      "WI": Allocation.Dem,
+      "WV": Allocation.GOP,
+      "WY": Allocation.GOP
+    },
+    focuses: {},
+    year: 2020
+  },
+  2024: {
+    allocations: {},
+    focuses: {},
+    year: 2024
+  },
   safe: {
     name: 'Safe',
     allocations: {
@@ -672,6 +739,10 @@ export const PRESETS: Presets = {
 };
 
 export const ELECTION_YEARS_ALLOCATIONS_CANDIDATES = {
+  2024: {
+    [Allocation.GOP]: 'Trump',
+    [Allocation.Dem]: 'Harris'
+  },
   2020: {
     [Allocation.GOP]: 'Trump',
     [Allocation.Dem]: 'Biden'
