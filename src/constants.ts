@@ -508,7 +508,7 @@ export const MIXINS: Presets = {
       MT: Allocation.GOP,
       NE_0: Allocation.GOP,
       NE_1: Allocation.GOP,
-      NE_3: Allocation.GOP,
+      NE_2: Allocation.GOP,
       ND: Allocation.GOP,
       OK: Allocation.GOP,
       SC: Allocation.GOP,
