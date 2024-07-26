@@ -1,6 +1,7 @@
 import acto from '@abcnews/alternating-case-to-object';
 import { getTier, TIERS } from '@abcnews/env-utils';
 import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
+// @ts-ignore
 import { loadScrollyteller } from '@abcnews/svelte-scrollyteller/wc';
 import React from 'react';
 import { render } from 'react-dom';
@@ -13,6 +14,46 @@ import Graphic from './components/Graphic';
 import Illustration, { IllustrationName } from './components/Illustration';
 import Live from './components/Live';
 import { whenOdysseyLoaded } from './utils/getOdyssey';
+
+// FIXME: this is a hack to style the scrollyteller, this should be built into svelte-scrollyteller itself
+document.head.appendChild(Object.assign(document.createElement('style'), {
+  type: "text/css",
+  innerHTML: `
+.is-legacy .scrollyteller .st-panel>p {
+  font-size: var(--od-font-size) !important;
+  color: var(--od-colour-text-primary) !important;
+}
+
+.is-legacy .scrollyteller .st-panel::before {
+  outline: 10px solid purple;
+  background-color: #f9f9f9 !important;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+
+.is-future .scrollyteller .st-panel>p {
+  font-size: var(--od-font-size) !important;
+  color: var(--od-colour-text-primary) !important;
+  font-family: var(--od-font-stack-sans) !important;
+  border-radius: 12px;
+}
+
+.is-future .scrollyteller .st-panel::before {
+  background-color: var(--bg, var(--od-colour-theme-surface-over-image));
+  transition: background-color 2s;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(20px);
+  border-radius:12px;
+}
+
+@media (min-width:1585px){
+  .scrollyteller .st-panel{
+    max-width:50%;
+    margin-left:0!important;
+  }
+}
+`}));
 
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
@@ -68,7 +109,7 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
 );
 
 whenScrollytellersLoaded.then(scrollytellerDefinitions => {
-  (scrollytellerDefinitions as ScrollytellerDefinition<GraphicProps>[]).forEach(scrollytellerDefinition =>
+  (scrollytellerDefinitions as any[]).forEach(scrollytellerDefinition =>
     render(<Block panels={scrollytellerDefinition.panels} />, scrollytellerDefinition.mountNode)
   );
 });

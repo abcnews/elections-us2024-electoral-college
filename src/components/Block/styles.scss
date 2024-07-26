@@ -5,30 +5,6 @@
   clip: rect(0, auto, auto, 0);
 }
 
-// Override Scrollyteller's internal snapping behaviour
-
-.scrollyteller> :first-child {
-  position: fixed !important;
-  top: 0 !important;
-  bottom: auto !important;
-  left: 0 !important;
-  will-change: transform;
-}
-
-.scrollyteller> :first-child[data-ie] {
-  z-index: 0 !important;
-}
-
-.scrollyteller> :first-child[data-stage='above'],
-.scrollyteller> :first-child[data-stage='below'] {
-  position: absolute !important;
-}
-
-.scrollyteller> :first-child[data-stage='below'] {
-  top: auto !important;
-  bottom: 0 !important;
-}
-
 .graphic {
   margin: 0 auto;
   padding: 1rem 0 0;
