@@ -1,8 +1,7 @@
 import acto from '@abcnews/alternating-case-to-object';
 import { getTier, TIERS } from '@abcnews/env-utils';
 import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
-import type { ScrollytellerDefinition } from '@abcnews/scrollyteller';
-import { loadScrollyteller } from '@abcnews/scrollyteller';
+import { loadScrollyteller } from '@abcnews/svelte-scrollyteller/wc';
 import React from 'react';
 import { render } from 'react-dom';
 import { applyColourToPanels } from './panels';
@@ -22,10 +21,10 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
     const names = selectMounts('scrollytellerNAME', { markAsUsed: false })
       .map(mountEl => (getMountValue(mountEl).match(/NAME([a-z]+)/) || [])[1])
       .filter(name => typeof name === 'string');
-    const scrollytellerDefinitions: ScrollytellerDefinition<PossiblyEncodedGraphicProps>[] = [];
+    const scrollytellerDefinitions: any[] = [];
 
     for (const name of names) {
-      let scrollytellerDefinition: ScrollytellerDefinition<PossiblyEncodedGraphicProps>;
+      let scrollytellerDefinition: any;
 
       try {
         scrollytellerDefinition = loadScrollyteller(name, 'u-full');

@@ -1,10 +1,10 @@
 import type { PanelDefinition } from '@abcnews/scrollyteller';
-import Scrollyteller from '@abcnews/scrollyteller';
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import type { GraphicProps } from '../Graphic';
 import Graphic from '../Graphic';
 import styles from './styles.scss';
 import { getOdyssey } from '../../utils/getOdyssey';
+import ScrollytellerWebComponent from '../ScrollytellerWebComponent';
 
 interface BlockProps {
   panels: PanelDefinition<GraphicProps>[];
@@ -86,21 +86,14 @@ const Block: React.FC<BlockProps> = ({ panels }) => {
     return () => unsubscribe(onUpdate);
   }, [graphicRef.current]);
 
-  return (
-    <Scrollyteller
-      className={styles.scrollyteller}
-      panelClassName={styles.panel}
-      firstPanelClassName={styles.firstPanel}
-      lastPanelClassName={styles.lastPanel}
-      panels={panels}
-      onMarker={onMarker}
-      theme="light"
-    >
-      <div ref={graphicRef} className={styles.graphic}>
-        <Graphic {...graphicProps} />
-      </div>
-    </Scrollyteller>
-  );
+  return (<ScrollytellerWebComponent panels={panels} styles={styles} onMarker={onMarker}>
+
+    <div ref={graphicRef} className={styles.graphic}>
+      <Graphic {...graphicProps} />
+    </div>
+  </ScrollytellerWebComponent>)
+
+
 };
 
 export default Block;
