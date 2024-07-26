@@ -114,11 +114,11 @@ const Editor: React.FC = () => {
       ...replacement.focuses
     });
     setYear(replacement.year || DEFAULT_GRAPHIC_PROPS.year);
+    setHexBorders(replacement.hexborders);
   };
 
   const importMarker = (marker: string) => {
     const graphicProps = alternatingCaseToGraphicProps(marker);
-
     replaceGraphicProps(graphicProps);
     setRelative(Number(graphicProps.relative) || DEFAULT_GRAPHIC_PROPS.relative);
     setCounting(graphicProps.counting || DEFAULT_GRAPHIC_PROPS.counting);
@@ -181,16 +181,7 @@ const Editor: React.FC = () => {
   const graphicPropsAsUrlQuery = useMemo(() => graphicPropsToUrlQuery(graphicProps, DEFAULT_GRAPHIC_PROPS), [
     graphicProps
   ]);
-
-  const markersData = useMemo(
-    () =>
-      STORY_MARKERS.map(({ label, note, prefix }) => ({
-        label,
-        note,
-        text: `#${prefix}${graphicPropsAsAlternatingCase}`
-      })),
-    [graphicPropsAsAlternatingCase]
-  );
+  console.log({ graphicPropsAsUrlQuery })
 
   const fallbackAutomationBaseURL = useMemo(
     () =>
@@ -362,6 +353,7 @@ const Editor: React.FC = () => {
         <label>
           Story markers
           <button
+            title="Load marker from clipboard"
             onClick={() => {
               const marker = prompt('Paste a marker here to import its configuration');
 
@@ -375,11 +367,15 @@ const Editor: React.FC = () => {
             <Icon name="edit" />
           </button>
         </label>
-        {markersData.map(({ label, note, text }) => (
+        {STORY_MARKERS.map(({ label, note, prefix }) => ({
+          label,
+          note,
+          text: `#${prefix}${graphicPropsAsAlternatingCase}`
+        })).map(({ label, note, text }) => (
           <details key={label}>
             <summary>
               {label}
-              <button onClick={() => navigator.clipboard.writeText(text)}>
+              <button onClick={() => navigator.clipboard.writeText(text)} title="Copy marker">
                 <Icon name="share" />
               </button>
             </summary>
