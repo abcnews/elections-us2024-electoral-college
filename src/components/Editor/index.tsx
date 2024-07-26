@@ -69,6 +69,7 @@ const Editor: React.FC = () => {
   const [year, setYear] = useState<ElectionYear>(initialUrlParamProps.year);
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [counting, setCounting] = useState(initialUrlParamProps.counting);
+  const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders);
   const [tappableLayer, setTappableLayer] = useState(initialUrlParamProps.tappableLayer);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
 
@@ -121,6 +122,7 @@ const Editor: React.FC = () => {
     replaceGraphicProps(graphicProps);
     setRelative(Number(graphicProps.relative) || DEFAULT_GRAPHIC_PROPS.relative);
     setCounting(graphicProps.counting || DEFAULT_GRAPHIC_PROPS.counting);
+    setHexBorders(graphicProps.hexborders || DEFAULT_GRAPHIC_PROPS.hexborders);
   };
 
   const loadLiveResults = () => {
@@ -166,9 +168,10 @@ const Editor: React.FC = () => {
       year,
       relative,
       counting,
-      tappableLayer
+      tappableLayer,
+      hexborders: hexBorders
     }),
-    [allocations, focuses, year, relative, counting, tappableLayer]
+    [allocations, focuses, year, relative, counting, hexBorders, tappableLayer]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(
@@ -293,7 +296,7 @@ const Editor: React.FC = () => {
               </span>
             ))}
         </div>
-        <label>Counting</label>
+        <label>Visual</label>
         <div className={styles.flexRow}>
           <span key="none">
             <label>
@@ -305,6 +308,20 @@ const Editor: React.FC = () => {
                 onChange={() => setCounting(!counting)}
               ></input>
               Show totals
+            </label>
+          </span>
+        </div>
+        <div className={styles.flexRow}>
+          <span key="none">
+            <label>
+              <input
+                type="checkbox"
+                name="hexBorders"
+                value="hexBorders"
+                checked={hexBorders}
+                onChange={() => setHexBorders(!hexBorders)}
+              ></input>
+              Show hexagon borders
             </label>
           </span>
         </div>

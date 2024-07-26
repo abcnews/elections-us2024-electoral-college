@@ -33,16 +33,19 @@ $focusChangeTransitionDuration: 0.5s;
       stroke: $colorFrom;
       transform: none;
     }
+
     49.99% {
       fill: $color_White;
       stroke: $colorFrom;
       transform: rotateY(90deg);
     }
+
     50% {
       fill: $colorTo;
       stroke: none;
       transform: rotateY(-90deg);
     }
+
     100% {
       fill: $colorTo;
       stroke: none;
@@ -141,6 +144,16 @@ $focusChangeTransitionDuration: 0.5s;
   @media (max-width: 667px) {
     stroke-width: $swHeavy_SM;
   }
+}
+
+[data-has-hexborders] .delegateAllocation {
+  stroke: #00000018;
+  stroke-width: 1px;
+}
+
+[data-has-hexborders] .delegateAllocation:not([data-allocation="n"]) {
+  stroke: #ffffff22;
+  stroke-width: 1px;
 }
 
 .delegateAllocation[data-allocation='#{$Allocation_Dem}'] {
@@ -404,7 +417,7 @@ $focusChangeTransitionDuration: 0.5s;
   opacity: 1;
 }
 
-.label > * {
+.label>* {
   text-anchor: middle;
   font-size: 1.5rem;
 
@@ -428,9 +441,9 @@ $focusChangeTransitionDuration: 0.5s;
   }
 }
 
-.label[data-main-allocation='#{$Allocation_Dem}'] > .labelOutline,
-.label[data-main-allocation='#{$Allocation_GOP}'] > .labelOutline,
-.label[data-main-allocation='#{$Allocation_Tossup}'] > .labelOutline {
+.label[data-main-allocation='#{$Allocation_Dem}']>.labelOutline,
+.label[data-main-allocation='#{$Allocation_GOP}']>.labelOutline,
+.label[data-main-allocation='#{$Allocation_Tossup}']>.labelOutline {
   stroke-opacity: 0.25;
   stroke: $color_Text;
 }
@@ -445,8 +458,8 @@ $focusChangeTransitionDuration: 0.5s;
   fill: $color_Text;
 }
 
-.label[data-main-allocation='#{$Allocation_Dem}'] > .labelText,
-.label[data-main-allocation='#{$Allocation_GOP}'] > .labelText,
-.label[data-main-allocation='#{$Allocation_Tossup}'] > .labelText {
+.label[data-main-allocation='#{$Allocation_Dem}']>.labelText,
+.label[data-main-allocation='#{$Allocation_GOP}']>.labelText,
+.label[data-main-allocation='#{$Allocation_Tossup}']>.labelText {
   fill: $color_BG;
 }

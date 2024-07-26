@@ -22,7 +22,8 @@ export type PossiblyEncodedGraphicProps =
 export const DEFAULT_PROPS = {
   year: DEFAULT_ELECTION_YEAR,
   relative: null,
-  counting: true
+  counting: true,
+  hexborders: false
 };
 
 const Graphic: React.FC<GraphicProps> = props => {

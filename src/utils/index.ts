@@ -133,6 +133,8 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string): GraphicP
     graphicProps.relative = null;
   }
 
+  graphicProps.hexborders = graphicProps.hexborders === "true";
+
   return graphicProps as GraphicProps;
 };
 

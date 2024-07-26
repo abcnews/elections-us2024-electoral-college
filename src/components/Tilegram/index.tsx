@@ -30,6 +30,7 @@ export type TilegramProps = {
   year?: ElectionYear;
   relative?: ElectionYear | null;
   tappableLayer?: TappableLayer;
+  hexborders?: boolean;
   onTapGroup?: (groupID: string) => void;
   onTapState?: (stateID: string) => void;
 };
@@ -112,6 +113,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
       data-has-focuses={hasFocuses ? '' : undefined}
       data-is-interactive={isInteractive ? '' : undefined}
       data-is-inspecting={isInspecting ? '' : undefined}
+      data-has-hexborders={props.hexborders ? '' : undefined}
       data-tappable={tappableLayer}
       style={{ paddingBottom: `${(svgHeight / svgWidth) * 100}%` }}
     >
@@ -154,8 +156,8 @@ const Tilegram: React.FC<TilegramProps> = props => {
                         incumbentAllocation === allocation
                           ? 'rtl'
                           : challengerAllocation === allocation
-                          ? 'ltr'
-                          : undefined
+                            ? 'ltr'
+                            : undefined
                       }
                       data-focus={focus}
                       clipPath={isFlipping ? `url(#${keys['clip']})` : undefined}
