@@ -1,5 +1,12 @@
 @import '../../constants.scss';
 
+.root {
+  // --color-panel-background: rgba(255, 255, 255, .8);
+  // --color-panel-text: black;
+  // --color-panel-filter: blur(0.3125rem);
+  // --color-panel-opacity: 0.75;
+}
+
 .scrollyteller {
   background-color: inherit;
   clip: rect(0, auto, auto, 0);
@@ -148,6 +155,7 @@
   background-color: $color_None;
   line-height: 1.25;
   white-space: nowrap;
+  color: black;
 }
 
 .state[data-is-first-encounter]::after {

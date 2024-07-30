@@ -86,12 +86,11 @@ const Block: React.FC<BlockProps> = ({ panels }) => {
     return () => unsubscribe(onUpdate);
   }, [graphicRef.current]);
 
-  return (<ScrollytellerWebComponent panels={panels} styles={styles} onMarker={onMarker}>
-
-    <div ref={graphicRef} className={styles.graphic}>
+  return (<div className={styles.root}><ScrollytellerWebComponent panels={panels} styles={styles} onMarker={onMarker}>
+    <div ref={graphicRef} className={styles.graphic} >
       <Graphic {...graphicProps} />
-    </div>
-  </ScrollytellerWebComponent>)
+    </div >
+  </ScrollytellerWebComponent ></div >)
 
 
 };

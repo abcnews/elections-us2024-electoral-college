@@ -19,33 +19,6 @@ import { whenOdysseyLoaded } from './utils/getOdyssey';
 document.head.appendChild(Object.assign(document.createElement('style'), {
   type: "text/css",
   innerHTML: `
-.is-legacy .scrollyteller .st-panel>p {
-  font-size: var(--od-font-size) !important;
-  color: var(--od-colour-text-primary) !important;
-}
-
-.is-legacy .scrollyteller .st-panel::before {
-  outline: 10px solid purple;
-  background-color: #f9f9f9 !important;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-}
-
-
-.is-future .scrollyteller .st-panel>p {
-  font-size: var(--od-font-size) !important;
-  color: var(--od-colour-text-primary) !important;
-  font-family: var(--od-font-stack-sans) !important;
-  border-radius: 12px;
-}
-
-.is-future .scrollyteller .st-panel::before {
-  background-color: var(--bg, var(--od-colour-theme-surface-over-image));
-  transition: background-color 2s;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(20px);
-  border-radius:12px;
-}
 
 @media (min-width:1585px){
   .scrollyteller .st-panel{
