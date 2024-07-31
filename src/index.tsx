@@ -15,19 +15,6 @@ import Illustration, { IllustrationName } from './components/Illustration';
 import Live from './components/Live';
 import { whenOdysseyLoaded } from './utils/getOdyssey';
 
-// FIXME: this is a hack to style the scrollyteller, this should be built into svelte-scrollyteller itself
-document.head.appendChild(Object.assign(document.createElement('style'), {
-  type: "text/css",
-  innerHTML: `
-
-@media (min-width:1585px){
-  .scrollyteller .st-panel{
-    max-width:50%;
-    margin-left:0!important;
-  }
-}
-`}));
-
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
     const liveMounts = selectMounts('eclive');
