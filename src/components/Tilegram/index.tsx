@@ -69,21 +69,6 @@ const Tilegram: React.FC<TilegramProps> = props => {
     }
   };
 
-  // We need to trick svg4everyone into not nuking our <use> elements,
-  // by making it think the <svg>'s nodeName isn't "svg"
-  useLayoutEffect(() => {
-    const svgEl = svgRef.current;
-
-    if (!svgEl) {
-      return;
-    }
-
-    Object.defineProperty(svgEl, 'nodeName', {
-      value: 'savage',
-      writable: false
-    });
-  }, []);
-
   useEffect(() => {
     if (!isInteractive) {
       return;
@@ -156,8 +141,8 @@ const Tilegram: React.FC<TilegramProps> = props => {
                         incumbentAllocation === allocation
                           ? 'rtl'
                           : challengerAllocation === allocation
-                            ? 'ltr'
-                            : undefined
+                          ? 'ltr'
+                          : undefined
                       }
                       data-focus={focus}
                       clipPath={isFlipping ? `url(#${keys['clip']})` : undefined}
