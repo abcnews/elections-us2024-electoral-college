@@ -18,31 +18,34 @@ import fs from 'fs';
 const __dirname = path.dirname(import.meta.url.replace('file://',''));
 
 
-
-function toSvgCoord([x,y]){
   // Offset to line up with legacy graphics
   const Y_OFFSET = 18
 
+function toSvgCoord([x,y]){
 
-  const newX = Math.round(x)+2;
-  const newY = Math.round(y) + Y_OFFSET;
+
+  const newX = (x);
+  const newY = (y) + Y_OFFSET;
 
   return `${newX},${newY}`;
 }
 
+// 1. Create a hex class matching roughly the old hex dims
+const Tile = defineHex({ dimensions: 17 });
+const grid = new Grid(Tile, rectangle({ width: 100, height: 100 }));
+const zeroHex = grid
+  .getHex({ col: 0, row: 0 })
+  .corners.map(({ x, y }) => [x, y])
+  .map(([x ,y]) => `${x},${y}`);
+const zeroHexD = `M${zeroHex.join(' ')}z`;
+
 function processFile(delegateHexesXy){
-  // Create state hexagons
-  // 1. Create a hex class matching roughly the old hex dims
-  const Tile = defineHex({ dimensions: 17 });
-  const grid = new Grid(Tile, rectangle({ width: 100, height: 100 }));
   const STATES_DELEGATE_HEXES = {};
   Object.entries(delegateHexesXy).forEach(([state, hexes]) => {
     const newHexes = hexes.map((point, i) => {
-      const d= grid
-        .getHex({ col: point[1], row: point[0] })
-        .corners.map(({ x, y }) => toSvgCoord([x,y]))
-        .join(' ');
-        return d;
+      const hex = grid
+        .getHex({ col: point[1], row: point[0] });
+      return ([hex.x,hex.y+Y_OFFSET]);
 
     });
     STATES_DELEGATE_HEXES[state] = newHexes;
@@ -86,5 +89,5 @@ function processFile(delegateHexesXy){
 const us2024= processFile(statesDelegateHexexXY2024, '2024');
 const us2020  =processFile(statesDelegateHexexXY2020, '2020');
 
-fs.writeFileSync(path.resolve(__dirname, 'generated__mapdata.json'), JSON.stringify({us2024, us2020}, null,2));
+fs.writeFileSync(path.resolve(__dirname, 'generated__mapdata.json'), JSON.stringify({zeroHexD, us2024, us2020}, null,2));
 
