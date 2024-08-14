@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './styles.scss';
-import { determineIfAllocationIsMade, getGroupIDForStateIDAndDelegateIndex, getStateAllocations } from '../../../utils';
+import { getStateAllocations } from '../../../utils';
 import { STATES_LABELS } from '../data';
-import { Focus, FOCUSES } from '../../../constants';
+import { Focus } from '../../../constants';
+import { getStyleDelays } from '../util';
 
 export function TilegramLabels({ data, allocations, focuses }) {
   const { STATES_DELEGATE_HEXES } = data;
@@ -10,12 +11,12 @@ export function TilegramLabels({ data, allocations, focuses }) {
     <>
       {Object.entries(STATES_DELEGATE_HEXES).map(([state, paths]) => {
         const stateAllocations = allocations && getStateAllocations(state, allocations);
-        const hasAllocation = stateAllocations && stateAllocations.some(determineIfAllocationIsMade);
         const stateMainAllocation = stateAllocations && stateAllocations[0];
-
         const [labelX, labelY, hasOutlineOnMobile] = STATES_LABELS[state];
+        const style = getStyleDelays(labelX, labelY);
+
         return (
-          <React.Fragment>
+          <React.Fragment key={STATES_LABELS[state].join()}>
             <text
               className={[
                 styles.labelOutline,
@@ -26,6 +27,7 @@ export function TilegramLabels({ data, allocations, focuses }) {
                 .join(' ')}
               x={labelX}
               y={labelY}
+              style={style}
             >
               {state}
             </text>
@@ -39,6 +41,7 @@ export function TilegramLabels({ data, allocations, focuses }) {
                 .join(' ')}
               x={labelX}
               y={labelY}
+              style={style}
             >
               {state}
             </text>

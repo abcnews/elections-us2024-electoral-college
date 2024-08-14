@@ -1,42 +1,39 @@
 @import '../../../constants.scss';
 .root {
-  transition: opacity 1s;
-}
-.root-hidden {
-  opacity: 0;
+  --allocation-r: #{$color_GOP};
+  --allocation-e: #{$color_LikelyGOP};
+  --allocation-d: #{$color_Dem};
+  --allocation-s: #{$color_LikelyDem};
+  --allocation-u: #{$color_Tossup};
+  --allocation-n: white;
 }
 .hex {
-  transition: fill 0.2s;
+  transition: fill 1s, stroke 1s;
   //  Make the hexes slightly larger so they fill the gaps a little more
   scale: 1.02;
-  animation: flip 1s;
+  stroke: transparent;
+  fill: var(--to);
 }
 .hex-borders {
   stroke: #9894941a !important;
 }
-
-.allocation-r {
-  fill: #{$color_GOP};
+.hex-animating {
+  animation: flip 1s;
 }
 
-.allocation-e {
-  fill: #{$color_LikelyGOP};
-}
-
-.allocation-d {
-  fill: #{$color_Dem};
-}
-
-.allocation-s {
-  fill: #{$color_LikelyDem};
-}
-
-.allocation-u {
-  fill: #{$color_Tossup};
-}
-
-.allocation-n {
-  fill: white;
+@keyframes flip {
+  0% {
+    fill: var(--from);
+  }
+  49.999% {
+    fill: var(--from);
+  }
+  50% {
+    transform: scaleX(0.02);
+  }
+  50.001% {
+    fill: var(--to);
+  }
 }
 
 .defocused {
@@ -60,10 +57,4 @@
 
 .state-allocation-n {
   stroke: #989494;
-}
-
-@keyframes flip {
-  50% {
-    transform: scaleX(0);
-  }
 }
