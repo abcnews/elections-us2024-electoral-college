@@ -2,7 +2,7 @@ import React from 'react';
 import mapData from './generated__mapdata.json';
 import styles from './styles.scss';
 import { Allocations, ElectionYear, Focus, Focuses } from '../../constants';
-import { TilegramHex } from './TilegramHex/TilegramHex';
+import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
 const { us2020, us2024 } = mapData;
 
@@ -35,7 +35,7 @@ export default function Tilegram(props: TilegramProps) {
       <div className={styles.root} onClick={clickHandler} data-year={year}>
         <svg viewBox="0 0 1043 759">
           <g className={styles.tiles2024}>
-            <TilegramHex
+            <TilegramHexes
               data={us2024}
               allocations={allocations}
               focuses={hasFocuses && focuses}
@@ -44,7 +44,7 @@ export default function Tilegram(props: TilegramProps) {
             />
           </g>
           <g className={styles.tiles2020}>
-            <TilegramHex
+            <TilegramHexes
               data={us2020}
               allocations={allocations}
               focuses={hasFocuses && focuses}
