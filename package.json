@@ -22,7 +22,10 @@
 		"@types/react": "^17.0.80",
 		"@types/react-dom": "^17.0.25",
 		"@types/webpack-env": "^1.18.5",
-		"elections-us2020-results-data": "git+ssh://git@github.com:abcnews/elections-us2020-results-data.git"
+		"elections-us2020-results-data": "git+ssh://git@github.com:abcnews/elections-us2020-results-data.git",
+		"honeycomb-grid": "^4.1.5",
+		"polygon-clipping": "^0.15.7",
+		"typescript-require": "^0.3.0"
 	},
 	"dependencies": {
 		"@abcnews/alternating-case-to-object": "^3.1.1",

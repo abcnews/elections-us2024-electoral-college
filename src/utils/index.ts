@@ -19,8 +19,6 @@ import {
 } from '../constants';
 import { GraphicProps } from '../components/Graphic';
 
-
-
 export const votesForGroups = (groups: Group[]) => {
   return groups.reduce((memo, group) => {
     return memo + group.votes;

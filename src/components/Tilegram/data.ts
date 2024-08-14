@@ -651,7 +651,6 @@ export const STATES_DELEGATE_HEXES: StatesShapes = {
   ]
 };
 
-
 export const STATES_SHAPES: StatesShapes = {
   AK: ['30,615 44,624 59,615 59,598 44,590 44,573 30,564 15,573 15,590 0,598 0,615 15,624 30,615'],
   AL: [
@@ -817,13 +816,13 @@ export const STATES_LABELS: StatesLabels = {
   CA: [111, 363],
   CO: [252, 276],
   CT: [918, 184],
-  DC: [829, 376, true],
-  DE: [903, 350, true],
+  DC: [827, 380, true],
+  DE: [900, 355, true],
   FL: [628, 658],
   GA: [600, 517],
   HI: [178, 686, true],
   IA: [378, 261],
-  ID: [237, 171, true],
+  ID: [235, 171, true],
   IL: [474, 312],
   IN: [555, 312],
   KS: [304, 325],
@@ -836,18 +835,18 @@ export const STATES_LABELS: StatesLabels = {
   MN: [378, 184],
   MO: [385, 325],
   MS: [459, 522, true],
-  MT: [281, 148, true],
+  MT: [281, 150, true],
   NC: [703, 442],
-  ND: [326, 158, true],
+  ND: [340, 150, true],
   NE: [296, 250, true],
   NH: [918, 88],
   NJ: [896, 286],
-  NM: [252, 453, true],
+  NM: [252, 456, true],
   NV: [178, 250],
   NY: [800, 173],
   OH: [637, 312],
   OK: [356, 389],
-  OR: [104, 197, true],
+  OR: [104, 200, true],
   PA: [755, 261],
   RI: [999, 184],
   SC: [696, 504],
@@ -855,12 +854,12 @@ export const STATES_LABELS: StatesLabels = {
   TN: [518, 440],
   TX: [326, 517],
   UT: [207, 276, true],
-  VA: [754, 388],
+  VA: [754, 370],
   VT: [888, 70, true],
-  WA: [118, 158],
+  WA: [118, 160],
   WI: [459, 197],
-  WV: [703, 360],
-  WY: [281, 197, true]
+  WV: [703, 350],
+  WY: [281, 200, true]
 };
 
 export const COUNTRY_PATHS = [

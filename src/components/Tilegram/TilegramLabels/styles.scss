@@ -1,0 +1,61 @@
+@import '../../../constants.scss';
+.label,
+.label-outline {
+  fill: black;
+  stroke: none;
+  text-anchor: middle;
+  font-size: 1rem;
+  transition: opacity 0.2s;
+  z-index: 2;
+  pointer-events: none;
+  @media (max-width: 667px) {
+    transform: translate(0, 0.25rem);
+    font-size: 1.5rem;
+  }
+}
+.label-outline {
+  fill: white;
+}
+
+.label--r,
+.label--d,
+.label--u {
+  fill: white;
+}
+
+.label--e,
+.label--s {
+  fill: black;
+}
+
+.label-outline {
+  stroke: white;
+  stroke-opacity: 0.5;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.label-outline--r,
+.label-outline--d {
+  stroke: black;
+  opacity: 0;
+}
+.label-outline--u {
+  stroke: black;
+}
+
+.label-outline--e,
+.label-outline--s {
+  stroke: white;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.mobile-always {
+  @media (max-width: 667px) {
+    opacity: 1;
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DEFAULT_ELECTION_YEAR } from '../../constants';
-import type { TilegramProps } from '../Tilegram';
-import Tilegram from '../Tilegram';
+import type { TilegramProps } from '../Tilegram/Tilegram';
+import Tilegram from '../Tilegram/Tilegram';
 import type { TotalsProps } from '../Totals';
 import Totals from '../Totals';
 import styles from './styles.scss';
@@ -14,9 +14,9 @@ export type GraphicProps = {
 
 export type PossiblyEncodedGraphicProps =
   | {
-    allocations: string;
-    focuses: string;
-  }
+      allocations: string;
+      focuses: string;
+    }
   | GraphicProps;
 
 export const DEFAULT_PROPS = {

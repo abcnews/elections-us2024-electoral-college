@@ -25,10 +25,14 @@ import type { GraphicProps } from '../Graphic';
 import Graphic, { DEFAULT_PROPS as DEFAULT_GRAPHIC_PROPS } from '../Graphic';
 import graphicStyles from '../Graphic/styles.scss';
 import Icon from '../Icon';
-import { TappableLayer } from '../Tilegram';
 import tilegramStyles from '../Tilegram/styles.scss';
 import totalsStyles from '../Totals/styles.scss';
 import styles from './styles.scss';
+
+export enum TappableLayer {
+  Delegates,
+  States
+}
 
 const COMPONENTS_STYLES = {
   Graphic: graphicStyles,
@@ -38,8 +42,7 @@ const COMPONENTS_STYLES = {
 
 const INITIAL_GRAPHIC_PROPS = {
   allocations: { ...INITIAL_ALLOCATIONS },
-  focuses: { ...INITIAL_FOCUSES },
-  tappableLayer: TappableLayer.Delegates
+  focuses: { ...INITIAL_FOCUSES }
 };
 
 const STORY_MARKERS = [
@@ -70,7 +73,7 @@ const Editor: React.FC = () => {
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [counting, setCounting] = useState(initialUrlParamProps.counting);
   const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders);
-  const [tappableLayer, setTappableLayer] = useState(initialUrlParamProps.tappableLayer);
+  const [tappableLayer, setTappableLayer] = useState(TappableLayer.Delegates);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
 
   const createSnapshot = (name: string, urlQuery: string) => {
@@ -134,31 +137,35 @@ const Editor: React.FC = () => {
     });
   };
 
-  const onTapGroup = (groupID: string) => {
-    const allocationsToMixin: Allocations = {};
+  function onClick({ stateId, groupId }) {
+    if (tappableLayer === TappableLayer.Delegates) {
+      // toggle states
+      const allocationsToMixin: Allocations = {};
 
-    const allocation = allocations[groupID];
-    const allocationIndex = ALLOCATIONS.indexOf(allocation);
+      const allocation = allocations[groupId];
+      const allocationIndex = ALLOCATIONS.indexOf(allocation);
 
-    // Cycle to the next Allocation in the enum (or the first if we don't recognise it)
-    allocationsToMixin[groupID] = ALLOCATIONS[
-      allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
-    ] as Allocation;
+      // Cycle to the next Allocation in the enum (or the first if we don't recognise it)
+      allocationsToMixin[groupId] = ALLOCATIONS[
+        allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
+      ] as Allocation;
 
-    mixinGraphicProps({ allocations: allocationsToMixin });
-  };
+      mixinGraphicProps({ allocations: allocationsToMixin });
+    }
 
-  const onTapState = (stateID: string) => {
-    const focusesToMixin: Focuses = {};
+    if (tappableLayer === TappableLayer.States) {
+      /// mixins
+      const focusesToMixin: Focuses = {};
 
-    const focus = focuses[stateID];
-    const focusIndex = FOCUSES.indexOf(focus);
+      const focus = focuses[stateId];
+      const focusIndex = FOCUSES.indexOf(focus);
 
-    // Cycle to the next Focus in the enum (or the first if we don't recognise it)
-    focusesToMixin[stateID] = FOCUSES[focusIndex === FOCUSES.length - 1 ? 0 : focusIndex + 1] as Focus;
+      // Cycle to the next Focus in the enum (or the first if we don't recognise it)
+      focusesToMixin[stateId] = FOCUSES[focusIndex === FOCUSES.length - 1 ? 0 : focusIndex + 1] as Focus;
 
-    mixinGraphicProps({ focuses: focusesToMixin });
-  };
+      mixinGraphicProps({ focuses: focusesToMixin });
+    }
+  }
 
   const graphicProps = useMemo(
     () => ({
@@ -168,20 +175,20 @@ const Editor: React.FC = () => {
       year,
       relative,
       counting,
-      tappableLayer,
       hexborders: hexBorders
     }),
-    [allocations, focuses, year, relative, counting, hexBorders, tappableLayer]
+    [allocations, focuses, year, relative, counting, hexBorders]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(
     () => graphicPropsToAlternatingCase(graphicProps, DEFAULT_GRAPHIC_PROPS),
     [graphicProps]
   );
-  const graphicPropsAsUrlQuery = useMemo(() => graphicPropsToUrlQuery(graphicProps, DEFAULT_GRAPHIC_PROPS), [
-    graphicProps
-  ]);
-  console.log({ graphicPropsAsUrlQuery })
+  const graphicPropsAsUrlQuery = useMemo(
+    () => graphicPropsToUrlQuery(graphicProps, DEFAULT_GRAPHIC_PROPS),
+    [graphicProps]
+  );
+  console.log({ graphicPropsAsUrlQuery });
 
   const fallbackAutomationBaseURL = useMemo(
     () =>
@@ -198,12 +205,7 @@ const Editor: React.FC = () => {
   return (
     <div className={styles.root}>
       <div className={styles.graphic}>
-        <Graphic
-          tappableLayer={TappableLayer.States}
-          onTapGroup={onTapGroup}
-          onTapState={onTapState}
-          {...graphicProps}
-        />
+        <Graphic onClick={onClick} {...graphicProps} />
       </div>
       <div className={styles.controls}>
         <label>Active layer</label>
