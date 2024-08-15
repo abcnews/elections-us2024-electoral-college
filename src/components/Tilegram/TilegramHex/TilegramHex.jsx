@@ -6,6 +6,13 @@ import { getStyleDelays } from '../util';
 const HEX_SHAPE =
   'M14.722431864335457,-8.5 14.722431864335457,8.5 0,17 -14.722431864335457,8.5 -14.722431864335457,-8.5 0,-17z';
 
+/** look up the corresponding css class for the given hexflip animation */
+const animationStyles = {
+  fade: null,
+  flip: styles.hexFlipping,
+  telegraph: styles.hexTelegraphFlipping
+};
+
 function getSimplifiedAllocation(allocation) {
   if ([Allocation.None, Allocation.Tossup].includes(allocation)) return Allocation.None;
   if ([Allocation.GOP, Allocation.LikelyGOP].includes(allocation)) return Allocation.GOP;
@@ -16,13 +23,13 @@ function getSimplifiedAllocation(allocation) {
 function _TilegramHexInner({ coords, hexBorders, hexflip, allocation, focus, state, groupId }) {
   const [transitionFrom, setTransitionFrom] = useState(allocation);
   const [oldAllocation, setOldAllocation] = useState(allocation);
-  const [isAnimating, setIsAnimating] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
   useEffect(() => {
     const isSame = getSimplifiedAllocation(oldAllocation) === getSimplifiedAllocation(allocation);
     const isUncertain =
       getSimplifiedAllocation(oldAllocation) === Allocation.None ||
       getSimplifiedAllocation(allocation) === Allocation.None;
-    if (hexflip && !isSame && !isUncertain) {
+    if (hexflip !== 'fade' && !isSame && !isUncertain) {
       setTransitionFrom(oldAllocation);
       setIsAnimating(true);
     }
@@ -38,7 +45,7 @@ function _TilegramHexInner({ coords, hexBorders, hexflip, allocation, focus, sta
           styles.hex,
           hexBorders && styles.hexBorders,
           focus && focus === Focus.No && styles.defocused,
-          isAnimating && styles.hexAnimating
+          isAnimating && animationStyles[hexflip]
         ]
           .filter(Boolean)
           .join(' ')}

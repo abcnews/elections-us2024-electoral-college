@@ -11,7 +11,8 @@ import {
   MIXINS,
   PRESETS,
   ElectionYear,
-  ELECTION_YEARS
+  ELECTION_YEARS,
+  HEX_ANIMATIONS
 } from '../../constants';
 import { loadData } from '../../data';
 import {
@@ -72,8 +73,8 @@ const Editor: React.FC = () => {
   const [year, setYear] = useState<ElectionYear>(initialUrlParamProps.year);
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [counting, setCounting] = useState(initialUrlParamProps.counting);
-  const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders || false);
-  const [hexflip, setHexflip] = useState(initialUrlParamProps.hexflip || false);
+  const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders);
+  const [hexflip, setHexflip] = useState(initialUrlParamProps.hexflip);
   const [tappableLayer, setTappableLayer] = useState(TappableLayer.Delegates);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
 
@@ -190,7 +191,6 @@ const Editor: React.FC = () => {
     () => graphicPropsToUrlQuery(graphicProps, DEFAULT_GRAPHIC_PROPS),
     [graphicProps]
   );
-  console.log({ graphicPropsAsUrlQuery });
 
   const fallbackAutomationBaseURL = useMemo(
     () =>
@@ -318,19 +318,24 @@ const Editor: React.FC = () => {
             </label>
           </span>
         </div>
+
+        <label>Hexagon animation</label>
         <div className={styles.flexRow}>
-          <span key="none">
-            <label>
-              <input
-                type="checkbox"
-                name="hexflip"
-                value="hexflip"
-                checked={hexflip}
-                onChange={() => setHexflip(!hexflip)}
-              ></input>
-              Flip hexagons on change
-            </label>
-          </span>
+          {HEX_ANIMATIONS.map(animation => (
+            <span key={animation}>
+              <label>
+                <input
+                  key={Math.random() /* otherwise the checkbox value gets stuck */}
+                  type="radio"
+                  name="year"
+                  value={animation}
+                  checked={animation === hexflip}
+                  onChange={() => setHexflip(animation)}
+                ></input>
+                {animation}
+              </label>
+            </span>
+          ))}
         </div>
         <label>
           Mix-ins <small>(added to the map)</small>

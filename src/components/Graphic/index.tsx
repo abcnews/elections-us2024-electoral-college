@@ -24,7 +24,7 @@ export const DEFAULT_PROPS = {
   relative: null,
   counting: true,
   hexborders: false,
-  hexflip: true
+  hexflip: 'fade'
 };
 
 const Graphic: React.FC<GraphicProps> = props => {

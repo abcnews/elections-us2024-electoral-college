@@ -12,7 +12,7 @@ export type TilegramProps = {
   year?: ElectionYear;
   relative?: ElectionYear | null;
   hexborders?: boolean;
-  hexflip?: boolean;
+  hexflip?: string;
   onClick?: (props: { groupId: string; stateId: string }) => void;
 };
 

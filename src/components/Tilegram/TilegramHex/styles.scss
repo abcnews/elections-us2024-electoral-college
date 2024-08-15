@@ -17,22 +17,58 @@
 .hex-borders {
   stroke: #9894941a !important;
 }
-.hex-animating {
+.hex-flipping {
   animation: flip 1s;
+}
+.hex-telegraph-flipping {
+  animation: telegraphFlip 2s;
 }
 
 @keyframes flip {
   0% {
     fill: var(--from);
   }
+  20% {
+    filter: none;
+  }
   49.999% {
     fill: var(--from);
   }
   50% {
     transform: scaleX(0.02);
+    filter: brightness(200%);
   }
-  50.001% {
+  75.001% {
     fill: var(--to);
+  }
+  80% {
+    filter: none;
+  }
+}
+
+@keyframes telegraphFlip {
+  0% {
+    fill: var(--from);
+  }
+  2% {
+    filter: saturate(10%) brightness(120%);
+  }
+  50% {
+    transform: scaleX(1);
+  }
+  74.999% {
+    filter: saturate(10%) brightness(120%);
+    fill: var(--from);
+  }
+  75% {
+    transform: scaleX(0.02);
+  }
+  75.001% {
+    filter: brightness(120%);
+    fill: var(--to);
+  }
+  100% {
+    filter: none;
   }
 }
 
