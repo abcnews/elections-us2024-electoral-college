@@ -8,7 +8,7 @@ import {
   PRESETS
 } from '../../constants';
 import { loadData } from '../../data';
-import { getStateIDForgroupId, liveResultsToGraphicProps } from '../../utils';
+import { getStateIDForGroupID, liveResultsToGraphicProps } from '../../utils';
 import Graphic, { GraphicProps } from '../Graphic';
 import Live from '../Live';
 import styles from './styles.scss';
@@ -48,7 +48,7 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
         return;
       }
 
-      const stateID = getStateIDForgroupId(groupId);
+      const stateID = getStateIDForGroupID(groupId);
 
       if (!stateID) {
         return;
@@ -166,7 +166,7 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
 
       Object.keys(allocations).forEach(groupId => {
         const allocation = allocations[groupId];
-        const stateID = getStateIDForgroupId(groupId);
+        const stateID = getStateIDForGroupID(groupId);
 
         allocations[groupId] =
           allocation === Allocation.Dem || allocation === Allocation.GOP ? allocation : Allocation.Tossup;

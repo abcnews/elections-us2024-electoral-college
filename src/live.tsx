@@ -81,7 +81,7 @@ button {
       </style>
       <h1>Live Results</h1>
       <div className="graphic">
-        <Graphic onCliuck={jumpToState} {...graphicProps} />
+        <Graphic onClick={jumpToState} {...graphicProps} />
       </div>
       <div className="grid">
         {STATE_IDS.map(stateID => (

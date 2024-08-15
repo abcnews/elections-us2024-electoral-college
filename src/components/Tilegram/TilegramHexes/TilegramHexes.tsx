@@ -12,23 +12,27 @@ export function TilegramHexes({ data, allocations, focuses, hexBorders, hexflip,
       {Object.entries(STATES_DELEGATE_HEXES).map(([state, paths]) => {
         return (
           <g key={state} data-state={state} className={styles.root}>
-            {paths.map((coords, i) => (
-              <TilegramHex
-                key={coords.join()}
-                coords={coords}
-                state={state}
-                index={i}
-                allocationHash={allocationHash}
-                allocations={allocations}
-                focus={focuses[state]}
-                hexBorders={hexBorders}
-                hexflip={hexflip}
-              />
-            ))}
+            {
+              //@ts-ignore
+              paths.map((coords, i) => (
+                <TilegramHex
+                  key={coords.join()}
+                  coords={coords}
+                  state={state}
+                  index={i}
+                  allocationHash={allocationHash}
+                  allocations={allocations}
+                  focus={focuses[state]}
+                  hexBorders={hexBorders}
+                  hexflip={hexflip}
+                />
+              ))
+            }
           </g>
         );
       })}
       {Object.entries(STATES_SHAPES).map(([state, paths]) =>
+        //@ts-ignore
         paths.map(d => (
           <path
             key={d}
