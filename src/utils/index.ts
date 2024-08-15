@@ -19,8 +19,6 @@ import {
 } from '../constants';
 import { GraphicProps } from '../components/Graphic';
 
-
-
 export const votesForGroups = (groups: Group[]) => {
   return groups.reduce((memo, group) => {
     return memo + group.votes;
@@ -133,6 +131,7 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string): GraphicP
     graphicProps.relative = null;
   }
   graphicProps.hexborders = !!graphicProps.hexborders;
+  graphicProps.hexflip = graphicProps.hexflip;
 
   return graphicProps as GraphicProps;
 };

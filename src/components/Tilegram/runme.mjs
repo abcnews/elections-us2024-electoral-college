@@ -14,39 +14,42 @@ import { defineHex, Grid, rectangle } from 'honeycomb-grid';
 import polygonClipping from 'polygon-clipping';
 import path from 'path';
 import fs from 'fs';
+
 const __dirname = path.dirname(import.meta.url.replace('file://',''));
 
-function toSvgCoord([x,y]){
+
   // Offset to line up with legacy graphics
-  const Y_OFFSET = 17
+  const Y_OFFSET = 18
+
+function toSvgCoord([x,y]){
 
 
-  const newX = Math.round(x);
-  const newY = Math.round(y) + Y_OFFSET;
+  const newX = (x);
+  const newY = (y) + Y_OFFSET;
 
   return `${newX},${newY}`;
 }
 
-function processFile(delegateHexesXy, suffix){
-  // Create state hexagons
-  // 1. Create a hex class matching roughly the old hex dims
-  const Tile = defineHex({ dimensions: 17.1 });
-  const grid = new Grid(Tile, rectangle({ width: 100, height: 100 }));
+// 1. Create a hex class matching roughly the old hex dims
+const Tile = defineHex({ dimensions: 17 });
+const grid = new Grid(Tile, rectangle({ width: 100, height: 100 }));
+const zeroHex = grid
+  .getHex({ col: 0, row: 0 })
+  .corners.map(({ x, y }) => [x, y])
+  .map(([x ,y]) => `${x},${y}`);
+const zeroHexD = `M${zeroHex.join(' ')}z`;
+
+function processFile(delegateHexesXy){
   const STATES_DELEGATE_HEXES = {};
   Object.entries(delegateHexesXy).forEach(([state, hexes]) => {
-    const newHexes = hexes.map(point => {
-      return grid
-        .getHex({ col: point[1], row: point[0] })
-        .corners.map(({ x, y }) => toSvgCoord([x,y]))
-        .join(' ');
+    const newHexes = hexes.map((point, i) => {
+      const hex = grid
+        .getHex({ col: point[1], row: point[0] });
+      return ([hex.x,hex.y+Y_OFFSET]);
+
     });
     STATES_DELEGATE_HEXES[state] = newHexes;
   });
-  fs.writeFileSync(
-    path.resolve(__dirname, `./generated__statesDelegateHexesSvg--${suffix}.json`),
-    JSON.stringify(STATES_DELEGATE_HEXES, null, 2)
-  );
-
 
   // Create state outlines
   const STATES_SHAPES = {};
@@ -70,12 +73,6 @@ function processFile(delegateHexesXy, suffix){
 
     STATES_SHAPES[state] = statePolygonsUnionStrings;
   });
-  fs.writeFileSync(
-    path.resolve(__dirname, `./generated__statesShapesSvg--${suffix}.json`),
-    JSON.stringify(STATES_SHAPES, null, 2)
-  );
-
-
 
   // Create country outlines
   const countryPolygonsUnion = polygonClipping.union(allPolygons).sort(
@@ -84,14 +81,13 @@ function processFile(delegateHexesXy, suffix){
 
   const statePolygonsUnionStrings = countryPolygonsUnion.map(polygon => {
     return polygon[0].map(toSvgCoord).join(' ');
-  })
+  });
 
-  fs.writeFileSync(
-    path.resolve(__dirname, `./generated__countryPathsSvg--${suffix}.json`),
-    JSON.stringify(statePolygonsUnionStrings, null, 2)
-  );
-
+  return {STATES_DELEGATE_HEXES, STATES_SHAPES, statePolygonsUnionStrings}
 }
 
-processFile(statesDelegateHexexXY2024, '2024');
-processFile(statesDelegateHexexXY2020, '2020');
+const us2024= processFile(statesDelegateHexexXY2024, '2024');
+const us2020  =processFile(statesDelegateHexexXY2020, '2020');
+
+fs.writeFileSync(path.resolve(__dirname, 'generated__mapdata.json'), JSON.stringify({zeroHexD, us2024, us2020}, null,2));
+

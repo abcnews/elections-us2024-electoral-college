@@ -1,0 +1,96 @@
+@import '../../../constants.scss';
+.root {
+  --allocation-r: #{$color_GOP};
+  --allocation-e: #{$color_LikelyGOP};
+  --allocation-d: #{$color_Dem};
+  --allocation-s: #{$color_LikelyDem};
+  --allocation-u: #{$color_Tossup};
+  --allocation-n: white;
+}
+.hex {
+  transition: fill 1s, stroke 1s;
+  //  Make the hexes slightly larger so they fill the gaps a little more
+  scale: 1.02;
+  stroke: transparent;
+  fill: var(--to);
+}
+.hex-borders {
+  stroke: #9894941a !important;
+}
+.hex-flipping {
+  animation: flip 1s;
+}
+.hex-telegraph-flipping {
+  animation: telegraphFlip 2s;
+}
+
+@keyframes flip {
+  0% {
+    fill: var(--from);
+  }
+  20% {
+    filter: none;
+  }
+  49.999% {
+    fill: var(--from);
+  }
+  50% {
+    transform: scaleX(0.02);
+    filter: brightness(200%);
+  }
+  75.001% {
+    fill: var(--to);
+  }
+  80% {
+    filter: none;
+  }
+}
+
+@keyframes telegraphFlip {
+  0% {
+    fill: var(--from);
+  }
+  2% {
+    filter: saturate(10%) brightness(120%);
+  }
+  50% {
+    transform: scaleX(1);
+  }
+  74.999% {
+    filter: saturate(10%) brightness(120%);
+    fill: var(--from);
+  }
+  75% {
+    transform: scaleX(0.02);
+  }
+  75.001% {
+    filter: brightness(120%);
+    fill: var(--to);
+  }
+  100% {
+    filter: none;
+  }
+}
+
+.defocused {
+  opacity: 0.05 !important;
+}
+
+.state {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1px;
+  transition: stroke-width 0.2s;
+}
+
+.state-hidden {
+  opacity: 0;
+}
+.state-focused {
+  stroke-width: 2px;
+  stroke: black;
+}
+
+.state-allocation-n {
+  stroke: #989494;
+}

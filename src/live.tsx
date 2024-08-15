@@ -5,7 +5,6 @@ import { render } from 'react-dom';
 import Graphic, { GraphicProps } from './components/Graphic';
 import Live from './components/Live';
 import liveStyles from './components/Live/styles.scss';
-import { TappableLayer } from './components/Tilegram';
 import { STATE_IDS } from './constants';
 import { loadData } from './data';
 import { liveResultsToGraphicProps } from './utils';
@@ -23,8 +22,8 @@ const Article = () => {
     loadData({}).then(data => setGraphicProps(liveResultsToGraphicProps(data)));
   }, []);
 
-  function jumpToState(stateID) {
-    window.location.hash = `#${stateID}`;
+  function jumpToState({ stateId }) {
+    window.location.hash = `#${stateId}`;
   }
 
   return (
@@ -82,7 +81,7 @@ button {
       </style>
       <h1>Live Results</h1>
       <div className="graphic">
-        <Graphic tappableLayer={TappableLayer.States} onTapState={jumpToState} {...graphicProps} />
+        <Graphic onCliuck={jumpToState} {...graphicProps} />
       </div>
       <div className="grid">
         {STATE_IDS.map(stateID => (
