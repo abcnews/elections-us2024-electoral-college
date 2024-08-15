@@ -13,7 +13,7 @@ function getSimplifiedAllocation(allocation) {
   return null;
 }
 
-function _TilegramHexInner({ coords, hexBorders, allocation, focus, state, groupId }) {
+function _TilegramHexInner({ coords, hexBorders, hexflip, allocation, focus, state, groupId }) {
   const [transitionFrom, setTransitionFrom] = useState(allocation);
   const [oldAllocation, setOldAllocation] = useState(allocation);
   const [isAnimating, setIsAnimating] = useState(true);
@@ -22,7 +22,7 @@ function _TilegramHexInner({ coords, hexBorders, allocation, focus, state, group
     const isUncertain =
       getSimplifiedAllocation(oldAllocation) === Allocation.None ||
       getSimplifiedAllocation(allocation) === Allocation.None;
-    if (!isSame && !isUncertain) {
+    if (hexflip && !isSame && !isUncertain) {
       setTransitionFrom(oldAllocation);
       setIsAnimating(true);
     }

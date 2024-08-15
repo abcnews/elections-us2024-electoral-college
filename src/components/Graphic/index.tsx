@@ -23,7 +23,8 @@ export const DEFAULT_PROPS = {
   year: DEFAULT_ELECTION_YEAR,
   relative: null,
   counting: true,
-  hexborders: false
+  hexborders: false,
+  hexflip: true
 };
 
 const Graphic: React.FC<GraphicProps> = props => {

@@ -72,7 +72,8 @@ const Editor: React.FC = () => {
   const [year, setYear] = useState<ElectionYear>(initialUrlParamProps.year);
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [counting, setCounting] = useState(initialUrlParamProps.counting);
-  const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders);
+  const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders || false);
+  const [hexflip, setHexflip] = useState(initialUrlParamProps.hexflip || false);
   const [tappableLayer, setTappableLayer] = useState(TappableLayer.Delegates);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
 
@@ -117,7 +118,6 @@ const Editor: React.FC = () => {
       ...replacement.focuses
     });
     setYear(replacement.year || DEFAULT_GRAPHIC_PROPS.year);
-    setHexBorders(replacement.hexborders);
   };
 
   const importMarker = (marker: string) => {
@@ -126,6 +126,7 @@ const Editor: React.FC = () => {
     setRelative(Number(graphicProps.relative) || DEFAULT_GRAPHIC_PROPS.relative);
     setCounting(graphicProps.counting || DEFAULT_GRAPHIC_PROPS.counting);
     setHexBorders(graphicProps.hexborders || DEFAULT_GRAPHIC_PROPS.hexborders);
+    setHexflip(graphicProps.hexflip || DEFAULT_GRAPHIC_PROPS.hexflip);
   };
 
   const loadLiveResults = () => {
@@ -175,9 +176,10 @@ const Editor: React.FC = () => {
       year,
       relative,
       counting,
-      hexborders: hexBorders
+      hexborders: hexBorders,
+      hexflip
     }),
-    [allocations, focuses, year, relative, counting, hexBorders]
+    [allocations, focuses, year, relative, counting, hexBorders, hexflip]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(
@@ -254,9 +256,7 @@ const Editor: React.FC = () => {
             </span>
           ))}
         </div>
-        <label>
-          Relative year <small>(show incumbent outlines &amp; flips)</small>
-        </label>
+        <label>Relative year</label>
         <div className={styles.flexRow}>
           <span key="none">
             <label>
@@ -315,6 +315,20 @@ const Editor: React.FC = () => {
                 onChange={() => setHexBorders(!hexBorders)}
               ></input>
               Show hexagon borders
+            </label>
+          </span>
+        </div>
+        <div className={styles.flexRow}>
+          <span key="none">
+            <label>
+              <input
+                type="checkbox"
+                name="hexflip"
+                value="hexflip"
+                checked={hexflip}
+                onChange={() => setHexflip(!hexflip)}
+              ></input>
+              Flip hexagons on change
             </label>
           </span>
         </div>

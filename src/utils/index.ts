@@ -131,6 +131,7 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string): GraphicP
     graphicProps.relative = null;
   }
   graphicProps.hexborders = !!graphicProps.hexborders;
+  graphicProps.hexflip = !!graphicProps.hexflip;
 
   return graphicProps as GraphicProps;
 };
@@ -193,6 +194,10 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
 
   if (typeof graphicProps.hexborders === 'string') {
     graphicProps.hexborders = graphicProps.hexborders === 'true';
+  }
+
+  if (typeof graphicProps.hexflip === 'string') {
+    graphicProps.hexflip = graphicProps.hexflip === 'true';
   }
 
   if (typeof graphicProps.tappableLayer === 'string') {

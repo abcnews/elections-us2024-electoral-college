@@ -12,11 +12,12 @@ export type TilegramProps = {
   year?: ElectionYear;
   relative?: ElectionYear | null;
   hexborders?: boolean;
+  hexflip?: boolean;
   onClick?: (props: { groupId: string; stateId: string }) => void;
 };
 
 export default function Tilegram(props: TilegramProps) {
-  const { allocations, focuses, onClick, hexborders } = props;
+  const { allocations, focuses, onClick, hexborders, hexflip } = props;
   const year = props.year === 2024 ? 2024 : 2020;
 
   const hasFocuses = focuses && Object.values(focuses).some(value => value === Focus.Yes);
@@ -40,6 +41,7 @@ export default function Tilegram(props: TilegramProps) {
               allocations={allocations}
               focuses={hasFocuses && focuses}
               hexBorders={hexborders}
+              hexflip={hexflip}
               isVisible={year === 2024}
             />
           </g>
@@ -49,6 +51,7 @@ export default function Tilegram(props: TilegramProps) {
               allocations={allocations}
               focuses={hasFocuses && focuses}
               hexBorders={hexborders}
+              hexflip={hexflip}
               isVisible={year !== 2024}
             />
           </g>
