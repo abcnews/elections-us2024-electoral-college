@@ -5,10 +5,9 @@
   stroke: none;
   text-anchor: middle;
   font-size: 1rem;
-  transition: opacity 0.2s;
   z-index: 2;
   pointer-events: none;
-  transition: all 0.1s;
+  transition: all 1s;
   @media (max-width: 667px) {
     transform: translate(0, 0.25rem);
     font-size: 1.5rem;

@@ -139,7 +139,7 @@ const Editor: React.FC = () => {
     });
   };
 
-  function onClick({ stateId, groupId }) {
+  function onClick({ stateId, groupId, ...args }) {
     if (tappableLayer === TappableLayer.Delegates) {
       // toggle states
       const allocationsToMixin: Allocations = {};

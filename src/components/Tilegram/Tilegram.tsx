@@ -18,6 +18,7 @@ export type TilegramProps = {
 
 export default function Tilegram(props: TilegramProps) {
   const { allocations, focuses, onClick, hexborders, hexflip } = props;
+
   const year = props.year === 2024 ? 2024 : 2020;
 
   const hasFocuses = focuses && Object.values(focuses).some(value => value === Focus.Yes);
@@ -26,9 +27,9 @@ export default function Tilegram(props: TilegramProps) {
     if (!onClick || target.nodeName !== 'path') {
       return;
     }
-    const parent = target.parentNode;
-    const stateId = parent.dataset.state;
+    const stateId = target.parentNode.parentNode.dataset.state;
     const groupId = target.dataset.delegate;
+
     onClick({ groupId, stateId });
   }
   return (

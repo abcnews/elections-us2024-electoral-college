@@ -21,6 +21,7 @@ export function TilegramLabels({ data, allocations, focuses }) {
               className={[
                 styles.labelOutline,
                 hasOutlineOnMobile && styles.mobileAlways,
+                focuses && focuses[state] === Focus.No && styles.hidden,
                 styles['label-outline--' + stateMainAllocation]
               ]
                 .filter(Boolean)
