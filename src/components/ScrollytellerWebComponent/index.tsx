@@ -24,16 +24,10 @@ export default function ScrollytellerWebComponent({ children, panels, styles, on
     current.addEventListener('marker', e => onMarker(e.detail));
   }, [scrollyEl]);
 
-  return <>
-    <ScrollytellerPortalChild domNode={scrollyPortal}>
-      {children}
-    </ScrollytellerPortalChild>
-    <abcnews-scrollyteller
-      ref={scrollyEl}
-      className={styles.scrollyteller}
-      panelClassName={styles.panel}
-      firstPanelClassName={styles.firstPanel}
-      lastPanelClassName={styles.lastPanel}
-      theme="light" />
-  </>
+  return (
+    <>
+      <ScrollytellerPortalChild domNode={scrollyPortal}>{children}</ScrollytellerPortalChild>
+      <abcnews-scrollyteller ref={scrollyEl} className={styles.scrollyteller} />
+    </>
+  );
 }
