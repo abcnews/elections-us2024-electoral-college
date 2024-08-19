@@ -5,6 +5,7 @@
   // --color-panel-text: black;
   // --color-panel-filter: blur(0.3125rem);
   // --color-panel-opacity: 0.75;
+  --color-panel-border: 1px solid var(--tint-5);
 }
 
 .scrollyteller {
@@ -87,7 +88,7 @@
 
 /* Environment hacks */
 
-[class*='u-richtext'][class*='u-richtext']>h3 {
+[class*='u-richtext'][class*='u-richtext'] > h3 {
   padding-top: 2rem;
   font-family: 'ABCSerif', sans-serif;
   text-align: center;

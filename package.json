@@ -34,6 +34,7 @@
 		"@abcnews/google-doc-scrollyteller": "^1.0.1",
 		"@abcnews/mount-utils": "^3.0.0",
 		"@abcnews/scrollyteller": "^4.1.1",
+		"@abcnews/svelte-scrollyteller": "github:abcnews/svelte-scrollyteller#feature/future-news",
 		"core-js": "^3.37.1",
 		"file-saver": "^2.0.5",
 		"jszip": "^3.10.1",

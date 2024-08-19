@@ -1,7 +1,8 @@
 @import '../../constants.scss';
-
-[data-mount][id^='eclive'] + [data-mount][id^='eclive'] {
-  margin-top: -1rem;
+// If it's the last thing in the panel, remove the margin and pull it back in,
+// this way the card looks tidy.
+[id*='ecliveSTATE']:last-child > .root {
+  margin-bottom: -0.5rem !important;
 }
 
 .root {
@@ -9,8 +10,10 @@
   margin-left: -2.375rem;
   margin-right: -2.375rem;
   padding: 1rem 1.25rem;
-  background-color: #ebebeb;
+  background-color: rgba(0, 0, 0, 0.1);
   font-size: 0.75rem;
+  border-radius: var(--panel-radius);
+  margin-block-end: 1rem;
 
   /* Scrollyteller panel layout matching (large-first responsive) */
 
@@ -26,22 +29,6 @@
 
   @media only screen and (min-width: 100rem) and (max-width: 120rem) {
     font-size: 0.6875rem;
-  }
-
-  :first-child > & {
-    margin-top: -2.25rem;
-
-    @media only screen and (max-width: 667px) {
-      margin-top: -1.5rem;
-    }
-  }
-
-  :last-child > & {
-    margin-bottom: -2.25rem;
-
-    @media only screen and (max-width: 667px) {
-      margin-bottom: -1.5rem;
-    }
   }
 }
 
