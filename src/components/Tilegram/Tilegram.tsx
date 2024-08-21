@@ -36,8 +36,9 @@ export default function Tilegram(props: TilegramProps) {
     <>
       <div className={styles.root} onClick={clickHandler} data-year={year}>
         <svg viewBox="0 0 1043 759">
-          <g className={styles.tiles2024}>
+          <g id="hex-2024" className={styles.tiles2024}>
             <TilegramHexes
+              id="2024"
               data={us2024}
               allocations={allocations}
               focuses={hasFocuses && focuses}
@@ -46,8 +47,9 @@ export default function Tilegram(props: TilegramProps) {
               isVisible={year === 2024}
             />
           </g>
-          <g className={styles.tiles2020}>
+          <g id="hex-2020" className={styles.tiles2020}>
             <TilegramHexes
+              id="2020"
               data={us2020}
               allocations={allocations}
               focuses={hasFocuses && focuses}
@@ -56,7 +58,9 @@ export default function Tilegram(props: TilegramProps) {
               isVisible={year !== 2024}
             />
           </g>
-          <TilegramLabels data={us2024} allocations={allocations} focuses={hasFocuses && focuses} />
+          <g id="labels">
+            <TilegramLabels data={us2024} allocations={allocations} focuses={hasFocuses && focuses} />
+          </g>
         </svg>
       </div>
     </>

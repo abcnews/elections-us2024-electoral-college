@@ -37,9 +37,8 @@ function _TilegramHexInner({ coords, hexBorders, hexflip, allocation, focus, sta
   }, [allocation]);
 
   const stopAnimating = useCallback(() => setIsAnimating(false));
-  const svgCoord = coords.join();
   return (
-    <g className={styles.root} transform={`translate(${svgCoord})`} onAnimationEnd={stopAnimating}>
+    <g className={styles.root} transform={`translate(${coords.join(' ')})`} onAnimationEnd={stopAnimating}>
       <path
         className={[
           styles.hex,
@@ -56,6 +55,8 @@ function _TilegramHexInner({ coords, hexBorders, hexflip, allocation, focus, sta
           '--to': `var(--allocation-${allocation})`,
           ...getStyleDelays(...coords)
         }}
+        fill="#eee"
+        stroke="#888"
         d={HEX_SHAPE}
       />
     </g>
