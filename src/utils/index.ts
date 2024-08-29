@@ -132,6 +132,7 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string): GraphicP
   }
   graphicProps.hexborders = !!graphicProps.hexborders;
   graphicProps.hexflip = graphicProps.hexflip;
+  graphicProps.hexani = graphicProps.hexani;
 
   return graphicProps as GraphicProps;
 };

@@ -31,10 +31,17 @@ body {
 
 .graphic {
   flex: 0 0 auto;
-  margin: 0 auto;
-  padding: 0.5rem;
+  margin: 1rem auto 0 auto;
+  max-width: calc(100% - 2rem);
+  padding: 0.5rem 1rem;
   width: 100%;
   max-width: 57.5rem;
+  background: white;
+  border-radius: 0.5rem;
+}
+.graphic-inner {
+  position: relative;
+  width: calc(100% - 1rem);
 }
 
 @media (min-width: 90rem) {

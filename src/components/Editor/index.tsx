@@ -12,7 +12,8 @@ import {
   PRESETS,
   ElectionYear,
   ELECTION_YEARS,
-  HEX_ANIMATIONS
+  HEX_ANIMATIONS,
+  HEX_ANIMATION_STYLES
 } from '../../constants';
 import { loadData } from '../../data';
 import {
@@ -75,6 +76,7 @@ const Editor: React.FC = () => {
   const [counting, setCounting] = useState(initialUrlParamProps.counting);
   const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders);
   const [hexflip, setHexflip] = useState(initialUrlParamProps.hexflip);
+  const [hexani, setHexani] = useState(initialUrlParamProps.hexani);
   const [tappableLayer, setTappableLayer] = useState(TappableLayer.Delegates);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
 
@@ -128,6 +130,7 @@ const Editor: React.FC = () => {
     setCounting(graphicProps.counting || DEFAULT_GRAPHIC_PROPS.counting);
     setHexBorders(graphicProps.hexborders || DEFAULT_GRAPHIC_PROPS.hexborders);
     setHexflip(graphicProps.hexflip || DEFAULT_GRAPHIC_PROPS.hexflip);
+    setHexani(graphicProps.hexani || DEFAULT_GRAPHIC_PROPS.hexani);
   };
 
   const loadLiveResults = () => {
@@ -178,9 +181,10 @@ const Editor: React.FC = () => {
       relative,
       counting,
       hexborders: hexBorders,
-      hexflip
+      hexflip,
+      hexani
     }),
-    [allocations, focuses, year, relative, counting, hexBorders, hexflip]
+    [allocations, focuses, year, relative, counting, hexBorders, hexflip, hexani]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(
@@ -207,7 +211,9 @@ const Editor: React.FC = () => {
   return (
     <div className={styles.root}>
       <div className={styles.graphic}>
-        <Graphic onClick={onClick} {...graphicProps} />
+        <div className={styles.graphicInner}>
+          <Graphic onClick={onClick} {...graphicProps} />
+        </div>
       </div>
       <div className={styles.controls}>
         <label>Active layer</label>
@@ -325,12 +331,28 @@ const Editor: React.FC = () => {
             <span key={animation}>
               <label>
                 <input
-                  key={Math.random() /* otherwise the checkbox value gets stuck */}
                   type="radio"
-                  name="year"
+                  name="hexflip"
                   value={animation}
                   checked={animation === hexflip}
                   onChange={() => setHexflip(animation)}
+                ></input>
+                {animation}
+              </label>
+            </span>
+          ))}
+        </div>
+
+        <div className={styles.flexRow}>
+          {HEX_ANIMATION_STYLES.map(animation => (
+            <span key={animation}>
+              <label>
+                <input
+                  type="radio"
+                  name="hexani"
+                  value={animation}
+                  checked={animation === hexani}
+                  onChange={() => setHexani(animation)}
                 ></input>
                 {animation}
               </label>
@@ -356,7 +378,10 @@ const Editor: React.FC = () => {
         </label>
         <div className={styles.flexRow}>
           <button key="empty" onClick={() => replaceGraphicProps({})}>
-            Empty
+            Empty (24)
+          </button>
+          <button key="empty" onClick={() => replaceGraphicProps({ year: 2020 })}>
+            Empty (20)
           </button>
           {Object.keys(PRESETS).map(key => {
             const { name, ...graphicProps } = PRESETS[key];

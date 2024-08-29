@@ -20,7 +20,7 @@ function getSimplifiedAllocation(allocation) {
   return null;
 }
 
-function _TilegramHexInner({ coords, hexBorders, hexflip, allocation, focus, state, groupId }) {
+function _TilegramHexInner({ coords, hexBorders, hexflip, hexani, allocation, focus, state, groupId }) {
   const [transitionFrom, setTransitionFrom] = useState(allocation);
   const [oldAllocation, setOldAllocation] = useState(allocation);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -53,7 +53,7 @@ function _TilegramHexInner({ coords, hexBorders, hexflip, allocation, focus, sta
         style={{
           '--from': `var(--allocation-${transitionFrom})`,
           '--to': `var(--allocation-${allocation})`,
-          ...getStyleDelays(...coords)
+          ...getStyleDelays(...coords, hexani)
         }}
         fill="#eee"
         stroke="#888"

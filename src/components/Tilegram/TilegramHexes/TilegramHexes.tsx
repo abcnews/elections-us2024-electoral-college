@@ -4,7 +4,7 @@ import { getGroupIDForStateIDAndDelegateIndex, getStateAllocations } from '../..
 import { Focus } from '../../../constants';
 import { TilegramHex } from '../TilegramHex/TilegramHex';
 
-export function TilegramHexes({ id, data, allocations, focuses, hexBorders, hexflip, isVisible }) {
+export function TilegramHexes({ id, data, allocations, focuses, hexBorders, hexflip, hexani, isVisible, labels }) {
   const { STATES_DELEGATE_HEXES, STATES_SHAPES } = data;
   const allocationHash = Object.values(allocations).join('');
   return (
@@ -26,6 +26,7 @@ export function TilegramHexes({ id, data, allocations, focuses, hexBorders, hexf
                     focus={focuses[state]}
                     hexBorders={hexBorders}
                     hexflip={hexflip}
+                    hexani={hexani}
                   />
                 ))
               }
@@ -53,7 +54,6 @@ export function TilegramHexes({ id, data, allocations, focuses, hexBorders, hexf
               data-state={state}
               fill="none"
               stroke="black"
-              stroke-width="4"
               d={`M${d}z`}
             />
           ))

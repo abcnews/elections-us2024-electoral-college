@@ -770,3 +770,4 @@ export const ELECTION_YEARS = Object.keys(ELECTION_YEARS_ALLOCATIONS_CANDIDATES)
 export const [DEFAULT_ELECTION_YEAR, DEFAULT_RELATIVE_ELECTION_YEAR] = ELECTION_YEARS;
 
 export const HEX_ANIMATIONS = ['fade', 'flip', 'telegraph'];
+export const HEX_ANIMATION_STYLES = ['wipe', 'twinkle', 'none'];

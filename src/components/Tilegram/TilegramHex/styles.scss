@@ -15,7 +15,7 @@
   fill: var(--to);
 }
 .hex-borders {
-  stroke: #9894941a !important;
+  stroke: rgba(153, 153, 153, 0.5) !important;
 }
 .hex-flipping {
   animation: flip 1s;
@@ -73,7 +73,7 @@
 }
 
 .defocused {
-  opacity: 0.05 !important;
+  opacity: 0.08 !important;
 }
 
 .state {

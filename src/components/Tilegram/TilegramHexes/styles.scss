@@ -5,15 +5,6 @@
 .root-hidden {
   opacity: 0;
 }
-.hex {
-  transition: fill 0.2s;
-  //  Make the hexes slightly larger so they fill the gaps a little more
-  scale: 1.02;
-  animation: flip 1s;
-}
-.hex-borders {
-  stroke: #9894941a !important;
-}
 
 .allocation-r {
   fill: #{$color_GOP};
@@ -46,7 +37,7 @@
 .state {
   fill: none;
   stroke: #fff;
-  stroke-width: 1px;
+  stroke-width: 3px;
   transition: all 1s;
 }
 
@@ -59,7 +50,8 @@
 }
 
 .state-allocation-n {
-  stroke: #989494;
+  stroke: #000;
+  stroke-width: 2px;
 }
 
 @keyframes flip {

@@ -4,7 +4,7 @@ import styles from './styles.scss';
 import { Allocations, ElectionYear, Focus, Focuses } from '../../constants';
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
-const { us2020, us2024 } = mapData;
+const { us2020, us2024, labels } = mapData;
 
 export type TilegramProps = {
   allocations?: Allocations;
@@ -13,11 +13,12 @@ export type TilegramProps = {
   relative?: ElectionYear | null;
   hexborders?: boolean;
   hexflip?: string;
+  hexani?: string;
   onClick?: (props: { groupId: string; stateId: string }) => void;
 };
 
 export default function Tilegram(props: TilegramProps) {
-  const { allocations, focuses, onClick, hexborders, hexflip } = props;
+  const { allocations, focuses, onClick, hexborders, hexflip, hexani } = props;
 
   const year = props.year === 2024 ? 2024 : 2020;
 
@@ -44,6 +45,7 @@ export default function Tilegram(props: TilegramProps) {
               focuses={hasFocuses && focuses}
               hexBorders={hexborders}
               hexflip={hexflip}
+              hexani={hexani}
               isVisible={year === 2024}
             />
           </g>
@@ -55,11 +57,18 @@ export default function Tilegram(props: TilegramProps) {
               focuses={hasFocuses && focuses}
               hexBorders={hexborders}
               hexflip={hexflip}
+              hexani={hexani}
               isVisible={year !== 2024}
             />
           </g>
           <g id="labels">
-            <TilegramLabels data={us2024} allocations={allocations} focuses={hasFocuses && focuses} />
+            <TilegramLabels
+              data={us2024}
+              labels={labels}
+              allocations={allocations}
+              focuses={hasFocuses && focuses}
+              hexani={hexani}
+            />
           </g>
         </svg>
       </div>
