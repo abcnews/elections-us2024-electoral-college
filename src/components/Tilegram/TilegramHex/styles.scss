@@ -8,7 +8,7 @@
   --allocation-n: white;
 }
 .hex {
-  transition: fill 1s, stroke 1s;
+  transition: fill 1s, stroke 1s, opacity 1s;
   //  Make the hexes slightly larger so they fill the gaps a little more
   scale: 1.02;
   stroke: transparent;
@@ -74,6 +74,11 @@
 
 .defocused {
   opacity: 0.08 !important;
+}
+
+.defocusedgrey {
+  fill: #ebebeb;
+  --allocation-n: rgb(74, 74, 74);
 }
 
 .state {

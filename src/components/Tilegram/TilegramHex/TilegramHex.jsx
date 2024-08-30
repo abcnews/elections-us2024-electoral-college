@@ -36,6 +36,9 @@ function _TilegramHexInner({ coords, hexBorders, hexflip, hexani, allocation, fo
     setOldAllocation(allocation);
   }, [allocation]);
 
+  const isDefocused = focus && focus === Focus.No;
+  const defocusedStyle = ['u', 'n'].includes(allocation) ? styles.defocusedgrey : styles.defocused;
+
   const stopAnimating = useCallback(() => setIsAnimating(false));
   return (
     <g className={styles.root} transform={`translate(${coords.join(' ')})`} onAnimationEnd={stopAnimating}>
@@ -43,7 +46,7 @@ function _TilegramHexInner({ coords, hexBorders, hexflip, hexani, allocation, fo
         className={[
           styles.hex,
           hexBorders && styles.hexBorders,
-          focus && focus === Focus.No && styles.defocused,
+          isDefocused && defocusedStyle,
           isAnimating && animationStyles[hexflip]
         ]
           .filter(Boolean)

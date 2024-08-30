@@ -12,7 +12,7 @@ export function TilegramLabels({ data, allocations, focuses, hexani, labels }) {
       {Object.entries(STATES_DELEGATE_HEXES).map(([state, paths]) => {
         const stateAllocations = allocations && getStateAllocations(state, allocations);
         const stateMainAllocation = stateAllocations && stateAllocations[0];
-        const [labelX, labelY, hasOutlineOnMobile] = STATES_LABELS[state];
+        const [labelX, labelY] = STATES_LABELS[state];
         const style = getStyleDelays(labelX, labelY, hexani);
 
         return (
@@ -20,7 +20,6 @@ export function TilegramLabels({ data, allocations, focuses, hexani, labels }) {
             <text
               className={[
                 styles.labelOutline,
-                hasOutlineOnMobile && styles.mobileAlways,
                 focuses && focuses[state] === Focus.No && styles.hidden,
                 styles['label-outline--' + stateMainAllocation]
               ]

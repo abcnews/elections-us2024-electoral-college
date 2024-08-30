@@ -7,6 +7,24 @@ import { TilegramHex } from '../TilegramHex/TilegramHex';
 export function TilegramHexes({ id, data, allocations, focuses, hexBorders, hexflip, hexani, isVisible, labels }) {
   const { STATES_DELEGATE_HEXES, STATES_SHAPES } = data;
   const allocationHash = Object.values(allocations).join('');
+
+  const sortedStateBorders = Object.entries(STATES_SHAPES).map(([state, paths]) => ({
+    state,
+    paths,
+    allocation: getStateAllocations(state, allocations)[0] || 'n',
+    defocused: focuses && focuses[state] === Focus.No,
+    focused: focuses && focuses[state] === Focus.Yes
+  }));
+
+  // pre-sort state borders because we can't use z-index in SVG. Focused borders to the top
+  if (focuses) {
+    sortedStateBorders.sort((a, b) => {
+      if (a.focused && b.defocused) return 1;
+      if (a.defocused && b.focused) return -1;
+      return 0;
+    });
+  }
+
   return (
     <g className={[styles.root, !isVisible && styles.rootHidden].filter(Boolean).join(' ')}>
       <g id="state-hexes">
@@ -36,18 +54,17 @@ export function TilegramHexes({ id, data, allocations, focuses, hexBorders, hexf
       </g>
 
       <g id="state-borders">
-        {Object.entries(STATES_SHAPES).map(([state, paths]) =>
+        {sortedStateBorders.map(({ state, paths, allocation, focused, defocused }) =>
           //@ts-ignore
           paths.map(d => (
             <path
               id={`state-border-${state}-${id}`}
               key={d}
-              data-foo={'state-allocation-' + getStateAllocations(state, allocations)[0] || 'n'}
               className={[
                 styles.state,
-                styles['state-allocation-' + getStateAllocations(state, allocations)[0] || 'n'],
-                focuses && focuses[state] === Focus.No && styles.stateHidden,
-                focuses && focuses[state] === Focus.Yes && styles.stateFocused
+                styles['state-allocation-' + allocation],
+                defocused && styles.stateDefocused,
+                focused && styles.stateFocused
               ]
                 .filter(Boolean)
                 .join(' ')}

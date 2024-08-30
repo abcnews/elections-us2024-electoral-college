@@ -832,7 +832,7 @@ export const STATES_LABELS: StatesLabels = {
   MD: [870, 378],
   ME: [958, 29, true],
   MI: [592, 188],
-  MN: [378, 184],
+  MN: [382, 210],
   MO: [385, 325],
   MS: [456, 525, true],
   MT: [281, 150, true],
@@ -858,7 +858,7 @@ export const STATES_LABELS: StatesLabels = {
   VT: [883, 74, true],
   WA: [118, 160],
   WI: [459, 197],
-  WV: [703, 350],
+  WV: [706, 353],
   WY: [279, 200, true]
 };
 

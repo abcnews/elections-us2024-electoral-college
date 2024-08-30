@@ -8,54 +8,56 @@
   z-index: 2;
   pointer-events: none;
   transition: all 1s;
+  font-family: 'ABCSans';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.54px;
   @media (max-width: 667px) {
     transform: translate(0, 0.25rem);
     font-size: 1.5rem;
   }
 }
-.label-outline {
-  fill: white;
-}
 
 .label--r,
-.label--d,
-.label--u {
+.label--d {
   fill: white;
 }
-
-.label--e,
-.label--s {
-  fill: black;
+.label--u {
+  fill: #575757;
+}
+.label-s {
+  fill: #003e94;
+}
+.label--e {
+  fill: #6b0002;
 }
 
 .label-outline {
-  stroke: white;
+  stroke: transparent;
   stroke-opacity: 0.5;
   stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.label-outline--r,
+.label-outline--r {
+  stroke: #{$color_GOP};
+}
 .label-outline--d {
-  stroke: black;
-  opacity: 0;
+  stroke: #{$color_Dem};
 }
 .label-outline--u {
-  stroke: black;
+  stroke: #{$color_Tossup};
 }
-
-.label-outline--e,
+.label-outline--e {
+  stroke: #{$color_LikelyGOP};
+}
 .label-outline--s {
-  stroke: white;
+  stroke: #{$color_LikelyDem};
 }
 
 .hidden {
   opacity: 0;
-}
-
-.mobile-always {
-  @media (max-width: 667px) {
-    opacity: 1;
-  }
 }

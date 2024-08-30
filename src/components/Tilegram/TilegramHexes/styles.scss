@@ -6,34 +6,6 @@
   opacity: 0;
 }
 
-.allocation-r {
-  fill: #{$color_GOP};
-}
-
-.allocation-e {
-  fill: #{$color_LikelyGOP};
-}
-
-.allocation-d {
-  fill: #{$color_Dem};
-}
-
-.allocation-s {
-  fill: #{$color_LikelyDem};
-}
-
-.allocation-u {
-  fill: #{$color_Tossup};
-}
-
-.allocation-n {
-  fill: white;
-}
-
-.defocused {
-  opacity: 0.05 !important;
-}
-
 .state {
   fill: none;
   stroke: #fff;
@@ -41,12 +13,19 @@
   transition: all 1s;
 }
 
-.state-hidden {
-  opacity: 0;
+.state-allocation-u {
+  stroke: #7a7a7a;
+}
+
+.state-defocused {
+  stroke: white !important;
 }
 .state-focused {
   stroke-width: 2px;
-  stroke: black;
+
+  &.state-allocation-n {
+    stroke: black;
+  }
 }
 
 .state-allocation-n {
