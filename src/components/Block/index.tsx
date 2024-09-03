@@ -51,8 +51,6 @@ const Block: React.FC<BlockProps> = ({ panels }) => {
       const stage = top > 0 ? 'above' : bottom < fixedHeight ? 'below' : 'during';
 
       if (stage !== prevStage) {
-        mediaEl.setAttribute('data-stage', stage);
-
         if (prevStage !== 'initial' && mediaEl.animate) {
           const catchupDistance = top - recentTops[0];
           const catchupDuration = 250 / recentTops.length;
@@ -86,13 +84,19 @@ const Block: React.FC<BlockProps> = ({ panels }) => {
     return () => unsubscribe(onUpdate);
   }, [graphicRef.current]);
 
-  return (<div className={styles.root}><ScrollytellerWebComponent panels={panels.map(panel => ({ ...panel, align: 'left' }))} styles={styles} onMarker={onMarker}>
-    <div ref={graphicRef} className={styles.graphic} >
-      <Graphic {...graphicProps} />
-    </div >
-  </ScrollytellerWebComponent ></div >)
-
-
+  return (
+    <div className={styles.root}>
+      <ScrollytellerWebComponent
+        panels={panels.map(panel => ({ ...panel, align: 'left' }))}
+        styles={styles}
+        onMarker={onMarker}
+      >
+        <div ref={graphicRef} className={styles.graphic}>
+          <Graphic {...graphicProps} />
+        </div>
+      </ScrollytellerWebComponent>
+    </div>
+  );
 };
 
 export default Block;
