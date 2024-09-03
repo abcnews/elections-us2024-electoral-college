@@ -4,7 +4,8 @@ import styles from './styles.scss';
 import { Allocations, ElectionYear, Focus, Focuses } from '../../constants';
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
-const { us2020, us2024, labels } = mapData;
+import { STATES_LABELS } from './data';
+const { us2020, us2024 } = mapData;
 
 export type TilegramProps = {
   allocations?: Allocations;
@@ -64,7 +65,7 @@ export default function Tilegram(props: TilegramProps) {
           <g id="labels">
             <TilegramLabels
               data={us2024}
-              labels={labels}
+              labels={STATES_LABELS}
               allocations={allocations}
               focuses={hasFocuses && focuses}
               hexani={hexani}
