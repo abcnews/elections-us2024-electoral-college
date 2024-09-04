@@ -19,7 +19,7 @@ export default class MSRand {
 }
 
 export function getStyleDelays(x, y, hexani) {
-  if (hexani === 'none') {
+  if (!hexani || hexani === 'none') {
     return {};
   }
 
