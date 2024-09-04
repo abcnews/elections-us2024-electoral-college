@@ -24,13 +24,13 @@ export function getStyleDelays(x, y, hexani) {
   }
 
   if (hexani === 'twinkle') {
-    const delay = new MSRand(x * y).randMax(600);
-    const duration = new MSRand(x * y).randMax(500) + 1000;
+    const delay = (x % 4) * 50;
+    // const duration = (x % 4) * 500; //new MSRand(y).randMax(400) + 1000;
     return {
       transitionDelay: delay + 'ms',
-      animationDelay: delay + 'ms',
-      transitionDuration: duration + 'ms',
-      animationDuration: duration + 'ms'
+      animationDelay: delay + 'ms'
+      // transitionDuration: duration + 'ms',
+      // animationDuration: duration + 'ms'
     };
   }
 

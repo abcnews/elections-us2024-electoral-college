@@ -4,9 +4,9 @@
  * be bothered to?
  *
  * Hexagons are configured in stateDelegateHexesXy*.json - these are editable in
- * the builder in https://www.abc.net.au/res/sites/news-projects/elections-us2024-results/0.1.0/editor.html
+ * the builder in https://www.abc.net.au/res/sites/news-projects/elections-us2024-results/0.2.0/editor.html
  *
- * When changing hexagon layouts, run `node runme.js` to generate new files.
+ * When changing hexagon layouts, run `npm run generate-mapdata` to generate new files.
  */
 import statesDelegateHexexXY2024 from './statesDelegateHexesXY2024.json' with { type: "json" };
 import statesDelegateHexexXY2020 from './statesDelegateHexesXY2020.json' with { type: "json" };

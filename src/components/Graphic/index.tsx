@@ -33,11 +33,13 @@ const Graphic: React.FC<GraphicProps> = props => {
   const isCounting = typeof counting !== 'boolean' || counting;
 
   return (
-    <div className={styles.root} title={title}>
-      <header className={styles.header} data-is-counting={isCounting ? '' : undefined}>
-        <Totals allocations={allocations} year={year} />
-      </header>
-      <Tilegram allocations={allocations} year={year} {...otherTilegramProps} />
+    <div className={styles.ratioBox}>
+      <div className={styles.root} title={title}>
+        <header className={styles.header} data-is-counting={isCounting ? '' : undefined}>
+          <Totals allocations={allocations} year={year} />
+        </header>
+        <Tilegram allocations={allocations} year={year} {...otherTilegramProps} />
+      </div>
     </div>
   );
 };
