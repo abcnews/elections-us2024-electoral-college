@@ -60,7 +60,7 @@ const STORY_MARKERS = [
 
 const SNAPSHOTS_LOCALSTORAGE_KEY = 'eceditorsnapshots';
 
-const Editor: React.FC = () => {
+const Builder: React.FC = () => {
   const initialUrlParamProps = useMemo(
     () => ({
       ...INITIAL_GRAPHIC_PROPS,
@@ -490,4 +490,4 @@ const Editor: React.FC = () => {
   );
 };
 
-export default Editor;
+export default Builder;
