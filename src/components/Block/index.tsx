@@ -18,84 +18,14 @@ const Block: React.FC<BlockProps> = ({ panels }) => {
     setGraphicProps(graphicProps);
   }, []);
 
-  useLayoutEffect(() => {
-    const graphicEl = graphicRef.current;
-
-    if (!graphicEl) {
-      return;
-    }
-
-    const mediaEl = graphicEl.parentElement;
-
-    if (!mediaEl) {
-      return;
-    }
-
-    const blockEl = mediaEl.parentElement;
-
-    if (!blockEl) {
-      return;
-    }
-
-    if (window.navigator.userAgent.indexOf('Trident/') > -1) {
-      mediaEl.setAttribute('data-ie', '');
-    }
-
-    let recentTops: number[] = [];
-    let lastUpdateTime: number = 0;
-    let prevStage: string = 'initial';
-
-    const onUpdate = ({ fixedHeight }) => {
-      const updateTime = Date.now();
-      const { top, bottom } = blockEl.getBoundingClientRect();
-      const stage = top > 0 ? 'above' : bottom < fixedHeight ? 'below' : 'during';
-
-      if (stage !== prevStage) {
-        if (prevStage !== 'initial' && mediaEl.animate) {
-          const catchupDistance = top - recentTops[0];
-          const catchupDuration = 250 / recentTops.length;
-
-          mediaEl.animate([{ transform: `translate3D(0, ${catchupDistance}px, 0)` }, { transform: 'none' }], {
-            duration: catchupDuration,
-            easing: 'cubic-bezier(0.22,0.61,0.36,1)',
-            fill: 'both',
-            iterations: 1
-          });
-
-          recentTops = [];
-        }
-      } else {
-        // Retain last 3 top values (resets when stage changes or 30ms passes between frames)
-        if (updateTime - lastUpdateTime > 30) {
-          recentTops = [];
-        } else if (recentTops.length >= 3) {
-          recentTops.shift();
-        }
-
-        recentTops.push(top);
-      }
-
-      prevStage = stage;
-      lastUpdateTime = updateTime;
-    };
-
-    subscribe(onUpdate);
-
-    return () => unsubscribe(onUpdate);
-  }, [graphicRef.current]);
-
   return (
-    <div className={styles.root}>
-      <ScrollytellerWebComponent
-        panels={panels.map(panel => ({ ...panel, align: 'left' }))}
-        styles={styles}
-        onMarker={onMarker}
-      >
-        <div ref={graphicRef} className={styles.graphic}>
-          <Graphic {...graphicProps} />
-        </div>
-      </ScrollytellerWebComponent>
-    </div>
+    <ScrollytellerWebComponent
+      panels={panels.map(panel => ({ ...panel, align: 'left' }))}
+      styles={styles}
+      onMarker={onMarker}
+    >
+      <Graphic {...graphicProps} />
+    </ScrollytellerWebComponent>
   );
 };
 

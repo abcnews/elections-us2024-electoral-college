@@ -1,10 +1,15 @@
 @import '../../constants.scss';
 
 .root {
-  max-width: 850px;
-  max-height: 80dvh;
   margin: 0 auto;
-  aspect-ratio: 1/1;
+  aspect-ratio: 10/8.8;
+  height: 100%;
+  width: unset;
+
+  @container (max-aspect-ratio:10/8.8) {
+    width: 100%;
+    height: auto;
+  }
 }
 
 [data-mount][id^='ecgraphic']:global(.u-pull) > .root {

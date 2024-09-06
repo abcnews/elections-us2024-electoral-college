@@ -21,7 +21,7 @@ export default function ScrollytellerWebComponent({ children, panels, styles, on
     if (!current) return;
     current.panels = panels;
     current.layout = { align: 'left' };
-    current.addEventListener('load', () => setScrollyPortal(current.graphicRootEl));
+    current.addEventListener('load', e => setScrollyPortal(e.detail));
     current.addEventListener('marker', e => onMarker(e.detail));
   }, [scrollyEl]);
 

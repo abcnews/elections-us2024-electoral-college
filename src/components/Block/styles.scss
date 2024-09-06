@@ -1,36 +1,9 @@
 @import '../../constants.scss';
 
-.root {
-  // --color-panel-background: rgba(255, 255, 255, .8);
-  // --color-panel-text: black;
-  // --color-panel-filter: blur(0.3125rem);
-  // --color-panel-opacity: 0.75;
-  // --color-panel-border: 1px solid var(--tint-5);
-}
-
 .scrollyteller {
   background-color: inherit;
   clip: rect(0, auto, auto, 0);
 }
-
-// .graphic {
-//   margin: 0 auto;
-//   padding: 1rem 0 0;
-//   width: calc(100% - 2rem);
-//   max-width: 57.5rem;
-
-//   @media (min-width: 61.25rem) {
-//     margin-left: 40%;
-//     padding: 7.5vw 0 0;
-//     max-width: 55vw;
-//   }
-
-//   @media (min-width: 100rem) {
-//     margin-left: 50%;
-//     padding: 7.5vw 0 0;
-//     max-width: 40vw;
-//   }
-// }
 
 .state {
   margin: 0 0.05em;
