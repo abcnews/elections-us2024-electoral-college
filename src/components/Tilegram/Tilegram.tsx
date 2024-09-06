@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import mapData from './generated__mapdata.json';
 import styles from './styles.scss';
-import { Allocations, ElectionYear, Focus, Focuses } from '../../constants';
+import { Allocation, ALLOCATIONS, Allocations, ElectionYear, Focus, Focuses } from '../../constants';
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
 import { STATES_LABELS } from './data';
@@ -25,6 +25,16 @@ export default function Tilegram(props: TilegramProps) {
 
   const hasFocuses = focuses && Object.values(focuses).some(value => value === Focus.Yes);
 
+  // When any state has been allocated, change the style from None to Unallocated.
+  const hasAllocations =
+    typeof allocations !== 'undefined' && Object.values(allocations).some(allocation => allocation !== 'n');
+  const newAllocations = { ...allocations };
+  if (hasAllocations) {
+    Object.entries(newAllocations).forEach(([key, value]) => {
+      newAllocations[key] = value === Allocation.None ? Allocation.Unallocated : value;
+    });
+  }
+
   function clickHandler({ target }) {
     if (!onClick || target.nodeName !== 'path') {
       return;
@@ -42,7 +52,7 @@ export default function Tilegram(props: TilegramProps) {
             <TilegramHexes
               id="2024"
               data={us2024}
-              allocations={allocations}
+              allocations={newAllocations}
               focuses={hasFocuses && focuses}
               hexBorders={hexborders}
               hexflip={hexflip}
@@ -54,7 +64,7 @@ export default function Tilegram(props: TilegramProps) {
             <TilegramHexes
               id="2020"
               data={us2020}
-              allocations={allocations}
+              allocations={newAllocations}
               focuses={hasFocuses && focuses}
               hexBorders={hexborders}
               hexflip={hexflip}

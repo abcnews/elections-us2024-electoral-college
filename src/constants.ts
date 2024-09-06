@@ -352,9 +352,9 @@ export enum Allocation {
   None = 'n',
   Dem = 'd',
   LikelyDem = 's',
-  Tossup = 'u',
   LikelyGOP = 'e',
-  GOP = 'r'
+  GOP = 'r',
+  Unallocated = 'u'
 }
 
 export const ALLOCATIONS: string[] = Object.keys(Allocation).map(x => Allocation[x]);
@@ -727,10 +727,10 @@ export const PRESETS: Presets = {
     },
     focuses: {}
   },
-  tossup: {
-    name: 'Tossup',
+  Unallocated: {
+    name: 'Unallocated',
     allocations: GROUP_IDS.reduce((allocations, groupID) => {
-      allocations[groupID] = Allocation.Tossup;
+      allocations[groupID] = Allocation.Unallocated;
 
       return allocations;
     }, {}),

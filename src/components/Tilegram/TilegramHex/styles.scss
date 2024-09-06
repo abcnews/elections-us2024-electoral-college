@@ -4,7 +4,7 @@
   --allocation-e: #{$color_LikelyGOP};
   --allocation-d: #{$color_Dem};
   --allocation-s: #{$color_LikelyDem};
-  --allocation-u: #{$color_Tossup};
+  --allocation-u: #{$color_Unallocated};
   --allocation-n: white;
 }
 .hex {
@@ -79,23 +79,4 @@
 .defocusedgrey {
   fill: #ebebeb;
   --allocation-n: rgb(74, 74, 74);
-}
-
-.state {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 1px;
-  transition: stroke-width 0.2s;
-}
-
-.state-hidden {
-  opacity: 0;
-}
-.state-focused {
-  stroke-width: 2px;
-  stroke: black;
-}
-
-.state-allocation-n {
-  stroke: #989494;
 }

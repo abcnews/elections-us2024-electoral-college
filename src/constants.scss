@@ -2,7 +2,7 @@
 $Allocation_None: 'n';
 $Allocation_Dem: 'd';
 $Allocation_LikelyDem: 's';
-$Allocation_Tossup: 'u';
+$Allocation_Unallocated: 'u';
 $Allocation_LikelyGOP: 'e';
 $Allocation_GOP: 'r';
 
@@ -18,9 +18,9 @@ $color_Text: $color_Black;
 $color_BG: $color_White;
 $color_None: $color_White;
 $color_Dem: #006ac7;
-$color_LikelyDem: #94cdff;
-$color_Tossup: $color_Grey;
-$color_LikelyGOP: #ffa8aa;
+$color_LikelyDem: #a0c3f3;
+$color_Unallocated: $color_Grey;
+$color_LikelyGOP: #f5b7b2;
 $color_GOP: #c21718;
 $color_No: $color_White;
 $color_Yes: $color_Black;

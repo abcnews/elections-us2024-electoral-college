@@ -3,7 +3,7 @@ import styles from './styles.scss';
 
 export enum IllustrationName {
   Preview = 'preview',
-  Tossup = 'tossup',
+  Unallocated = 'Unallocated',
   TrumpFlip = 'trumpflip',
   BidenFlip = 'bidenflip',
   BidenAhead = 'bidenahead',

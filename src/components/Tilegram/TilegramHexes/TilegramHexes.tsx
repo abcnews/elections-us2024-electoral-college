@@ -16,11 +16,19 @@ export function TilegramHexes({ id, data, allocations, focuses, hexBorders, hexf
     focused: focuses && focuses[state] === Focus.Yes
   }));
 
-  // pre-sort state borders because we can't use z-index in SVG. Focused borders to the top
+  // pre-sort state borders because we can't use z-index in SVG.
   if (focuses) {
+    // Focused borders to the top
     sortedStateBorders.sort((a, b) => {
       if (a.focused && b.defocused) return 1;
       if (a.defocused && b.focused) return -1;
+      return 0;
+    });
+  } else {
+    // sort grey borders underneath white ones
+    sortedStateBorders.sort((a, b) => {
+      if (a.allocation !== 'u' && b.allocation === 'u') return 1;
+      if (a.allocation === 'u' && b.allocation !== 'u') return -1;
       return 0;
     });
   }

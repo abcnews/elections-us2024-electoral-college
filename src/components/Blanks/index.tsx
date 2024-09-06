@@ -126,7 +126,7 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
     // }
 
     // Strategy 5)
-    // Cycle between relative incumbent, challenger and Tossup
+    // Cycle between relative incumbent, challenger and Unallocated
     const relativeIncumbentAllocation =
       PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupId] || Allocation.Dem;
     const relativeChallengerAllocation =
@@ -136,7 +136,7 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
         nextAudienceAllocations[groupId] = relativeChallengerAllocation;
         break;
       case relativeChallengerAllocation:
-        nextAudienceAllocations[groupId] = Allocation.Tossup;
+        nextAudienceAllocations[groupId] = Allocation.Unallocated;
         break;
       default:
         nextAudienceAllocations[groupId] = relativeIncumbentAllocation;
@@ -169,7 +169,7 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
         const stateID = getStateIDForGroupID(groupId);
 
         allocations[groupId] =
-          allocation === Allocation.Dem || allocation === Allocation.GOP ? allocation : Allocation.Tossup;
+          allocation === Allocation.Dem || allocation === Allocation.GOP ? allocation : Allocation.Unallocated;
         focuses[stateID] = allocation === Allocation.Dem || allocation === Allocation.GOP ? Focus.No : Focus.Yes;
       });
 

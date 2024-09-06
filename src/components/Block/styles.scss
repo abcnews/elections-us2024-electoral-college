@@ -28,8 +28,8 @@
   background-color: $color_LikelyDem;
 }
 
-.state[data-main-allocation='#{$Allocation_Tossup}'] {
-  background-color: $color_Tossup;
+.state[data-main-allocation='#{$Allocation_Unallocated}'] {
+  background-color: $color_Unallocated;
 }
 
 .state[data-main-allocation='#{$Allocation_LikelyGOP}'] {
@@ -50,7 +50,7 @@
 
 .state[data-main-allocation='#{$Allocation_Dem}'],
 .state[data-main-allocation='#{$Allocation_GOP}'],
-.state[data-main-allocation='#{$Allocation_Tossup}'] {
+.state[data-main-allocation='#{$Allocation_Unallocated}'] {
   color: $color_BG;
 }
 

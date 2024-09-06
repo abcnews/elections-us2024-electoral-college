@@ -151,8 +151,9 @@ const Builder: React.FC = () => {
       const allocationIndex = ALLOCATIONS.indexOf(allocation);
 
       // Cycle to the next Allocation in the enum (or the first if we don't recognise it)
+      // Don't cycle to "Unallocated", this is only used for styling
       allocationsToMixin[groupId] = ALLOCATIONS[
-        allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
+        allocationIndex === ALLOCATIONS.length - 2 ? 0 : allocationIndex + 1
       ] as Allocation;
 
       mixinGraphicProps({ allocations: allocationsToMixin });

@@ -14,7 +14,7 @@ const animationStyles = {
 };
 
 function getSimplifiedAllocation(allocation) {
-  if ([Allocation.None, Allocation.Tossup].includes(allocation)) return Allocation.None;
+  if ([Allocation.None, Allocation.Unallocated].includes(allocation)) return Allocation.None;
   if ([Allocation.GOP, Allocation.LikelyGOP].includes(allocation)) return Allocation.GOP;
   if ([Allocation.Dem, Allocation.LikelyDem].includes(allocation)) return Allocation.Dem;
   return null;

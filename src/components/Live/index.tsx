@@ -19,7 +19,7 @@ interface LiveProps {
 
 const ALLOCATIONS_CANDIDATES = {
   ...ELECTION_YEARS_ALLOCATIONS_CANDIDATES[DEFAULT_ELECTION_YEAR],
-  [Allocation.Tossup]: 'Other'
+  [Allocation.Unallocated]: 'Other'
 };
 
 const MONTH_SHORTNAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -85,8 +85,8 @@ const formatTimeUpdated = (time: Date) => {
   const hours = time.getHours();
 
   return isToday(time)
-    ? `${hours % 12 || 12}:${String(time.getMinutes()).padStart(2, '0')}${
-        hours >= 12 ? 'p' : 'a'
-      }m ${timeString.substring(timeString.indexOf('(')).replace(/([a-z\s]+)/g, '')}`
+    ? `${hours % 12 || 12}:${String(time.getMinutes()).padStart(2, '0')}${hours >= 12 ? 'p' : 'a'}m ${timeString
+        .substring(timeString.indexOf('('))
+        .replace(/([a-z\s]+)/g, '')}`
     : `${time.getDate()} ${MONTH_SHORTNAMES[time.getMonth()]}`;
 };
