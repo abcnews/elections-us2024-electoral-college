@@ -20,17 +20,19 @@ export type TilegramProps = {
 
 export default function Tilegram(props: TilegramProps) {
   const { allocations, focuses, onClick, hexborders, hexflip, hexani } = props;
-
+  if (typeof focuses === 'undefined' || typeof allocations === 'undefined') return null;
   const year = props.year === 2024 ? 2024 : 2020;
 
   const hasFocuses = focuses && Object.values(focuses).some(value => value === Focus.Yes);
 
   // When any state has been allocated, change the style from None to Unallocated.
-  const hasAllocations =
-    typeof allocations !== 'undefined' && Object.values(allocations).some(allocation => allocation !== 'n');
+  const hasAllocations = Object.values(allocations).some(allocation => allocation !== 'n');
   const newAllocations = { ...allocations };
   if (hasAllocations) {
     Object.entries(newAllocations).forEach(([key, value]) => {
+      // If focused, leave the original style/don't turn unallocated states grey
+      const isFocused = focuses[key.replace(/_\d/, '')] !== 'n';
+      if (isFocused) return;
       newAllocations[key] = value === Allocation.None ? Allocation.Unallocated : value;
     });
   }
