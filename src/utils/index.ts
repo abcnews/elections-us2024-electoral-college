@@ -18,6 +18,7 @@ import {
   DEFAULT_RELATIVE_ELECTION_YEAR
 } from '../constants';
 import { GraphicProps } from '../components/Graphic';
+import { decode, encode } from '@abcnews/base-36-text';
 
 export const votesForGroups = (groups: Group[]) => {
   return groups.reduce((memo, group) => {
@@ -79,7 +80,7 @@ export const determineIfAnyStateAllocationsAreMade = (stateID: string, allocatio
 export const determineIfMostStateAllocationsAreMade = (stateID: string, allocations: Allocations) =>
   determineIfProportionOfStateAllocationsMeetCondition(0.5, stateID, allocations, determineIfAllocationIsMade);
 
-function decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
+function _decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
   code = typeof code === 'string' ? code.replace(/(\w)(\d+)/g, (_, char, repeated) => char.repeat(+repeated)) : code;
   code = code && code.length === keys.length ? code : defaultValue.repeat(keys.length);
 
@@ -92,7 +93,7 @@ function decode<Dict>(code: string, keys: string[], possibleValues: string[], de
   }, {} as Dict);
 }
 
-function encode<Dict>(dict: Dict, keys: string[], possibleValues: string[], defaultValue: string): string {
+function _encode<Dict>(dict: Dict, keys: string[], possibleValues: string[], defaultValue: string): string {
   return keys
     .reduce((memo: [string, number][], key, index) => {
       const value = possibleValues.indexOf(dict[key]) > -1 ? dict[key] : defaultValue;
@@ -111,14 +112,14 @@ function encode<Dict>(dict: Dict, keys: string[], possibleValues: string[], defa
 }
 
 export const decodeAllocations = (code: string): Allocations =>
-  decode<Allocations>(code, GROUP_IDS, ALLOCATIONS, Allocation.None);
+  _decode<Allocations>(code, GROUP_IDS, ALLOCATIONS, Allocation.None);
 
 export const encodeAllocations = (allocations: Allocations): string =>
-  encode<Allocations>(allocations, GROUP_IDS, ALLOCATIONS, Allocation.None);
+  _encode<Allocations>(allocations, GROUP_IDS, ALLOCATIONS, Allocation.None);
 
-export const decodeFocuses = (code: string): Focuses => decode<Focuses>(code, STATE_IDS, FOCUSES, Focus.No);
+export const decodeFocuses = (code: string): Focuses => _decode<Focuses>(code, STATE_IDS, FOCUSES, Focus.No);
 
-export const encodeFocuses = (focuses: Focuses): string => encode<Focuses>(focuses, STATE_IDS, FOCUSES, Focus.No);
+export const encodeFocuses = (focuses: Focuses): string => _encode<Focuses>(focuses, STATE_IDS, FOCUSES, Focus.No);
 
 export const alternatingCaseToGraphicProps = (alternatingCase: string): GraphicProps => {
   const graphicProps = acto(alternatingCase) as any;
@@ -133,6 +134,7 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string): GraphicP
   graphicProps.hexborders = !!graphicProps.hexborders;
   graphicProps.hexflip = graphicProps.hexflip;
   graphicProps.hexani = graphicProps.hexani;
+  graphicProps.addremoves = graphicProps.addremoves ? JSON.parse(decode(graphicProps.addremoves)) : {};
 
   return graphicProps as GraphicProps;
 };
@@ -145,6 +147,9 @@ export const graphicPropsToAlternatingCase = (graphicProps, defaultGraphicProps?
     }
 
     const value = graphicProps[key];
+    if (typeof value === 'undefined' || value === null) {
+      return alternatingCase;
+    }
 
     // We never export defaults
     if (defaultGraphicProps && defaultGraphicProps[key] === value) {
@@ -161,6 +166,8 @@ export const graphicPropsToAlternatingCase = (graphicProps, defaultGraphicProps?
       alternatingCase += value ? 'true' : 'false';
     } else if (value === null) {
       alternatingCase += 'null';
+    } else if (typeof value === 'object') {
+      alternatingCase += encode(JSON.stringify(value));
     } else {
       alternatingCase += value;
     }
@@ -168,7 +175,8 @@ export const graphicPropsToAlternatingCase = (graphicProps, defaultGraphicProps?
     return alternatingCase;
   }, '');
 
-export const urlQueryToGraphicProps = (urlQuery: string) => {
+/** This was used to save snapshots, but has been replaced by the ACTO string */
+export const legactyUrlQueryToGraphicProps = (urlQuery: string) => {
   if (urlQuery.length < 2) {
     return null;
   }
@@ -200,37 +208,11 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
   if (typeof graphicProps.tappableLayer === 'string') {
     graphicProps.tappableLayer = +graphicProps.tappableLayer;
   }
+  if (typeof graphicProps.addremoves === 'string') {
+    graphicProps.addremoves = JSON.stringify(graphicProps.addremoves);
+  }
   return graphicProps;
 };
-
-export const graphicPropsToUrlQuery = (graphicProps, defaultGraphicProps?): string =>
-  Object.keys(graphicProps).reduce((urlQuery, key) => {
-    // We never export tappableLayer
-    if (key === 'tappableLayer') {
-      return urlQuery;
-    }
-
-    const value = graphicProps[key];
-
-    // We never export defaults
-    if (defaultGraphicProps && defaultGraphicProps[key] === value) {
-      return urlQuery;
-    }
-
-    urlQuery += (urlQuery.length > 0 ? '&' : '?') + key + '=';
-
-    if (key === 'allocations') {
-      urlQuery += encodeAllocations(value);
-    } else if (key === 'focuses') {
-      urlQuery += encodeFocuses(value);
-    } else if (typeof value === 'boolean') {
-      urlQuery += value ? 'true' : 'false';
-    } else {
-      urlQuery += value;
-    }
-
-    return urlQuery;
-  }, '');
 
 export const getPartyIdForAllocation = (allocation: Allocation): PartyId =>
   allocation === Allocation.Dem ? 'dem' : allocation === Allocation.GOP ? 'gop' : 'oth';

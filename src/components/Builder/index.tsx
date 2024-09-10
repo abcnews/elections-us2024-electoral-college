@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Allocation,
   Allocations,
@@ -19,8 +19,7 @@ import { loadData } from '../../data';
 import {
   alternatingCaseToGraphicProps,
   graphicPropsToAlternatingCase,
-  urlQueryToGraphicProps,
-  graphicPropsToUrlQuery,
+  legactyUrlQueryToGraphicProps,
   liveResultsToGraphicProps
 } from '../../utils';
 import type { GraphicProps } from '../Graphic';
@@ -30,11 +29,7 @@ import Icon from '../Icon';
 import tilegramStyles from '../Tilegram/styles.scss';
 import totalsStyles from '../Totals/styles.scss';
 import styles from './styles.scss';
-
-export enum TappableLayer {
-  Delegates,
-  States
-}
+import { Dialog, DialogDivider, DialogHeader, DialogLabel } from './Dialog/dialog';
 
 const COMPONENTS_STYLES = {
   Graphic: graphicStyles,
@@ -44,7 +39,8 @@ const COMPONENTS_STYLES = {
 
 const INITIAL_GRAPHIC_PROPS = {
   allocations: { ...INITIAL_ALLOCATIONS },
-  focuses: { ...INITIAL_FOCUSES }
+  focuses: { ...INITIAL_FOCUSES },
+  addremoves: {}
 };
 
 const STORY_MARKERS = [
@@ -60,26 +56,38 @@ const STORY_MARKERS = [
 
 const SNAPSHOTS_LOCALSTORAGE_KEY = 'eceditorsnapshots';
 
+function getSnapshots() {
+  const snapshots = JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}');
+  Object.keys(snapshots).forEach(name => {
+    if (snapshots[name].startsWith('?')) {
+      console.info('- migrating legacy snapshot', name);
+      snapshots[name] = graphicPropsToAlternatingCase(legactyUrlQueryToGraphicProps(snapshots[name]));
+    }
+  });
+  return snapshots;
+}
+
 const Builder: React.FC = () => {
   const initialUrlParamProps = useMemo(
     () => ({
       ...INITIAL_GRAPHIC_PROPS,
       ...DEFAULT_GRAPHIC_PROPS,
-      ...urlQueryToGraphicProps(String(window.location.search))
+      ...alternatingCaseToGraphicProps(window.location.hash.slice(1))
     }),
     []
   );
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
   const [focuses, setFocuses] = useState<Focuses>(initialUrlParamProps.focuses);
+  const [addremoves, setAddremoves] = useState(initialUrlParamProps.addremoves);
   const [year, setYear] = useState<ElectionYear>(initialUrlParamProps.year);
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [counting, setCounting] = useState(initialUrlParamProps.counting);
   const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders);
   const [hexflip, setHexflip] = useState(initialUrlParamProps.hexflip);
   const [hexani, setHexani] = useState(initialUrlParamProps.hexani);
-  const [tappableLayer, setTappableLayer] = useState(TappableLayer.Delegates);
-  const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
-
+  const [snapshots, setSnapshots] = useState(getSnapshots());
+  const [lastTapped, setLastTapped] = useState(null);
+  const lastTappedHexCode = [lastTapped?.groupId, lastTapped?.hexId].join();
   const createSnapshot = (name: string, urlQuery: string) => {
     const nextSnapshots = {
       [name]: urlQuery,
@@ -121,6 +129,7 @@ const Builder: React.FC = () => {
       ...replacement.focuses
     });
     setYear(replacement.year || DEFAULT_GRAPHIC_PROPS.year);
+    setAddremoves(replacement.addremoves || DEFAULT_GRAPHIC_PROPS.addremoves);
   };
 
   const importMarker = (marker: string) => {
@@ -131,6 +140,7 @@ const Builder: React.FC = () => {
     setHexBorders(graphicProps.hexborders || DEFAULT_GRAPHIC_PROPS.hexborders);
     setHexflip(graphicProps.hexflip || DEFAULT_GRAPHIC_PROPS.hexflip);
     setHexani(graphicProps.hexani || DEFAULT_GRAPHIC_PROPS.hexani);
+    setAddremoves(graphicProps.addremoves || DEFAULT_GRAPHIC_PROPS.addremoves);
   };
 
   const loadLiveResults = () => {
@@ -142,35 +152,8 @@ const Builder: React.FC = () => {
     });
   };
 
-  function onClick({ stateId, groupId, ...args }) {
-    if (tappableLayer === TappableLayer.Delegates) {
-      // toggle states
-      const allocationsToMixin: Allocations = {};
-
-      const allocation = allocations[groupId];
-      const allocationIndex = ALLOCATIONS.indexOf(allocation);
-
-      // Cycle to the next Allocation in the enum (or the first if we don't recognise it)
-      // Don't cycle to "Unallocated", this is only used for styling
-      allocationsToMixin[groupId] = ALLOCATIONS[
-        allocationIndex === ALLOCATIONS.length - 2 ? 0 : allocationIndex + 1
-      ] as Allocation;
-
-      mixinGraphicProps({ allocations: allocationsToMixin });
-    }
-
-    if (tappableLayer === TappableLayer.States) {
-      /// mixins
-      const focusesToMixin: Focuses = {};
-
-      const focus = focuses[stateId];
-      const focusIndex = FOCUSES.indexOf(focus);
-
-      // Cycle to the next Focus in the enum (or the first if we don't recognise it)
-      focusesToMixin[stateId] = FOCUSES[focusIndex === FOCUSES.length - 1 ? 0 : focusIndex + 1] as Focus;
-
-      mixinGraphicProps({ focuses: focusesToMixin });
-    }
+  function onClick(lastTapped) {
+    setLastTapped(lastTapped);
   }
 
   const graphicProps = useMemo(
@@ -183,31 +166,28 @@ const Builder: React.FC = () => {
       counting,
       hexborders: hexBorders,
       hexflip,
-      hexani
+      hexani,
+      addremoves: Object.keys(addremoves).length > 0 ? addremoves : undefined
     }),
-    [allocations, focuses, year, relative, counting, hexBorders, hexflip, hexani]
+    [allocations, focuses, year, relative, counting, hexBorders, hexflip, hexani, addremoves]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(
     () => graphicPropsToAlternatingCase(graphicProps, DEFAULT_GRAPHIC_PROPS),
     [graphicProps]
   );
-  const graphicPropsAsUrlQuery = useMemo(
-    () => graphicPropsToUrlQuery(graphicProps, DEFAULT_GRAPHIC_PROPS),
-    [graphicProps]
-  );
-
-  const fallbackAutomationBaseURL = useMemo(
-    () =>
-      `https://fallback-automation.drzax.now.sh/api?url=${encodeURIComponent(
-        String(document.location.href).split('?')[0] + graphicPropsAsUrlQuery
-      )}&width=600&selector=.`,
-    [graphicPropsAsUrlQuery]
-  );
 
   useEffect(() => {
-    history.replaceState(graphicProps, document.title, graphicPropsAsUrlQuery);
-  }, [graphicPropsAsUrlQuery]);
+    history.replaceState(graphicProps, document.title, `#${graphicPropsAsAlternatingCase}`);
+  }, [graphicPropsAsAlternatingCase]);
+
+  function closeDialog() {
+    setLastTapped(null);
+  }
+
+  function closeDialogNextTick() {
+    setTimeout(closeDialog, 100);
+  }
 
   return (
     <div className={styles.root}>
@@ -217,33 +197,6 @@ const Builder: React.FC = () => {
         </div>
       </div>
       <div className={styles.controls}>
-        <label>Active layer</label>
-        <div className={styles.flexRow}>
-          <span>
-            <label>
-              <input
-                type="radio"
-                name="tappableLayer"
-                value={TappableLayer.Delegates}
-                checked={TappableLayer.Delegates === tappableLayer}
-                onChange={() => setTappableLayer(TappableLayer.Delegates)}
-              ></input>
-              Assigned delegates
-            </label>
-          </span>
-          <span>
-            <label>
-              <input
-                type="radio"
-                name="tappableLayer"
-                value={TappableLayer.States}
-                checked={TappableLayer.States === tappableLayer}
-                onChange={() => setTappableLayer(TappableLayer.States)}
-              ></input>
-              Focused states
-            </label>
-          </span>
-        </div>
         <label>
           Current year <small>(set candidate names &amp; sides)</small>
         </label>
@@ -442,7 +395,7 @@ const Builder: React.FC = () => {
                 return alert(`Can't overwrite existing snapshot`);
               }
 
-              createSnapshot(name, graphicPropsAsUrlQuery);
+              createSnapshot(name, graphicPropsAsAlternatingCase);
             }}
           >
             <Icon name="add" />
@@ -465,7 +418,7 @@ const Builder: React.FC = () => {
                 href={snapshots[name]}
                 onClick={event => {
                   event.preventDefault();
-                  replaceGraphicProps(urlQueryToGraphicProps(snapshots[name]));
+                  replaceGraphicProps(alternatingCaseToGraphicProps(snapshots[name]));
                 }}
               >
                 {name}
@@ -473,20 +426,72 @@ const Builder: React.FC = () => {
             </li>
           ))}
         </ul>
-        <label>Static image downloads</label>
-        <ul>
-          {Object.keys(COMPONENTS_STYLES).map(key => (
-            <li key={key}>
-              <a
-                href={`${fallbackAutomationBaseURL}${encodeURIComponent(COMPONENTS_STYLES[key].root)}`}
-                download={`fallback-${key}-${graphicPropsAsAlternatingCase}.png`}
-              >
-                {key}
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
+      {lastTapped && (
+        <Dialog onClose={closeDialog} position={[lastTapped.clientX, lastTapped.clientY]}>
+          <DialogHeader>{lastTapped.groupId}</DialogHeader>
+
+          {Object.entries(Allocation)
+            .slice(0, -1)
+            .map(([name, value]) => (
+              <DialogLabel>
+                <input
+                  type="radio"
+                  name="menu-allocation"
+                  value={value}
+                  checked={allocations[lastTapped.groupId] === value}
+                  onChange={() => {
+                    setAllocations({ ...allocations, [lastTapped.groupId]: value });
+                    closeDialogNextTick();
+                  }}
+                ></input>
+                {name}
+              </DialogLabel>
+            ))}
+
+          <DialogDivider />
+
+          <DialogLabel>
+            <input
+              type="checkbox"
+              checked={focuses[lastTapped.stateId] === Focus.Yes}
+              onChange={e => {
+                setFocuses({ ...focuses, [lastTapped.stateId]: e.target.checked ? Focus.Yes : Focus.No });
+                closeDialogNextTick();
+              }}
+            ></input>{' '}
+            Focused
+          </DialogLabel>
+          <DialogHeader>Added/removed hexes</DialogHeader>
+          <DialogLabel>
+            <input
+              type="checkbox"
+              checked={addremoves[lastTappedHexCode] === 'a'}
+              onChange={e => {
+                const checked = e.target.checked;
+                if (checked) setFocuses({ ...focuses, [lastTapped.stateId]: 'y' });
+                setAddremoves({ ...addremoves, [lastTappedHexCode]: checked ? 'a' : undefined });
+                closeDialogNextTick();
+              }}
+            ></input>
+            Hex added
+          </DialogLabel>
+          <DialogLabel>
+            <input
+              type="checkbox"
+              checked={addremoves[lastTappedHexCode] === 'r'}
+              onChange={e => {
+                const checked = e.target.checked;
+                if (checked) setFocuses({ ...focuses, [lastTapped.stateId]: 'y' });
+                setAddremoves({ ...addremoves, [lastTappedHexCode]: checked ? 'r' : undefined });
+                closeDialogNextTick();
+              }}
+            ></input>
+            Hex removed
+          </DialogLabel>
+          <DialogDivider />
+        </Dialog>
+      )}
     </div>
   );
 };

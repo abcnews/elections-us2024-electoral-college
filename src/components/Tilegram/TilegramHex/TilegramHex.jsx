@@ -3,8 +3,9 @@ import styles from './styles.scss';
 import { Allocation, ALLOCATIONS, Focus } from '../../../constants';
 import { getGroupIDForStateIDAndDelegateIndex } from '../../../utils';
 import { getStyleDelays } from '../util';
-const HEX_SHAPE =
-  'M14.722431864335457,-8.5 14.722431864335457,8.5 0,17 -14.722431864335457,8.5 -14.722431864335457,-8.5 0,-17z';
+
+import data from '../generated__mapdata.json';
+const { zeroHexD } = data;
 
 /** look up the corresponding css class for the given hexflip animation */
 const animationStyles = {
@@ -20,7 +21,7 @@ function getSimplifiedAllocation(allocation) {
   return null;
 }
 
-function _TilegramHexInner({ coords, hexBorders, hexflip, hexani, allocation, focus, state, groupId }) {
+function _TilegramHexInner({ coords, index, hexBorders, hexflip, hexani, allocation, focus, state, groupId }) {
   const [transitionFrom, setTransitionFrom] = useState(allocation);
   const [oldAllocation, setOldAllocation] = useState(allocation);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -53,6 +54,7 @@ function _TilegramHexInner({ coords, hexBorders, hexflip, hexani, allocation, fo
           .join(' ')}
         data-state={state}
         data-delegate={groupId}
+        data-index={index}
         style={{
           '--from': `var(--allocation-${transitionFrom})`,
           '--to': `var(--allocation-${allocation})`,
@@ -60,7 +62,7 @@ function _TilegramHexInner({ coords, hexBorders, hexflip, hexani, allocation, fo
         }}
         fill="#eee"
         stroke="#888"
-        d={HEX_SHAPE}
+        d={zeroHexD}
       />
     </g>
   );

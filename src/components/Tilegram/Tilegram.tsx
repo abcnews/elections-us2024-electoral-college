@@ -5,6 +5,7 @@ import { Allocation, ALLOCATIONS, Allocations, ElectionYear, Focus, Focuses } fr
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
 import { STATES_LABELS } from './data';
+import AddRemoves from './AddRemoves/AddRemoves';
 const { us2020, us2024 } = mapData;
 
 export type TilegramProps = {
@@ -19,7 +20,7 @@ export type TilegramProps = {
 };
 
 export default function Tilegram(props: TilegramProps) {
-  const { allocations, focuses, onClick, hexborders, hexflip, hexani } = props;
+  const { allocations, focuses, onClick, hexborders, hexflip, hexani, addremoves } = props;
   if (typeof focuses === 'undefined' || typeof allocations === 'undefined') return null;
   const year = props.year === 2024 ? 2024 : 2020;
 
@@ -37,14 +38,15 @@ export default function Tilegram(props: TilegramProps) {
     });
   }
 
-  function clickHandler({ target }) {
+  function clickHandler({ target, clientX, clientY }) {
     if (!onClick || target.nodeName !== 'path') {
       return;
     }
     const stateId = target.parentNode.parentNode.dataset.state;
     const groupId = target.dataset.delegate;
+    const hexId = target.dataset.index;
 
-    onClick({ groupId, stateId });
+    onClick({ groupId, stateId, clientX, clientY, hexId });
   }
   return (
     <>
@@ -73,6 +75,9 @@ export default function Tilegram(props: TilegramProps) {
               hexani={hexani}
               isVisible={year !== 2024}
             />
+          </g>
+          <g id="addremoves">
+            <AddRemoves addremoves={addremoves} allocations={allocations} data={year === 2024 ? us2024 : us2020} />
           </g>
           <g id="labels">
             <TilegramLabels

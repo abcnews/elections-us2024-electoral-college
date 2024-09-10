@@ -31,6 +31,7 @@
 	"dependencies": {
 		"@abcnews/alternating-case-to-object": "^3.1.1",
 		"@abcnews/base-36-props": "^1.4.0",
+		"@abcnews/base-36-text": "^1.0.1",
 		"@abcnews/env-utils": "^4.0.0",
 		"@abcnews/google-doc-scrollyteller": "^1.0.1",
 		"@abcnews/mount-utils": "^3.0.0",

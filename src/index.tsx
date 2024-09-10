@@ -57,7 +57,7 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
       const { state, hide } = acto(getMountValue(mount));
 
       if (typeof hide === 'boolean' && hide) {
-        return (((mount as unknown) as HTMLElement).style.display = 'none');
+        return ((mount as unknown as HTMLElement).style.display = 'none');
       }
 
       render(<Live stateCode={String(state).toUpperCase()} />, mount);
@@ -85,7 +85,8 @@ whenOdysseyLoaded.then(() => {
     }
 
     const { name } = acto(getMountValue(mount));
-    const isIllustrationName = (name: any): name is IllustrationName => name && Object.values(IllustrationName).includes(name);
+    const isIllustrationName = (name: any): name is IllustrationName =>
+      name && Object.values(IllustrationName).includes(name);
     if (!isIllustrationName(name)) {
       return;
     }
@@ -121,17 +122,4 @@ whenOdysseyLoaded.then(() => {
     mount.classList.add('u-pull');
     render(<Blanks {...blanksProps} />, mount);
   });
-
-  // Fallback exporter
-
-  if (getTier() === TIERS.PREVIEW) {
-    const titleEl = document.querySelector('.Header h1');
-
-    if (titleEl) {
-      (titleEl as HTMLElement).style.cursor = 'copy';
-      titleEl.addEventListener('click', () => {
-        import(/* webpackChunkName: "fallbacks" */ './fallbacks').then(module => module.default(titleEl, null));
-      });
-    }
-  }
 });

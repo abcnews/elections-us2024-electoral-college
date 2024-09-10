@@ -1,5 +1,14 @@
 $color_AlphaGrey: rgba(0, 0, 0, 0.1);
 
+path[data-delegate]:hover {
+  filter: brightness(130%);
+  transition: none;
+
+  &[style*='--to: var(--allocation-n);'] {
+    filter: brightness(90%);
+  }
+}
+
 html {
   box-sizing: border-box;
 }

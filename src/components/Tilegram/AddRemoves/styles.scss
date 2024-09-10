@@ -1,0 +1,13 @@
+.root {
+  pointer-events: none;
+}
+.a {
+  fill: #525252;
+}
+
+// Remove style adds an outline to the hex
+.r {
+  stroke-width: 3px;
+  stroke: white;
+  fill: none;
+}

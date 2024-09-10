@@ -1,0 +1,59 @@
+.dialog {
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  font-family: ABCSans;
+  animation: fadein 0.2s;
+  &::backdrop {
+    animation: fadein 0.2s;
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.menuHeader {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  font-weight: bold;
+}
+.menuItem {
+  display: block;
+  padding: 0.5rem 2rem 0.5rem 0.5rem;
+  cursor: pointer;
+  & + & {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+.menuDivider {
+  border: none;
+  height: 1px;
+  width: 100%;
+  background: black;
+  margin: 0;
+}
+
+input {
+  margin-right: 0.5rem;
+}
+
+.left {
+  border-radius: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.right {
+  border-radius: 0 0.5rem 0.5rem;
+}
