@@ -1,22 +1,26 @@
 import React, { useMemo } from 'react';
 import mapData from './generated__mapdata.json';
 import styles from './styles.scss';
-import { Allocation, ALLOCATIONS, Allocations, ElectionYear, Focus, Focuses } from '../../constants';
+import { Allocation, ALLOCATIONS, Allocations, Focus, Focuses } from '../../constants';
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
 import { STATES_LABELS } from './data';
 import AddRemoves from './AddRemoves/AddRemoves';
 const { us2020, us2024 } = mapData;
 
+export type AddRemoves = {
+  [key: string]: string | undefined;
+};
 export type TilegramProps = {
   allocations?: Allocations;
   focuses?: Focuses;
-  year?: ElectionYear;
-  relative?: ElectionYear | null;
+  year?: number;
+  relative?: number | null;
   hexborders?: boolean;
   hexflip?: string;
   hexani?: string;
-  onClick?: (props: { groupId: string; stateId: string }) => void;
+  addremoves?: AddRemoves;
+  onClick?: (props: { groupId: string; stateId: string; clientX: number; clientY: number; hexId: string }) => void;
 };
 
 export default function Tilegram(props: TilegramProps) {
@@ -77,7 +81,7 @@ export default function Tilegram(props: TilegramProps) {
             />
           </g>
           <g id="addremoves">
-            <AddRemoves addremoves={addremoves} allocations={allocations} data={year === 2024 ? us2024 : us2020} />
+            <AddRemoves addremoves={addremoves} data={year === 2024 ? us2024 : us2020} />
           </g>
           <g id="labels">
             <TilegramLabels

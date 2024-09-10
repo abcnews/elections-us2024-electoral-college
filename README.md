@@ -35,7 +35,6 @@ Under the hood, webpack is building multiple source entry points into many distr
 | `blanks.js`        | `src/blanks.tsx`        | Loads fill-in-the-blanks graphics (with or without live results) into `#ecblanks` mount points                                                                                  | [/blanks/](https://localhost:8000/blanks/)             |
 | `live.js`          | `src/live.tsx`          | Loads a live results dashboard (graphic + all state results modules) into an `#ecalllive` mount point                                                                           | [/live/](https://localhost:8000/live/)                 |
 | `illustrations.js` | `src/illustrations.tsx` | Loads SVG illustrations into `#ecillustration` mount points (as `<iframe>`s, to universally support SVG animations)                                                             | [/illustration/](https://localhost:8000/illustration/) |
-| `doc-block.js`     | `src/doc-block.tsx`     | Parses and loads scrollytellers from available Google Docs `*/pub` document URLs (to allow collaborative scrollyteller production outside our CMS) into an `#ecdb` mount point  | [/doc-block/](https://localhost:8000/doc-block/)       |
 
 All live results data comes from Andrew Kesper's live results service, which may not always be available.
 

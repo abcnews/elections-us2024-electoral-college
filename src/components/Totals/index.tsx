@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import type { Allocations, ElectionYear } from '../../constants';
+import type { Allocations } from '../../constants';
 import { Allocation, DEFAULT_ELECTION_YEAR, ELECTION_YEARS_ALLOCATIONS_CANDIDATES } from '../../constants';
 import { getVoteCountsForAllocations } from '../../utils';
 import styles from './styles.scss';
@@ -16,7 +16,7 @@ function usePrevious(value) {
 }
 
 export type TotalsProps = {
-  year?: ElectionYear;
+  year?: number;
   allocations?: Allocations;
 };
 

@@ -11,7 +11,7 @@ const IconAdd = () => (
   </g>
 );
 
-export default function AddRemoves({ addremoves = {}, allocations, data }) {
+export default function AddRemoves({ addremoves = {}, data }) {
   const graphics = Object.entries(addremoves)
     .filter(([key, style]) => style)
     .map(([key, style]) => {
@@ -29,5 +29,5 @@ export default function AddRemoves({ addremoves = {}, allocations, data }) {
         </g>
       );
     });
-  return graphics;
+  return <>{graphics}</>;
 }

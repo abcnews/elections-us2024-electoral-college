@@ -14,14 +14,15 @@ export function DialogLabel({ children }) {
 }
 
 export function Dialog({ children, onClose, position }) {
-  const dialog = useRef();
-  const [rect, setRect] = useState();
+  const dialog = useRef<HTMLDialogElement | null>(null);
+  const [rect, setRect] = useState<DOMRect | null>(null);
   useEffect(() => {
-    if (!dialog.current) {
+    const element = dialog.current;
+    if (!element) {
       return;
     }
-    dialog.current.showModal();
-    setRect(dialog.current.getBoundingClientRect());
+    element.showModal();
+    setRect(element.getBoundingClientRect());
   }, [dialog]);
 
   return (

@@ -464,7 +464,7 @@ export type Preset = {
   name?: string;
   allocations: Allocations;
   focuses: Focuses;
-  year?: ElectionYear;
+  year?: number;
 };
 
 export type Presets = {
@@ -761,11 +761,9 @@ export const ELECTION_YEARS_ALLOCATIONS_CANDIDATES = {
   }
 };
 
-export type ElectionYear = keyof typeof ELECTION_YEARS_ALLOCATIONS_CANDIDATES;
-
 export const ELECTION_YEARS = Object.keys(ELECTION_YEARS_ALLOCATIONS_CANDIDATES)
   .reverse()
-  .map(x => +x as ElectionYear);
+  .map(x => +x);
 
 export const [DEFAULT_ELECTION_YEAR, DEFAULT_RELATIVE_ELECTION_YEAR] = ELECTION_YEARS;
 

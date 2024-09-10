@@ -10,7 +10,6 @@ import {
   INITIAL_FOCUSES,
   MIXINS,
   PRESETS,
-  ElectionYear,
   ELECTION_YEARS,
   HEX_ANIMATIONS,
   HEX_ANIMATION_STYLES
@@ -30,11 +29,14 @@ import tilegramStyles from '../Tilegram/styles.scss';
 import totalsStyles from '../Totals/styles.scss';
 import styles from './styles.scss';
 import { Dialog, DialogDivider, DialogHeader, DialogLabel } from './Dialog/dialog';
+import { AddRemoves } from '../Tilegram/Tilegram';
 
-const COMPONENTS_STYLES = {
-  Graphic: graphicStyles,
-  Totals: totalsStyles,
-  Tilegram: tilegramStyles
+type LastTapped = {
+  stateId: string;
+  groupId: string;
+  hexId: number;
+  clientX: number;
+  clientY: number;
 };
 
 const INITIAL_GRAPHIC_PROPS = {
@@ -78,15 +80,15 @@ const Builder: React.FC = () => {
   );
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
   const [focuses, setFocuses] = useState<Focuses>(initialUrlParamProps.focuses);
-  const [addremoves, setAddremoves] = useState(initialUrlParamProps.addremoves);
-  const [year, setYear] = useState<ElectionYear>(initialUrlParamProps.year);
+  const [addremoves, setAddremoves] = useState<AddRemoves>(initialUrlParamProps.addremoves);
+  const [year, setYear] = useState<number>(initialUrlParamProps.year);
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [counting, setCounting] = useState(initialUrlParamProps.counting);
   const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders);
   const [hexflip, setHexflip] = useState(initialUrlParamProps.hexflip);
   const [hexani, setHexani] = useState(initialUrlParamProps.hexani);
   const [snapshots, setSnapshots] = useState(getSnapshots());
-  const [lastTapped, setLastTapped] = useState(null);
+  const [lastTapped, setLastTapped] = useState<LastTapped | null>(null);
   const lastTappedHexCode = [lastTapped?.groupId, lastTapped?.hexId].join();
   const createSnapshot = (name: string, urlQuery: string) => {
     const nextSnapshots = {
@@ -162,7 +164,7 @@ const Builder: React.FC = () => {
       allocations,
       focuses,
       year,
-      relative,
+      relative: relative,
       counting,
       hexborders: hexBorders,
       hexflip,
@@ -469,7 +471,7 @@ const Builder: React.FC = () => {
               checked={addremoves[lastTappedHexCode] === 'a'}
               onChange={e => {
                 const checked = e.target.checked;
-                if (checked) setFocuses({ ...focuses, [lastTapped.stateId]: 'y' });
+                if (checked) setFocuses({ ...focuses, [lastTapped.stateId]: Focus.Yes });
                 setAddremoves({ ...addremoves, [lastTappedHexCode]: checked ? 'a' : undefined });
                 closeDialogNextTick();
               }}
@@ -482,7 +484,7 @@ const Builder: React.FC = () => {
               checked={addremoves[lastTappedHexCode] === 'r'}
               onChange={e => {
                 const checked = e.target.checked;
-                if (checked) setFocuses({ ...focuses, [lastTapped.stateId]: 'y' });
+                if (checked) setFocuses({ ...focuses, [lastTapped.stateId]: Focus.Yes });
                 setAddremoves({ ...addremoves, [lastTappedHexCode]: checked ? 'r' : undefined });
                 closeDialogNextTick();
               }}
