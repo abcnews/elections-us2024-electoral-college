@@ -5,10 +5,11 @@ import {
   DEFAULT_ELECTION_YEAR,
   DEFAULT_RELATIVE_ELECTION_YEAR,
   Focus,
+  getStateIdForGroupId,
   PRESETS
 } from '../../constants';
 import { loadData } from '../../data';
-import { getStateIdForGroupId, liveResultsToGraphicProps } from '../../utils';
+import { liveResultsToGraphicProps } from '../../utils';
 import Graphic, { GraphicProps } from '../Graphic';
 import Live from '../Live';
 import styles from './styles.scss';

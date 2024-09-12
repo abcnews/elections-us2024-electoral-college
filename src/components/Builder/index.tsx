@@ -2,17 +2,16 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Allocation,
   Allocations,
-  ALLOCATIONS,
   INITIAL_ALLOCATIONS,
   Focus,
   Focuses,
-  FOCUSES,
   INITIAL_FOCUSES,
   MIXINS,
   PRESETS,
   ELECTION_YEARS,
   HEX_ANIMATIONS,
-  HEX_ANIMATION_STYLES
+  HEX_ANIMATION_STYLES,
+  GROUPS
 } from '../../constants';
 import { loadData } from '../../data';
 import {
@@ -23,10 +22,7 @@ import {
 } from '../../utils';
 import type { GraphicProps } from '../Graphic';
 import Graphic, { DEFAULT_PROPS as DEFAULT_GRAPHIC_PROPS } from '../Graphic';
-import graphicStyles from '../Graphic/styles.scss';
 import Icon from '../Icon';
-import tilegramStyles from '../Tilegram/styles.scss';
-import totalsStyles from '../Totals/styles.scss';
 import styles from './styles.scss';
 import { Dialog, DialogDivider, DialogHeader, DialogLabel } from './Dialog/dialog';
 import { AddRemoves } from '../Tilegram/Tilegram';
@@ -78,6 +74,7 @@ const Builder: React.FC = () => {
     }),
     []
   );
+
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
   const [focuses, setFocuses] = useState<Focuses>(initialUrlParamProps.focuses);
   const [addremoves, setAddremoves] = useState<AddRemoves>(initialUrlParamProps.addremoves);
@@ -90,6 +87,8 @@ const Builder: React.FC = () => {
   const [snapshots, setSnapshots] = useState(getSnapshots());
   const [lastTapped, setLastTapped] = useState<LastTapped | null>(null);
   const lastTappedHexCode = [lastTapped?.groupId, lastTapped?.hexId].join();
+  const lastTappedGroup = GROUPS.find(group => group.id === lastTapped?.groupId);
+
   const createSnapshot = (name: string, urlQuery: string) => {
     const nextSnapshots = {
       [name]: urlQuery,
@@ -431,7 +430,10 @@ const Builder: React.FC = () => {
       </div>
       {lastTapped && (
         <Dialog onClose={closeDialog} position={[lastTapped.clientX, lastTapped.clientY]}>
-          <DialogHeader>{lastTapped.groupId}</DialogHeader>
+          <DialogHeader>
+            <strong>{lastTapped.groupId}</strong> - {lastTappedGroup?.name}&nbsp; ({lastTappedGroup?.count[year]} vote
+            {lastTappedGroup?.count[year] > 1 ? 's' : ''})
+          </DialogHeader>
 
           {Object.entries(Allocation)
             .slice(0, -1)

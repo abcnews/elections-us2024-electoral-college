@@ -1,5 +1,9 @@
 import mapData from '../data/generated__mapdata.json';
-import { getStateIdForGroupId } from './utils';
+
+/** Turn a group ID into a state ID. I.e. Turn ME_1 into ME */
+export const getStateIdForGroupId = (groupId: string) => {
+  return groupId.split('_')[0];
+};
 
 export const GROUPS = mapData.groupCounts as Group[];
 
@@ -427,9 +431,7 @@ export const ELECTION_YEARS_ALLOCATIONS_CANDIDATES = {
   }
 };
 
-export const ELECTION_YEARS = Object.keys(ELECTION_YEARS_ALLOCATIONS_CANDIDATES)
-  .reverse()
-  .map(x => +x);
+export const ELECTION_YEARS = Object.keys(ELECTION_YEARS_ALLOCATIONS_CANDIDATES).reverse().map(Number);
 
 export const [DEFAULT_ELECTION_YEAR, DEFAULT_RELATIVE_ELECTION_YEAR] = ELECTION_YEARS;
 

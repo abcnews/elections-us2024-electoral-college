@@ -76,7 +76,6 @@ export const TilegramHexInner = React.memo(_TilegramHexInner, function arePropsE
 
 export function TilegramHex({ allocations, ...props }) {
   const groupId = getGroupIdForStateIdAndDelegateIndex(props.state, props.index);
-  console.log({ state: props.state, groupId });
   const allocation = allocations[groupId];
   return <TilegramHexInner {...props} groupId={groupId} allocation={allocation} />;
 }

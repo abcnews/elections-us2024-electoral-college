@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
 import mapData from '../../../data/generated__mapdata.json';
 import styles from './styles.scss';
-import { Allocation, ALLOCATIONS, Allocations, Focus, Focuses } from '../../constants';
+import { Allocation, ALLOCATIONS, Allocations, Focus, Focuses, getStateIdForGroupId } from '../../constants';
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
 import { STATES_LABELS } from './data';
 import AddRemoves from './AddRemoves/AddRemoves';
-import { getStateIdForGroupId } from '../../utils';
 const { us2020, us2024 } = mapData;
 
 export type AddRemoves = {

@@ -31,11 +31,6 @@ export const getGroupIdsForStateId = (stateId: string) => {
   return GROUP_IDS.filter(groupId => groupId.indexOf(stateId) === 0);
 };
 
-/** Turn a group ID into a state ID. I.e. Turn ME_1 into ME */
-export const getStateIdForGroupId = (groupId: string) => {
-  return groupId.split('_')[0];
-};
-
 export const getVoteCountsForAllocations = (
   allocations: Allocations,
   year: number = 2024
@@ -43,7 +38,6 @@ export const getVoteCountsForAllocations = (
   return ALLOCATIONS.reduce((memo, allocation) => {
     memo[allocation] = GROUPS.filter(({ id }) => allocations[id] === allocation).reduce((memo, current) => {
       const count = current.count[year];
-      console.log({ current, count, year });
       return memo + count;
     }, 0);
 

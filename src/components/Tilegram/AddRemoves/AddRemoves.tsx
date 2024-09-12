@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.scss';
 import mapData from '../../../../data/generated__mapdata.json';
-import { getStateIdForGroupId } from '../../../utils';
+import { getStateIdForGroupId } from '../../../constants';
 const { zeroHexD } = mapData;
 
 const IconRemove = () => <rect x="-7" y="-1.5" width="14" height="3" fill="white" />;
