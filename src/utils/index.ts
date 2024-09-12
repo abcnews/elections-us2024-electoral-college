@@ -5,7 +5,6 @@ import {
   Allocations,
   ALLOCATIONS,
   Group,
-  GroupID,
   GROUP_IDS,
   GROUPS,
   STATE_IDS,
@@ -13,46 +12,49 @@ import {
   Focuses,
   FOCUSES,
   INITIAL_ALLOCATIONS,
-  ELECTION_YEARS,
   DEFAULT_ELECTION_YEAR,
   DEFAULT_RELATIVE_ELECTION_YEAR
 } from '../constants';
 import { GraphicProps } from '../components/Graphic';
 import { decode, encode } from '@abcnews/base-36-text';
 
-export const votesForGroups = (groups: Group[]) => {
-  return groups.reduce((memo, group) => {
-    return memo + group.votes;
-  }, 0);
+/** Turn a state and a hexagon index into a split state. e.g. ME + 1 = ME_1, or NY + 2 = NY */
+export const getGroupIdForStateIdAndDelegateIndex = (stateId: string, delegateIndex: number) => {
+  const isSplitState = !GROUP_IDS.includes(stateId);
+  if (isSplitState) {
+    return `${stateId}_${Math.max(0, delegateIndex - 1)}`;
+  }
+  return stateId;
 };
 
-export const getGroupIDForStateIDAndDelegateIndex = (stateID: string, delegateIndex: number) => {
-  return `${stateID}${GroupID[stateID] != null ? '' : `_${Math.max(0, delegateIndex - 1)}`}`;
+export const getGroupIdsForStateId = (stateId: string) => {
+  return GROUP_IDS.filter(groupId => groupId.indexOf(stateId) === 0);
 };
 
-export const getGroupIDsForStateID = (stateID: string) => {
-  return GROUP_IDS.filter(groupID => groupID.indexOf(stateID) === 0);
+/** Turn a group ID into a state ID. I.e. Turn ME_1 into ME */
+export const getStateIdForGroupId = (groupId: string) => {
+  return groupId.split('_')[0];
 };
 
-export const getStateIDForGroupID = (groupID: string) => {
-  return groupID.split('_')[0];
-};
-
-export const getVoteCountsForAllocations = (allocations: Allocations): { [key: string]: number } => {
+export const getVoteCountsForAllocations = (
+  allocations: Allocations,
+  year: number = 2024
+): { [key: string]: number } => {
   return ALLOCATIONS.reduce((memo, allocation) => {
-    memo[allocation] = GROUPS.filter(({ id }) => allocations[GroupID[id]] === allocation).reduce(
-      (memo, { votes }) => memo + votes,
-      0
-    );
+    memo[allocation] = GROUPS.filter(({ id }) => allocations[id] === allocation).reduce((memo, current) => {
+      const count = current.count[year];
+      console.log({ current, count, year });
+      return memo + count;
+    }, 0);
 
     return memo;
   }, {});
 };
 
-export const getStateAllocations = (stateID: string, allocations: Allocations) => {
-  const stateGroupIDs = getGroupIDsForStateID(stateID);
+export const getStateAllocations = (stateId: string, allocations: Allocations) => {
+  const stateGroupIds = getGroupIdsForStateId(stateId);
 
-  return stateGroupIDs.map(groupID => allocations[groupID]);
+  return stateGroupIds.map(groupId => allocations[groupId]);
 };
 
 export const determineIfAllocationIsMade = (allocation: Allocation) => allocation !== Allocation.None;
@@ -62,23 +64,23 @@ export const determineIfAllocationIsDefinitive = (allocation: Allocation) =>
 
 export const determineIfProportionOfStateAllocationsMeetCondition = (
   proportion: number,
-  stateID: string,
+  stateId: string,
   allocations: Allocations,
   condition: (allocation: Allocation) => boolean
 ) => {
   proportion = Math.max(0, Math.min(proportion, 1));
 
-  const stateAllocations = getStateAllocations(stateID, allocations);
+  const stateAllocations = getStateAllocations(stateId, allocations);
   const stateAllocationsThatMeetCondition = stateAllocations.filter(condition);
 
   return stateAllocationsThatMeetCondition.length / stateAllocations.length > proportion;
 };
 
-export const determineIfAnyStateAllocationsAreMade = (stateID: string, allocations: Allocations) =>
-  determineIfProportionOfStateAllocationsMeetCondition(0, stateID, allocations, determineIfAllocationIsMade);
+export const determineIfAnyStateAllocationsAreMade = (stateId: string, allocations: Allocations) =>
+  determineIfProportionOfStateAllocationsMeetCondition(0, stateId, allocations, determineIfAllocationIsMade);
 
-export const determineIfMostStateAllocationsAreMade = (stateID: string, allocations: Allocations) =>
-  determineIfProportionOfStateAllocationsMeetCondition(0.5, stateID, allocations, determineIfAllocationIsMade);
+export const determineIfMostStateAllocationsAreMade = (stateId: string, allocations: Allocations) =>
+  determineIfProportionOfStateAllocationsMeetCondition(0.5, stateId, allocations, determineIfAllocationIsMade);
 
 function _decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
   code = typeof code === 'string' ? code.replace(/(\w)(\d+)/g, (_, char, repeated) => char.repeat(+repeated)) : code;
@@ -222,13 +224,13 @@ export const getAllocationForPartyID = (partyID: PartyId): Allocation =>
 
 export const liveResultsToGraphicProps = data =>
   Object.keys(data.s).reduce(
-    (memo, stateID) => {
-      const result = data.s[stateID];
+    (memo, stateId) => {
+      const result = data.s[stateId];
       const stateWinningPartyID = result.w;
       const stateAllocation = getAllocationForPartyID(stateWinningPartyID);
 
       if (stateAllocation !== Allocation.None) {
-        switch (stateID) {
+        switch (stateId) {
           case 'ME':
           case 'NE':
             const allocations = new Array(result.e - 1).fill(Allocation.None);
@@ -243,13 +245,13 @@ export const liveResultsToGraphicProps = data =>
             });
 
             allocations.forEach((allocation, index) => {
-              memo.allocations[`${stateID}_${index}`] = allocation;
+              memo.allocations[`${stateId}_${index}`] = allocation;
             });
             break;
           case 'NE':
             break;
           default:
-            memo.allocations[stateID] = stateAllocation;
+            memo.allocations[stateId] = stateAllocation;
             break;
         }
       }

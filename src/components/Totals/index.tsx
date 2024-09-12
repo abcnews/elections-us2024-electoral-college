@@ -22,7 +22,7 @@ export type TotalsProps = {
 
 const Totals: React.FC<TotalsProps> = props => {
   const { allocations, year } = props;
-  const voteCounts = useMemo(() => getVoteCountsForAllocations(allocations || {}), [allocations]);
+  const voteCounts = useMemo(() => getVoteCountsForAllocations(allocations || {}, year), [allocations, year]);
   const sides = useMemo(() => ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year || DEFAULT_ELECTION_YEAR], [year]);
   const incumbent = useMemo(() => Object.keys(sides)[0], [sides]);
   const previousIncumbent = usePrevious(incumbent);

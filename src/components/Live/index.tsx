@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   Allocation,
   State,
-  StateID,
+  StateId,
   STATES,
   ELECTION_YEARS_ALLOCATIONS_CANDIDATES,
   DEFAULT_ELECTION_YEAR
@@ -34,7 +34,7 @@ const isToday = (date: Date) => {
 };
 
 const Live: React.FC<LiveProps> = ({ stateCode, test }) => {
-  const stateID: number | undefined = useMemo(() => StateID[stateCode], [stateCode]);
+  const stateId: number | undefined = useMemo(() => StateId[stateCode], [stateCode]);
   const [result, setResult] = useState<Combined.Result>();
 
   useEffect(() => {
@@ -42,11 +42,11 @@ const Live: React.FC<LiveProps> = ({ stateCode, test }) => {
     loadData({ test }).then(data => setResult(data.s[stateCode]));
   }, [stateCode]);
 
-  if (typeof stateID !== 'number') {
+  if (typeof stateId !== 'number') {
     return <div data-unrecognised-state={stateCode}></div>;
   }
 
-  const state: State = STATES.find(({ id }) => stateID === id) as State; // We can assume stateID will match
+  const state: State = STATES.find(({ id }) => stateId === id) as State; // We can assume stateId will match
 
   if (!result || !result.cp) {
     return <div data-loading={stateCode}></div>;

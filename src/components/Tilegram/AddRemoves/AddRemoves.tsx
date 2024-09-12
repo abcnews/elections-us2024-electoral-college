@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './styles.scss';
-import data from '../generated__mapdata.json';
-const { zeroHexD } = data;
+import mapData from '../../../../data/generated__mapdata.json';
+import { getStateIdForGroupId } from '../../../utils';
+const { zeroHexD } = mapData;
 
 const IconRemove = () => <rect x="-7" y="-1.5" width="14" height="3" fill="white" />;
 const IconAdd = () => (
@@ -16,7 +17,7 @@ export default function AddRemoves({ addremoves = {}, data }) {
     .filter(([key, style]) => style)
     .map(([key, style]) => {
       const [stateDelegate, index] = String(key).split(',');
-      const state = stateDelegate.replace(/_\d/, '');
+      const state = getStateIdForGroupId(stateDelegate);
       const coords = data.STATES_DELEGATE_HEXES[state][index];
       if (!coords) {
         return null;

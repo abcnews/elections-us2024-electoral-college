@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import mapData from './generated__mapdata.json';
+import mapData from '../../../data/generated__mapdata.json';
 import styles from './styles.scss';
 import { Allocation, ALLOCATIONS, Allocations, Focus, Focuses } from '../../constants';
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
 import { STATES_LABELS } from './data';
 import AddRemoves from './AddRemoves/AddRemoves';
+import { getStateIdForGroupId } from '../../utils';
 const { us2020, us2024 } = mapData;
 
 export type AddRemoves = {
@@ -36,7 +37,7 @@ export default function Tilegram(props: TilegramProps) {
   if (hasAllocations) {
     Object.entries(newAllocations).forEach(([key, value]) => {
       // If focused, leave the original style/don't turn unallocated states grey
-      const isFocused = focuses[key.replace(/_\d/, '')] !== 'n';
+      const isFocused = focuses[getStateIdForGroupId(key)] !== 'n';
       if (isFocused) return;
       newAllocations[key] = value === Allocation.None ? Allocation.Unallocated : value;
     });

@@ -1,46 +1,46 @@
 {
-	"name": "elections-us2024-electoral-college",
-	"version": "1.0.16",
-	"description": " Successor of https://github.com/abcnews/elections-us2020-electoral-college",
-	"license": "MIT",
-	"private": true,
-	"contributors": [
-		"Colin Gourlay <gourlay.colin@abc.net.au>"
-	],
-	"scripts": {
-		"start": "aunty serve",
-		"test": "aunty test",
-		"generate-mapdata": "cd src/components/Tilegram && node runme.mjs"
-	},
-	"abc": {
-		"css": {
-			"libraryDir": "./node_modules/@abcaustralia/nucleus/css",
-			"logVariables": "false"
-		}
-	},
-	"devDependencies": {
-		"@abcnews/aunty": "^15.0.3",
-		"@types/react": "^17.0.80",
-		"@types/react-dom": "^17.0.25",
-		"@types/webpack-env": "^1.18.5",
-		"elections-us2020-results-data": "git+ssh://git@github.com:abcnews/elections-us2020-results-data.git",
-		"honeycomb-grid": "^4.1.5",
-		"polygon-clipping": "^0.15.7",
-		"typescript-require": "^0.3.0"
-	},
-	"dependencies": {
-		"@abcnews/alternating-case-to-object": "^3.1.1",
-		"@abcnews/base-36-props": "^1.4.0",
-		"@abcnews/base-36-text": "^1.0.1",
-		"@abcnews/env-utils": "^4.0.0",
-		"@abcnews/google-doc-scrollyteller": "^1.0.1",
-		"@abcnews/mount-utils": "^3.0.0",
-		"@abcnews/scrollyteller": "^4.1.1",
-		"@abcnews/svelte-scrollyteller": "github:abcnews/svelte-scrollyteller#feature/future-news",
-		"core-js": "^3.37.1",
-		"file-saver": "^2.0.5",
-		"jszip": "^3.10.1",
-		"msrand": "^1.0.3",
-		"react": "^17.0.2"
-	}
+  "name": "elections-us2024-electoral-college",
+  "version": "1.0.16",
+  "description": " Successor of https://github.com/abcnews/elections-us2020-electoral-college",
+  "license": "MIT",
+  "private": true,
+  "contributors": [
+    "Colin Gourlay <gourlay.colin@abc.net.au>"
+  ],
+  "scripts": {
+    "start": "aunty serve",
+    "test": "aunty test",
+    "generate-mapdata": "node data/runme.mjs"
+  },
+  "abc": {
+    "css": {
+      "libraryDir": "./node_modules/@abcaustralia/nucleus/css",
+      "logVariables": "false"
+    }
+  },
+  "devDependencies": {
+    "@abcnews/aunty": "^15.0.3",
+    "@types/react": "^17.0.80",
+    "@types/react-dom": "^17.0.25",
+    "@types/webpack-env": "^1.18.5",
+    "elections-us2020-results-data": "git+ssh://git@github.com:abcnews/elections-us2020-results-data.git",
+    "honeycomb-grid": "^4.1.5",
+    "polygon-clipping": "^0.15.7",
+    "typescript-require": "^0.3.0"
+  },
+  "dependencies": {
+    "@abcnews/alternating-case-to-object": "^3.1.1",
+    "@abcnews/base-36-props": "^1.4.0",
+    "@abcnews/base-36-text": "^1.0.1",
+    "@abcnews/env-utils": "^4.0.0",
+    "@abcnews/google-doc-scrollyteller": "^1.0.1",
+    "@abcnews/mount-utils": "^3.0.0",
+    "@abcnews/scrollyteller": "^4.1.1",
+    "@abcnews/svelte-scrollyteller": "github:abcnews/svelte-scrollyteller#feature/future-news",
+    "core-js": "^3.37.1",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "msrand": "^1.0.3",
+    "react": "^17.0.2"
+  }
 }

@@ -1,5 +1,5 @@
 import type { PanelDefinition } from '@abcnews/scrollyteller';
-import { PRESETS, StateID, STATES } from './constants';
+import { PRESETS, StateId, STATES } from './constants';
 import { getStateAllocations } from './utils';
 import blockStyles from './components/Block/styles.scss';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
@@ -46,14 +46,14 @@ export function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraph
         }
 
         const partWrapperNode = document.createElement('span');
-        const stateID = StateID[state.id];
+        const stateId = StateId[state.id];
         const { allocations, relative } = data as GraphicProps;
-        const stateMainAllocation = allocations && getStateAllocations(stateID, allocations)[0];
+        const stateMainAllocation = allocations && getStateAllocations(stateId, allocations)[0];
         const relativeAllocations = relative && PRESETS[relative]?.allocations;
-        const stateRelativeMainAllocation = relativeAllocations && getStateAllocations(stateID, relativeAllocations)[0];
+        const stateRelativeMainAllocation = relativeAllocations && getStateAllocations(stateId, relativeAllocations)[0];
 
-        if (!stateIntroductionTracker[stateID]) {
-          stateIntroductionTracker[stateID] = true;
+        if (!stateIntroductionTracker[stateId]) {
+          stateIntroductionTracker[stateId] = true;
           partWrapperNode.setAttribute('data-is-first-encounter', '');
         }
 
@@ -65,7 +65,7 @@ export function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraph
           partWrapperNode.setAttribute('data-relative-main-allocation', stateRelativeMainAllocation);
         }
 
-        partWrapperNode.setAttribute('data-state', stateID);
+        partWrapperNode.setAttribute('data-state', stateId);
         partWrapperNode.className = blockStyles.state;
         partWrapperNode.appendChild(partTextNode);
         parentEl.insertBefore(partWrapperNode, node);

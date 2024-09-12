@@ -1,352 +1,18 @@
-export enum GroupID {
-  AK,
-  AL,
-  AR,
-  AZ,
-  CA,
-  CO,
-  CT,
-  DC,
-  DE,
-  FL,
-  GA,
-  HI,
-  IA,
-  ID,
-  IL,
-  IN,
-  KS,
-  KY,
-  LA,
-  MA,
-  MD,
-  ME_0,
-  ME_1,
-  ME_2,
-  MI,
-  MN,
-  MO,
-  MS,
-  MT,
-  NC,
-  ND,
-  NE_0,
-  NE_1,
-  NE_2,
-  NE_3,
-  NH,
-  NJ,
-  NM,
-  NV,
-  NY,
-  OH,
-  OK,
-  OR,
-  PA,
-  RI,
-  SC,
-  SD,
-  TN,
-  TX,
-  UT,
-  VA,
-  VT,
-  WA,
-  WI,
-  WV,
-  WY
-}
+import mapData from '../data/generated__mapdata.json';
+import { getStateIdForGroupId } from './utils';
 
-export const GROUP_IDS = Object.keys(GroupID).filter(key => typeof GroupID[key] === 'number');
+export const GROUPS = mapData.groupCounts as Group[];
+
+export const GROUP_IDS = GROUPS.map(group => group.id);
 
 export type Group = {
-  id: GroupID;
+  id: string;
   name: string;
-  votes: number;
+  count: {
+    2020: number;
+    2024: number;
+  };
 };
-
-export const GROUPS: Group[] = [
-  {
-    id: GroupID.AL,
-    name: 'Alabama',
-    votes: 9
-  },
-  {
-    id: GroupID.AK,
-    name: 'Alaska',
-    votes: 3
-  },
-  {
-    id: GroupID.AZ,
-    name: 'Arizona',
-    votes: 11
-  },
-  {
-    id: GroupID.AR,
-    name: 'Arkansas',
-    votes: 6
-  },
-  {
-    id: GroupID.CA,
-    name: 'California',
-    votes: 55
-  },
-  {
-    id: GroupID.CO,
-    name: 'Colorado',
-    votes: 9
-  },
-  {
-    id: GroupID.CT,
-    name: 'Connecticut',
-    votes: 7
-  },
-  {
-    id: GroupID.DE,
-    name: 'Delaware',
-    votes: 3
-  },
-  {
-    id: GroupID.DC,
-    name: 'District of Columbia',
-    votes: 3
-  },
-  {
-    id: GroupID.FL,
-    name: 'Florida',
-    votes: 29
-  },
-  {
-    id: GroupID.GA,
-    name: 'Georgia',
-    votes: 16
-  },
-  {
-    id: GroupID.HI,
-    name: 'Hawaii',
-    votes: 4
-  },
-  {
-    id: GroupID.ID,
-    name: 'Idaho',
-    votes: 4
-  },
-  {
-    id: GroupID.IL,
-    name: 'Illinois',
-    votes: 20
-  },
-  {
-    id: GroupID.IN,
-    name: 'Indiana',
-    votes: 11
-  },
-  {
-    id: GroupID.IA,
-    name: 'Iowa',
-    votes: 6
-  },
-  {
-    id: GroupID.KS,
-    name: 'Kansas',
-    votes: 6
-  },
-  {
-    id: GroupID.KY,
-    name: 'Kentucky',
-    votes: 8
-  },
-  {
-    id: GroupID.LA,
-    name: 'Louisiana',
-    votes: 8
-  },
-  {
-    id: GroupID.ME_0,
-    name: 'Maine (State)',
-    votes: 2
-  },
-  {
-    id: GroupID.ME_1,
-    name: 'Maine (District 1)',
-    votes: 1
-  },
-  {
-    id: GroupID.ME_2,
-    name: 'Maine (District 2)',
-    votes: 1
-  },
-  {
-    id: GroupID.MD,
-    name: 'Maryland',
-    votes: 10
-  },
-  {
-    id: GroupID.MA,
-    name: 'Massachusetts',
-    votes: 11
-  },
-  {
-    id: GroupID.MI,
-    name: 'Michigan',
-    votes: 16
-  },
-  {
-    id: GroupID.MN,
-    name: 'Minnesota',
-    votes: 10
-  },
-  {
-    id: GroupID.MS,
-    name: 'Mississippi',
-    votes: 6
-  },
-  {
-    id: GroupID.MO,
-    name: 'Missouri',
-    votes: 10
-  },
-  {
-    id: GroupID.MT,
-    name: 'Montana',
-    votes: 3
-  },
-  {
-    id: GroupID.NE_0,
-    name: 'Nebraska (State)',
-    votes: 2
-  },
-  {
-    id: GroupID.NE_1,
-    name: 'Nebraska (District 1)',
-    votes: 1
-  },
-  {
-    id: GroupID.NE_2,
-    name: 'Nebraska (District 2)',
-    votes: 1
-  },
-  {
-    id: GroupID.NE_3,
-    name: 'Nebraska (District 3)',
-    votes: 1
-  },
-  {
-    id: GroupID.NV,
-    name: 'Nevada',
-    votes: 6
-  },
-  {
-    id: GroupID.NH,
-    name: 'New Hampshire',
-    votes: 4
-  },
-  {
-    id: GroupID.NJ,
-    name: 'New Jersey',
-    votes: 14
-  },
-  {
-    id: GroupID.NM,
-    name: 'New Mexico',
-    votes: 5
-  },
-  {
-    id: GroupID.NY,
-    name: 'New York',
-    votes: 29
-  },
-  {
-    id: GroupID.NC,
-    name: 'North Carolina',
-    votes: 15
-  },
-  {
-    id: GroupID.ND,
-    name: 'North Dakota',
-    votes: 3
-  },
-  {
-    id: GroupID.OH,
-    name: 'Ohio',
-    votes: 18
-  },
-  {
-    id: GroupID.OK,
-    name: 'Oklahoma',
-    votes: 7
-  },
-  {
-    id: GroupID.OR,
-    name: 'Oregon',
-    votes: 7
-  },
-  {
-    id: GroupID.PA,
-    name: 'Pennsylvania',
-    votes: 20
-  },
-  {
-    id: GroupID.RI,
-    name: 'Rhode Island',
-    votes: 4
-  },
-  {
-    id: GroupID.SC,
-    name: 'South Carolina',
-    votes: 9
-  },
-  {
-    id: GroupID.SD,
-    name: 'South Dakota',
-    votes: 3
-  },
-  {
-    id: GroupID.TN,
-    name: 'Tennessee',
-    votes: 11
-  },
-  {
-    id: GroupID.TX,
-    name: 'Texas',
-    votes: 38
-  },
-  {
-    id: GroupID.UT,
-    name: 'Utah',
-    votes: 6
-  },
-  {
-    id: GroupID.VT,
-    name: 'Vermont',
-    votes: 3
-  },
-  {
-    id: GroupID.VA,
-    name: 'Virginia',
-    votes: 13
-  },
-  {
-    id: GroupID.WA,
-    name: 'Washington',
-    votes: 12
-  },
-  {
-    id: GroupID.WV,
-    name: 'West Virginia',
-    votes: 5
-  },
-  {
-    id: GroupID.WI,
-    name: 'Wisconsin',
-    votes: 10
-  },
-  {
-    id: GroupID.WY,
-    name: 'Wyoming',
-    votes: 3
-  }
-];
 
 export enum Allocation {
   None = 'n',
@@ -363,13 +29,13 @@ export type Allocations = {
   [key: string]: Allocation;
 };
 
-export const INITIAL_ALLOCATIONS = GROUP_IDS.reduce((allocations, groupID) => {
-  allocations[groupID] = Allocation.None;
+export const INITIAL_ALLOCATIONS = GROUP_IDS.reduce((allocations, groupId) => {
+  allocations[groupId] = Allocation.None;
 
   return allocations;
 }, {});
 
-export enum StateID {
+export enum StateId {
   AK,
   AL,
   AR,
@@ -423,22 +89,22 @@ export enum StateID {
   WY
 }
 
-export const STATE_IDS = Object.keys(StateID).filter(key => typeof StateID[key] === 'number');
+export const STATE_IDS = Object.keys(StateId).filter(key => typeof StateId[key] === 'number');
 
 export type State = {
-  id: StateID;
+  id: StateId;
   name: string;
 };
 
 export const STATES: State[] = GROUPS.filter(({ id }) => {
-  const [, index] = GROUP_IDS[id].split('_');
+  const [, index] = id.split('_');
 
   return index == null || index === '0';
 }).map(({ id, name }) => {
-  const stateID = StateID[GROUP_IDS[id].split('_')[0]] as unknown;
+  const stateId = StateId[getStateIdForGroupId(id)] as unknown;
 
   return {
-    id: stateID as StateID,
+    id: stateId as StateId,
     name: name.split(' (')[0]
   };
 });
@@ -454,8 +120,8 @@ export type Focuses = {
   [key: string]: Focus;
 };
 
-export const INITIAL_FOCUSES = STATE_IDS.reduce((focuses, stateID) => {
-  focuses[stateID] = Focus.No;
+export const INITIAL_FOCUSES = STATE_IDS.reduce((focuses, stateId) => {
+  focuses[stateId] = Focus.No;
 
   return focuses;
 }, {});
@@ -729,8 +395,8 @@ export const PRESETS: Presets = {
   },
   Unallocated: {
     name: 'Unallocated',
-    allocations: GROUP_IDS.reduce((allocations, groupID) => {
-      allocations[groupID] = Allocation.Unallocated;
+    allocations: GROUP_IDS.reduce((allocations, groupId) => {
+      allocations[groupId] = Allocation.Unallocated;
 
       return allocations;
     }, {}),
@@ -740,8 +406,8 @@ export const PRESETS: Presets = {
 
 export const ELECTION_YEARS_ALLOCATIONS_CANDIDATES = {
   2024: {
-    [Allocation.GOP]: 'Trump',
-    [Allocation.Dem]: 'Harris'
+    [Allocation.Dem]: 'Harris',
+    [Allocation.GOP]: 'Trump'
   },
   2020: {
     [Allocation.GOP]: 'Trump',

@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './styles.scss';
 import { Allocation, ALLOCATIONS, Focus } from '../../../constants';
-import { getGroupIDForStateIDAndDelegateIndex } from '../../../utils';
+import { getGroupIdForStateIdAndDelegateIndex } from '../../../utils';
 import { getStyleDelays } from '../util';
 
-import data from '../generated__mapdata.json';
-const { zeroHexD } = data;
+import mapData from '../../../../data/generated__mapdata.json';
+const { zeroHexD } = mapData;
 
 /** look up the corresponding css class for the given hexflip animation */
 const animationStyles = {
@@ -75,7 +75,8 @@ export const TilegramHexInner = React.memo(_TilegramHexInner, function arePropsE
 });
 
 export function TilegramHex({ allocations, ...props }) {
-  const groupId = getGroupIDForStateIDAndDelegateIndex(props.state, props.index);
+  const groupId = getGroupIdForStateIdAndDelegateIndex(props.state, props.index);
+  console.log({ state: props.state, groupId });
   const allocation = allocations[groupId];
   return <TilegramHexInner {...props} groupId={groupId} allocation={allocation} />;
 }

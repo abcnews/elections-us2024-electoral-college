@@ -84,10 +84,10 @@ button {
         <Graphic onClick={jumpToState} {...graphicProps} />
       </div>
       <div className="grid">
-        {STATE_IDS.map(stateID => (
-          <div className="state" key={stateID} id={stateID}>
-            <Live stateCode={stateID} />
-            <MarkerText text={`#ecliveSTATE${stateID.toLowerCase()}`}></MarkerText>
+        {STATE_IDS.map(stateId => (
+          <div className="state" key={stateId} id={stateId}>
+            <Live stateCode={stateId} />
+            <MarkerText text={`#ecliveSTATE${stateId.toLowerCase()}`}></MarkerText>
           </div>
         ))}
       </div>

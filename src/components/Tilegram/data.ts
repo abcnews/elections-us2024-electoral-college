@@ -5,7 +5,7 @@ export const HEXGRID_PROPS = {
 };
 
 interface StatesShapes {
-  [stateID: string]: string[];
+  [stateId: string]: string[];
 }
 
 type StateLabel = [number, number, boolean?];

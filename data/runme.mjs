@@ -10,6 +10,7 @@
  */
 import statesDelegateHexexXY2024 from './statesDelegateHexesXY2024.json' with { type: "json" };
 import statesDelegateHexexXY2020 from './statesDelegateHexesXY2020.json' with { type: "json" };
+import groups from './groups.json' with { type: "json" };
 import { defineHex, Grid, rectangle } from 'honeycomb-grid';
 import polygonClipping from 'polygon-clipping';
 import path from 'path';
@@ -89,5 +90,16 @@ function processFile(delegateHexesXy){
 const us2024= processFile(statesDelegateHexexXY2024, '2024');
 const us2020  =processFile(statesDelegateHexexXY2020, '2020');
 
-fs.writeFileSync(path.resolve(__dirname, 'generated__mapdata.json'), JSON.stringify({zeroHexD, us2024, us2020}, null,2));
+
+// Calculate state/group totals based on the number of hexagons assigned to each
+// Note: ME/NE are hard-coded in the JSON because these states split votes
+const groupCounts = groups.map(group => ({
+  ...group,
+  count: group.count || {
+    2020: us2020.STATES_DELEGATE_HEXES[group.id].length,
+    2024: us2024.STATES_DELEGATE_HEXES[group.id].length,
+  }
+}));
+
+fs.writeFileSync(path.resolve(__dirname, 'generated__mapdata.json'), JSON.stringify({zeroHexD, us2024, us2020, groupCounts}, null,2));
 

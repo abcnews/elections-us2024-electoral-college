@@ -8,7 +8,7 @@ import {
   PRESETS
 } from '../../constants';
 import { loadData } from '../../data';
-import { getStateIDForGroupID, liveResultsToGraphicProps } from '../../utils';
+import { getStateIdForGroupId, liveResultsToGraphicProps } from '../../utils';
 import Graphic, { GraphicProps } from '../Graphic';
 import Live from '../Live';
 import styles from './styles.scss';
@@ -48,13 +48,13 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
         return;
       }
 
-      const stateID = getStateIDForGroupID(groupId);
+      const stateId = getStateIdForGroupId(groupId);
 
-      if (!stateID) {
+      if (!stateId) {
         return;
       }
 
-      setLiveStateCode(stateID);
+      setLiveStateCode(stateId);
     },
     [hasStatesResults, fixedGraphicProps]
   );
@@ -166,11 +166,11 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
 
       Object.keys(allocations).forEach(groupId => {
         const allocation = allocations[groupId];
-        const stateID = getStateIDForGroupID(groupId);
+        const stateId = getStateIdForGroupId(groupId);
 
         allocations[groupId] =
           allocation === Allocation.Dem || allocation === Allocation.GOP ? allocation : Allocation.Unallocated;
-        focuses[stateID] = allocation === Allocation.Dem || allocation === Allocation.GOP ? Focus.No : Focus.Yes;
+        focuses[stateId] = allocation === Allocation.Dem || allocation === Allocation.GOP ? Focus.No : Focus.Yes;
       });
 
       setFixedGraphicProps({

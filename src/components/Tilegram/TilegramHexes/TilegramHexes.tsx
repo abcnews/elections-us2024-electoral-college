@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from './styles.scss';
-import { getGroupIDForStateIDAndDelegateIndex, getStateAllocations } from '../../../utils';
+import { getGroupIdForStateIdAndDelegateIndex, getStateAllocations } from '../../../utils';
 import { Focus } from '../../../constants';
 import { TilegramHex } from '../TilegramHex/TilegramHex';
 
 export function TilegramHexes({ id, data, allocations, focuses, hexBorders, hexflip, hexani, isVisible }) {
   const { STATES_DELEGATE_HEXES, STATES_SHAPES } = data;
-  const allocationHash = Object.values(allocations).join('');
 
   const sortedStateBorders = Object.entries(STATES_SHAPES).map(([state, paths]) => ({
     state,
@@ -47,7 +46,6 @@ export function TilegramHexes({ id, data, allocations, focuses, hexBorders, hexf
                     coords={coords}
                     state={state}
                     index={i}
-                    allocationHash={allocationHash}
                     allocations={allocations}
                     focus={focuses[state]}
                     hexBorders={hexBorders}
