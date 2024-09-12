@@ -11,6 +11,7 @@
 import statesDelegateHexexXY2024 from './statesDelegateHexesXY2024.json' with { type: "json" };
 import statesDelegateHexexXY2020 from './statesDelegateHexesXY2020.json' with { type: "json" };
 import labels2024 from './labelPositions2024.json' with { type: "json" };
+import labels2020 from './labelPositions2020.json' with { type: "json" };
 import groups from './groups.json' with { type: "json" };
 import { defineHex, Grid, rectangle } from 'honeycomb-grid';
 import polygonClipping from 'polygon-clipping';
@@ -20,8 +21,27 @@ import fs from 'fs';
 const __dirname = path.dirname(import.meta.url.replace('file://',''));
 
 
-  // Offset to line up with legacy graphics
-  const Y_OFFSET = 18
+// Offset to line up with legacy graphics
+const Y_OFFSET = 18
+
+/**
+ * Labels form Figma are:
+ * 1. offset by Y_OFFSET
+ * 2. slightly wonky anyway.
+ *
+ * So this function tweaks them a little to work in the graphic.
+ */
+function processLabels(labels){
+  const newLabels = {...labels}
+  // Offset label positions for the graphic.
+  Object.keys(labels).forEach(key => {
+    const currentVal = labels[key][0];
+    // Labels from Figma are slightly off. Let's tweak them a little.
+    labels[key][0] = Math.floor(12+ currentVal - currentVal * 0.001);
+    labels[key][1] = Math.round(labels[key][1]);
+  });
+  return newLabels;
+}
 
 function toSvgCoord([x,y]){
 
@@ -91,16 +111,10 @@ function processFile(delegateHexesXy){
 const us2024= processFile(statesDelegateHexexXY2024);
 const us2020  =processFile(statesDelegateHexexXY2020);
 
-const newLabels = {...labels2024}
-// Offset label positions for the graphic.
-Object.keys(labels2024).forEach(key => {
-  console.log(key, labels2024[key][1])
-  labels2024[key][0] += 13;
-});
 
-us2024.labels = newLabels;
-us2020.labels = newLabels;
 
+us2024.labels = processLabels(labels2024);
+us2020.labels = processLabels(labels2020);
 
 // Calculate state/group totals based on the number of hexagons assigned to each
 // Note: ME/NE are hard-coded in the JSON because these states split votes

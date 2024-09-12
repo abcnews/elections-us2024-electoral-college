@@ -85,8 +85,7 @@ export default function Tilegram(props: TilegramProps) {
           </g>
           <g id="labels">
             <TilegramLabels
-              data={us2024}
-              labels={STATES_LABELS}
+              data={year === 2024 ? us2024 : us2020}
               allocations={allocations}
               focuses={hasFocuses && focuses}
               hexani={hexani}

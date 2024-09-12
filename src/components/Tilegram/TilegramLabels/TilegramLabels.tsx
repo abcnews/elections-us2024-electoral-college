@@ -15,10 +15,14 @@ export function TilegramLabels({ data, allocations, focuses, hexani }) {
         const stateAllocations = allocations && getStateAllocations(state, allocations);
         const stateMainAllocation = stateAllocations && stateAllocations[0];
         const [labelX, labelY] = labels[state];
-        const style = getStyleDelays(labelX, labelY, hexani);
+        const style = {
+          ...getStyleDelays(labelX, labelY, hexani),
+          transform: `translate(${labelX}px, ${labelY}px)`
+        };
+        console.log({ style });
 
         return (
-          <React.Fragment key={labels[state].join()}>
+          <React.Fragment key={state}>
             <text
               className={[
                 styles.labelOutline,
@@ -27,8 +31,8 @@ export function TilegramLabels({ data, allocations, focuses, hexani }) {
               ]
                 .filter(Boolean)
                 .join(' ')}
-              x={labelX}
-              y={labelY}
+              x="0"
+              y="0"
               style={style}
             >
               {state}
@@ -41,8 +45,8 @@ export function TilegramLabels({ data, allocations, focuses, hexani }) {
               ]
                 .filter(Boolean)
                 .join(' ')}
-              x={labelX}
-              y={labelY}
+              x="0"
+              y="0"
               style={style}
             >
               {state}

@@ -6,7 +6,7 @@
   text-anchor: middle;
   font-size: 1rem;
   z-index: 2;
-  pointer-events: none;
+  // pointer-events: none;
   transition: all 1s;
   font-family: 'ABCSans';
   font-size: 18px;
@@ -14,8 +14,9 @@
   font-weight: 700;
   line-height: normal;
   letter-spacing: 0.54px;
+  transition: transform 0.5s;
   @media (max-width: 667px) {
-    transform: translate(0, 0.25rem);
+    translate: 0 0.25rem;
     font-size: 1.5rem;
   }
 }
