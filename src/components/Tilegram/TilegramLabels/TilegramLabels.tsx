@@ -5,18 +5,20 @@ import { STATES_LABELS } from '../data';
 import { Focus } from '../../../constants';
 import { getStyleDelays } from '../util';
 
-export function TilegramLabels({ data, allocations, focuses, hexani, labels }) {
-  const { STATES_DELEGATE_HEXES } = data;
+console.log({ STATES_LABELS });
+
+export function TilegramLabels({ data, allocations, focuses, hexani }) {
+  const { STATES_DELEGATE_HEXES, labels } = data;
   return (
     <>
       {Object.entries(STATES_DELEGATE_HEXES).map(([state, paths]) => {
         const stateAllocations = allocations && getStateAllocations(state, allocations);
         const stateMainAllocation = stateAllocations && stateAllocations[0];
-        const [labelX, labelY] = STATES_LABELS[state];
+        const [labelX, labelY] = labels[state];
         const style = getStyleDelays(labelX, labelY, hexani);
 
         return (
-          <React.Fragment key={STATES_LABELS[state].join()}>
+          <React.Fragment key={labels[state].join()}>
             <text
               className={[
                 styles.labelOutline,

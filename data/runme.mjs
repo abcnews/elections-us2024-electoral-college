@@ -10,6 +10,7 @@
  */
 import statesDelegateHexexXY2024 from './statesDelegateHexesXY2024.json' with { type: "json" };
 import statesDelegateHexexXY2020 from './statesDelegateHexesXY2020.json' with { type: "json" };
+import labels2024 from './labelPositions2024.json' with { type: "json" };
 import groups from './groups.json' with { type: "json" };
 import { defineHex, Grid, rectangle } from 'honeycomb-grid';
 import polygonClipping from 'polygon-clipping';
@@ -87,8 +88,18 @@ function processFile(delegateHexesXy){
   return {STATES_DELEGATE_HEXES, STATES_SHAPES, statePolygonsUnionStrings}
 }
 
-const us2024= processFile(statesDelegateHexexXY2024, '2024');
-const us2020  =processFile(statesDelegateHexexXY2020, '2020');
+const us2024= processFile(statesDelegateHexexXY2024);
+const us2020  =processFile(statesDelegateHexexXY2020);
+
+const newLabels = {...labels2024}
+// Offset label positions for the graphic.
+Object.keys(labels2024).forEach(key => {
+  console.log(key, labels2024[key][1])
+  labels2024[key][0] += 13;
+});
+
+us2024.labels = newLabels;
+us2020.labels = newLabels;
 
 
 // Calculate state/group totals based on the number of hexagons assigned to each

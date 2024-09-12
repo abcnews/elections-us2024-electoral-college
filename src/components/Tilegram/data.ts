@@ -1,3 +1,5 @@
+import mapData from '../../../data/generated__mapdata.json';
+
 export const HEXGRID_PROPS = {
   width: 1037,
   height: 753,
@@ -8,65 +10,13 @@ interface StatesShapes {
   [stateId: string]: string[];
 }
 
-type StateLabel = [number, number, boolean?];
+type StateLabel = number[];
 
 type StatesLabels = {
   [key: string]: StateLabel;
 };
 
-export const STATES_LABELS: StatesLabels = {
-  AK: [58, 90],
-  AL: [518, 530],
-  AR: [415, 404],
-  AZ: [206, 453],
-  CA: [111, 363],
-  CO: [252, 276],
-  CT: [915, 184],
-  DC: [825, 380, true],
-  DE: [898, 355, true],
-  FL: [628, 658],
-  GA: [600, 517],
-  HI: [74, 559, true],
-  IA: [378, 261],
-  ID: [236, 191, true],
-  IL: [474, 312],
-  IN: [555, 312],
-  KS: [304, 325],
-  KY: [577, 389],
-  LA: [415, 506],
-  MA: [947, 135],
-  MD: [870, 378],
-  ME: [958, 29, true],
-  MI: [592, 188],
-  MN: [382, 210],
-  MO: [385, 325],
-  MS: [456, 525, true],
-  MT: [281, 150, true],
-  NC: [703, 442],
-  ND: [340, 150, true],
-  NE: [296, 250, true],
-  NH: [913, 88],
-  NJ: [896, 286],
-  NM: [250, 456, true],
-  NV: [178, 250],
-  NY: [800, 173],
-  OH: [637, 312],
-  OK: [356, 389],
-  OR: [147, 210, true],
-  PA: [755, 261],
-  RI: [995, 184],
-  SC: [696, 504],
-  SD: [326, 209, true],
-  TN: [518, 440],
-  TX: [326, 517],
-  UT: [207, 276, true],
-  VA: [754, 370],
-  VT: [883, 74, true],
-  WA: [118, 160],
-  WI: [459, 197],
-  WV: [706, 353],
-  WY: [279, 200, true]
-};
+export const STATES_LABELS = mapData.labels2024 as StatesLabels;
 
 export const COUNTRY_PATHS = [
   'M222 726l15-8v-17l-15-9-15 9v17l-15 8v18l15 8 15-8z',
