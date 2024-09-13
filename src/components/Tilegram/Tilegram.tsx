@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import mapData from '../../../data/generated__mapdata.json';
 import styles from './styles.scss';
-import { Allocation, ALLOCATIONS, Allocations, Focus, Focuses, getStateIdForGroupId } from '../../constants';
+import { Allocation, Allocations, Focus, Focuses, getStateIdForGroupId } from '../../constants';
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
-import { STATES_LABELS } from './data';
 import AddRemoves from './AddRemoves/AddRemoves';
 const { us2020, us2024 } = mapData;
 

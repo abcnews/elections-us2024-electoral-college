@@ -1,11 +1,8 @@
 import React from 'react';
 import styles from './styles.scss';
 import { getStateAllocations } from '../../../utils';
-import { STATES_LABELS } from '../data';
 import { Focus } from '../../../constants';
 import { getStyleDelays } from '../util';
-
-console.log({ STATES_LABELS });
 
 export function TilegramLabels({ data, allocations, focuses, hexani }) {
   const { STATES_DELEGATE_HEXES, labels } = data;
