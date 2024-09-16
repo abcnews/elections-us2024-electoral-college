@@ -408,27 +408,50 @@ export const PRESETS: Presets = {
   }
 };
 
+export const CANDIDATES = {
+  h: 'Harris',
+  t: 'Trump',
+  b: 'Biden',
+  c: 'Clinton',
+  o: 'Obama',
+  r: 'Romney',
+  m: 'McCain'
+};
+
 export const ELECTION_YEARS_ALLOCATIONS_CANDIDATES = {
   2024: {
-    [Allocation.Dem]: 'Harris',
-    [Allocation.GOP]: 'Trump'
+    [Allocation.Dem]: CANDIDATES.h,
+    [Allocation.GOP]: CANDIDATES.t
   },
   2020: {
-    [Allocation.GOP]: 'Trump',
-    [Allocation.Dem]: 'Biden'
+    [Allocation.GOP]: CANDIDATES.t,
+    [Allocation.Dem]: CANDIDATES.b
   },
   2016: {
-    [Allocation.Dem]: 'Clinton',
-    [Allocation.GOP]: 'Trump'
+    [Allocation.Dem]: CANDIDATES.c,
+    [Allocation.GOP]: CANDIDATES.t
   },
   2012: {
-    [Allocation.Dem]: 'Obama',
-    [Allocation.GOP]: 'Romney'
+    [Allocation.Dem]: CANDIDATES.o,
+    [Allocation.GOP]: CANDIDATES.r
   },
   2008: {
-    [Allocation.GOP]: 'McCain',
-    [Allocation.Dem]: 'Obama'
+    [Allocation.GOP]: CANDIDATES.m,
+    [Allocation.Dem]: CANDIDATES.o
   }
+};
+
+export const candidatesForYear = year => {
+  const yearCandidates: string[] = Object.values(ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year] || {});
+  const yearCandidateCodes = yearCandidates.map(candidateName => {
+    const candidateCodes = Object.keys(CANDIDATES);
+    const candidateNames = Object.values(CANDIDATES);
+
+    const index = candidateNames.indexOf(candidateName);
+    return candidateCodes[index];
+  });
+
+  return yearCandidateCodes;
 };
 
 export const ELECTION_YEARS = Object.keys(ELECTION_YEARS_ALLOCATIONS_CANDIDATES).reverse().map(Number);

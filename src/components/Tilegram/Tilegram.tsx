@@ -19,6 +19,7 @@ export type TilegramProps = {
   hexflip?: string;
   hexani?: string;
   addremoves?: AddRemoves;
+  candidatesoverride?: string;
   onClick?: (props: { groupId: string; stateId: string; clientX: number; clientY: number; hexId: string }) => void;
 };
 

@@ -1,6 +1,12 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import type { Allocations } from '../../constants';
-import { Allocation, DEFAULT_ELECTION_YEAR, ELECTION_YEARS_ALLOCATIONS_CANDIDATES } from '../../constants';
+import {
+  Allocation,
+  CANDIDATES,
+  candidatesForYear,
+  DEFAULT_ELECTION_YEAR,
+  ELECTION_YEARS_ALLOCATIONS_CANDIDATES
+} from '../../constants';
 import { getVoteCountsForAllocations } from '../../utils';
 import styles from './styles.scss';
 
@@ -16,20 +22,21 @@ function usePrevious(value) {
 }
 
 export type TotalsProps = {
+  candidatesoverride?: string;
   year?: number;
   allocations?: Allocations;
 };
 
 const Totals: React.FC<TotalsProps> = props => {
-  const { allocations, year } = props;
+  const { candidatesoverride, allocations, year } = props;
   const voteCounts = useMemo(() => getVoteCountsForAllocations(allocations || {}, year), [allocations, year]);
   const sides = useMemo(() => ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year || DEFAULT_ELECTION_YEAR], [year]);
   const incumbent = useMemo(() => Object.keys(sides)[0], [sides]);
   const previousIncumbent = usePrevious(incumbent);
+  const _candidatesoverride = candidatesoverride ? candidatesoverride.split('') : candidatesForYear(year);
 
   const tX = (votes: number, side: Allocation) =>
     side === incumbent ? (votes / MAX_VOTES) * 100 - 100 : (votes / MAX_VOTES) * -100 + 100;
-
   return (
     <div
       className={styles.root}
@@ -39,7 +46,7 @@ const Totals: React.FC<TotalsProps> = props => {
       <div className={styles.text}>
         {Object.keys(sides).map((allocation, i) => (
           <div key={allocation} className={styles.side} data-allocation={allocation}>
-            <span className={styles.sideLabel}>{sides[allocation]}</span>&nbsp;
+            <span className={styles.sideLabel}>{CANDIDATES[_candidatesoverride[i]]}</span>&nbsp;
             <span className={styles.sideValue}>{voteCounts[allocation]}</span>
           </div>
         ))}

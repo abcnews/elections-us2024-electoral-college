@@ -11,8 +11,10 @@ import {
   ELECTION_YEARS,
   HEX_ANIMATIONS,
   HEX_ANIMATION_STYLES,
-  GROUPS
+  GROUPS,
+  candidatesForYear
 } from '../../constants';
+import CandidateDropdown from './CandidateDropdown/CandidateDropdown';
 import { loadData } from '../../data';
 import {
   alternatingCaseToGraphicProps,
@@ -84,6 +86,11 @@ const Builder: React.FC = () => {
   const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders);
   const [hexflip, setHexflip] = useState(initialUrlParamProps.hexflip);
   const [hexani, setHexani] = useState(initialUrlParamProps.hexani);
+  const [candidatesoverride, setCandidatesoverride] = useState<string | undefined>(
+    initialUrlParamProps.candidatesoverride
+  );
+  const _candidatesoverride = candidatesoverride ? candidatesoverride.split('') : candidatesForYear(year);
+
   const [snapshots, setSnapshots] = useState(getSnapshots());
   const [lastTapped, setLastTapped] = useState<LastTapped | null>(null);
   const lastTappedHexCode = [lastTapped?.groupId, lastTapped?.hexId].join();
@@ -142,6 +149,7 @@ const Builder: React.FC = () => {
     setHexflip(graphicProps.hexflip || DEFAULT_GRAPHIC_PROPS.hexflip);
     setHexani(graphicProps.hexani || DEFAULT_GRAPHIC_PROPS.hexani);
     setAddremoves(graphicProps.addremoves || DEFAULT_GRAPHIC_PROPS.addremoves);
+    setCandidatesoverride(graphicProps.candidatesoverride);
   };
 
   const loadLiveResults = () => {
@@ -168,9 +176,10 @@ const Builder: React.FC = () => {
       hexborders: hexBorders,
       hexflip,
       hexani,
-      addremoves: Object.keys(addremoves).length > 0 ? addremoves : undefined
+      addremoves: Object.keys(addremoves).length > 0 ? addremoves : undefined,
+      candidatesoverride: candidatesoverride
     }),
-    [allocations, focuses, year, relative, counting, hexBorders, hexflip, hexani, addremoves]
+    [allocations, focuses, year, relative, counting, hexBorders, hexflip, hexani, addremoves, candidatesoverride]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(
@@ -250,6 +259,24 @@ const Builder: React.FC = () => {
               </span>
             ))}
         </div>
+        <label>Override candidates</label>
+        <div className={styles.flexRow}>
+          <CandidateDropdown
+            value={_candidatesoverride[0]}
+            onChange={value => setCandidatesoverride([value, _candidatesoverride[1]].join(''))}
+          />
+          <CandidateDropdown
+            value={_candidatesoverride[1]}
+            onChange={value => setCandidatesoverride([_candidatesoverride[0], value].join(''))}
+          />
+          {candidatesoverride && (
+            <>
+              <span>Candidate names overridden:</span>
+              <button onClick={() => setCandidatesoverride(undefined)}>Reset</button>
+            </>
+          )}
+        </div>
+
         <label>Visual</label>
         <div className={styles.flexRow}>
           <span key="none">
@@ -279,7 +306,6 @@ const Builder: React.FC = () => {
             </label>
           </span>
         </div>
-
         <label>Hexagon animation</label>
         <div className={styles.flexRow}>
           {HEX_ANIMATIONS.map(animation => (
@@ -297,7 +323,6 @@ const Builder: React.FC = () => {
             </span>
           ))}
         </div>
-
         <div className={styles.flexRow}>
           {HEX_ANIMATION_STYLES.map(animation => (
             <span key={animation}>

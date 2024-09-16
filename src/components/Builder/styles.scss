@@ -152,6 +152,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 0.25rem;
 }
 
 .flexRow > div {
@@ -162,22 +163,20 @@ body {
   padding: 0 1em 0 0;
 }
 
-.flexRow button {
+.flexRow button,
+.flexRow select {
   align-self: stretch;
   margin: 0;
   border: 0.0625rem solid currentColor;
   padding: 0.25rem 0.5rem;
-  background: transparent;
+  background: #f9f9f9;
   font-family: inherit;
   font-size: 0.875rem;
   cursor: pointer;
 }
 
-.flexRow button + button {
-  margin-left: 0.25rem;
-}
-
-.flexRow button:hover {
+.flexRow button:hover,
+.flexRow select {
   background-color: $color_AlphaGrey;
 }
 

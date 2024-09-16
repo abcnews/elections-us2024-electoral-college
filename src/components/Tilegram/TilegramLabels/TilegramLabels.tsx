@@ -16,7 +16,6 @@ export function TilegramLabels({ data, allocations, focuses, hexani }) {
           ...getStyleDelays(labelX, labelY, hexani),
           transform: `translate(${labelX}px, ${labelY}px)`
         };
-        console.log({ style });
 
         return (
           <React.Fragment key={state}>
