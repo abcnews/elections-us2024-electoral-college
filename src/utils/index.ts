@@ -35,9 +35,10 @@ export const getVoteCountsForAllocations = (
   allocations: Allocations,
   year: number = 2024
 ): { [key: string]: number } => {
+  console.log('vc4a', { allocations, year, ALLOCATIONS });
   return ALLOCATIONS.reduce((memo, allocation) => {
     memo[allocation] = GROUPS.filter(({ id }) => allocations[id] === allocation).reduce((memo, current) => {
-      const count = current.count[year];
+      const count = current.count[year <= 2020 ? 2020 : 2024];
       return memo + count;
     }, 0);
 
