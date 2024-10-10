@@ -9,10 +9,13 @@
 }
 .hex {
   transition: fill 1s, stroke 1s, opacity 1s;
-  //  Make the hexes slightly larger so they fill the gaps a little more
-  scale: 1.02;
   stroke: transparent;
   fill: var(--to);
+  //  Make the hexes slightly larger so they fill the gaps a little more
+  scale: 1.03;
+  @media (max-width: 700px) {
+    scale: 1.05;
+  }
 }
 .hex-borders {
   stroke: rgba(153, 153, 153, 0.5) !important;
