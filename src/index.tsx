@@ -18,10 +18,22 @@ import { whenOdysseyLoaded } from './utils/getOdyssey';
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
     const liveMounts = selectMounts('eclive');
-
-    const names = selectMounts('scrollytellerNAME', { markAsUsed: false })
+    const scrollytellerMounts = selectMounts('scrollytellerNAME', { markAsUsed: false });
+    const names = scrollytellerMounts
       .map(mountEl => (getMountValue(mountEl).match(/NAME([a-z]+)/) || [])[1])
       .filter(name => typeof name === 'string');
+
+    // Feature flag: highlight currently active panel
+    if (window.location.hash.includes('inactive')) {
+      //@ts-ignore
+      scrollytellerMounts.forEach(mount => mount.style.setProperty('--color-panel-opacity-inactive', 0.6));
+    }
+
+    if (window.location.hash.includes('loosen')) {
+      //@ts-ignore
+      scrollytellerMounts.forEach(mount => mount.style.setProperty('--color-panel-margin', '40vh'));
+    }
+
     const scrollytellerDefinitions: any[] = [];
 
     for (const name of names) {
