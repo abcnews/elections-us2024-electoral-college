@@ -19,6 +19,8 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
     const liveMounts = selectMounts('eclive');
     const scrollytellerMounts = selectMounts('scrollytellerNAME', { markAsUsed: false });
+
+    console.log({ scrollytellerMounts });
     const names = scrollytellerMounts
       .map(mountEl => (getMountValue(mountEl).match(/NAME([a-z]+)/) || [])[1])
       .filter(name => typeof name === 'string');
@@ -38,6 +40,7 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
 
     for (const name of names) {
       let scrollytellerDefinition: any;
+      console.log('load scrollytellering', name);
 
       try {
         scrollytellerDefinition = loadScrollyteller(name, 'u-full');

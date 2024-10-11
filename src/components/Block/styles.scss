@@ -6,18 +6,31 @@
 }
 
 .state {
-  margin: 0 0.05em;
-  border: 0.125rem solid $color_Yes;
-  padding: 0 0.2em;
-  display: inline-block;
+  display: inline-flex;
+  align-items: stretch;
   background-color: $color_None;
-  line-height: 1.25;
   white-space: nowrap;
   color: black;
+
+  border-radius: 4px;
+  font-family: ABCSans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 27px */
+  padding: 0.1em calc(6rem / 16) 0;
+  height: 1.4em;
 }
 
 .state[data-is-first-encounter]::after {
-  content: ' (' attr(data-state) ')';
+  display: inline-block;
+  content: ' ' attr(data-state);
+  padding: 0 calc(6rem / 16);
+  margin-left: calc(8rem / 16);
+  margin-right: calc(-6rem / 16);
+  margin-top: -0.1em;
+  padding-top: 0.1em;
+  box-shadow: -2px 0 white;
 }
 
 .state[data-main-allocation='#{$Allocation_Dem}'] {
@@ -25,11 +38,22 @@
 }
 
 .state[data-main-allocation='#{$Allocation_LikelyDem}'] {
-  background-color: $color_LikelyDem;
+  background-color: #a0c3f3;
+  color: #003e94;
 }
 
 .state[data-main-allocation='#{$Allocation_Unallocated}'] {
-  background-color: $color_Unallocated;
+  background-color: #7a7a7a;
+  color: white;
+  &:after {
+    box-sizing: border-box;
+    color: #525252;
+    background: #ebebeb;
+    border-radius: 0px calc(4rem / 16) calc(4rem / 16) 0px;
+    border: 2px solid #7a7a7a;
+
+    line-height: calc(150% - 4px); /* 27px */
+  }
 }
 
 .state[data-main-allocation='#{$Allocation_LikelyGOP}'] {
