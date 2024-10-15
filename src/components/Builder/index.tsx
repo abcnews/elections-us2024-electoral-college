@@ -28,6 +28,7 @@ import Icon from '../Icon';
 import styles from './styles.scss';
 import { Dialog, DialogDivider, DialogHeader, DialogLabel } from './Dialog/dialog';
 import { AddRemoves } from '../Tilegram/Tilegram';
+import NewVersionCheck from './NewVersionCheck';
 
 type LastTapped = {
   stateId: string;
@@ -201,6 +202,7 @@ const Builder: React.FC = () => {
 
   return (
     <div className={styles.root}>
+      <NewVersionCheck />
       <div className={styles.graphic}>
         <div className={styles.graphicInner}>
           <Graphic onClick={onClick} {...graphicProps} />
