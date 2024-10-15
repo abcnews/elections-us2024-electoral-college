@@ -12,6 +12,7 @@ import Graphic from './components/Graphic';
 import Illustration, { IllustrationName } from './components/Illustration';
 import Live from './components/Live';
 import { whenOdysseyLoaded } from './utils/getOdyssey';
+import './global.scss';
 
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {

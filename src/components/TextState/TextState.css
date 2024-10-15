@@ -34,30 +34,29 @@
 }
 
 .text-state[data-main-allocation='#{$Allocation_Dem}'] {
-  background-color: $color_Dem;
+  background: var(--Democrat-Called, #0062d1);
 }
 
 .text-state[data-main-allocation='#{$Allocation_LikelyDem}'] {
-  background-color: #a0c3f3;
-  color: #003e94;
+  background: var(--Democrat-Likely, #a0c3f3);
+  color: var(--Democrat-Label-Supp, #003e94);
 }
 
 .text-state[data-main-allocation='#{$Allocation_Unallocated}'] {
-  background-color: #7a7a7a;
+  background: var(--Stroke-De-emphasis, #7a7a7a);
   color: white;
   .text-state__acronym {
     box-sizing: border-box;
-    color: #525252;
-    background: #ebebeb;
     border-radius: 0px calc(4rem / 16) calc(4rem / 16) 0px;
-    border: 2px solid #7a7a7a;
-
+    color: var(--Secondary-lablels, #525252);
+    border: 2px solid var(--Stroke-De-emphasis, #7a7a7a);
+    background: var(--De-emphasis, #ebebeb);
     line-height: calc(150% - 4px); /* 27px */
   }
 }
 
 .text-state[data-main-allocation='#{$Allocation_UnallocatedFocused}'] {
-  background-color: #ebebeb;
+  background: var(--De-emphasis, #ebebeb);
   color: #000;
   .text-state__acronym {
     box-sizing: border-box;
@@ -75,21 +74,13 @@
 }
 
 .text-state[data-main-allocation='#{$Allocation_GOP}'] {
-  background-color: $color_GOP;
-}
-
-.text-state[data-relative-main-allocation='#{$Allocation_Dem}'] {
-  border-color: $color_Dem;
-}
-
-.text-state[data-relative-main-allocation='#{$Allocation_GOP}'] {
-  border-color: $color_GOP;
+  background: var(--Republican-Called, #cd1819);
 }
 
 .text-state[data-main-allocation='#{$Allocation_Dem}'],
 .text-state[data-main-allocation='#{$Allocation_GOP}'],
 .text-state[data-main-allocation='#{$Allocation_Unallocated}'] {
-  color: $color_BG;
+  color: white;
 }
 
 .text-state[data-main-allocation='#{$Allocation_Dem}'],
