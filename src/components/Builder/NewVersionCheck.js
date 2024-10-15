@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 async function newVersionCheck() {
-  const thisVersion = window.location.pathname.match(/\/interactive-voice-map\/(\d+\.\d+\.\d+)/)?.[1];
+  const thisVersion = window.location.pathname.match(/\/elections-us2024-electoral-college\/(\d+\.\d+\.\d+)/)?.[1];
   if (!thisVersion) {
-    return;
+    return Promise.resolve(null);
   }
   const [major, minor, patch] = thisVersion.split('.');
   const nextVersions = [
