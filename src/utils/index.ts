@@ -258,3 +258,8 @@ export const liveResultsToGraphicProps = data =>
       relative: DEFAULT_RELATIVE_ELECTION_YEAR
     }
   );
+
+/** For the given array of focuses, do we have at least one state focused? */
+export function getHasFocuses(focuses) {
+  return focuses && Object.values(focuses).some(value => value === Focus.Yes);
+}

@@ -5,6 +5,7 @@ import { Allocation, Allocations, Focus, Focuses, getStateIdForGroupId } from '.
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
 import AddRemoves from './AddRemoves/AddRemoves';
+import { getHasFocuses } from '../../utils';
 const { us2020, us2024 } = mapData;
 
 export type AddRemoves = {
@@ -28,7 +29,7 @@ export default function Tilegram(props: TilegramProps) {
   if (typeof focuses === 'undefined' || typeof allocations === 'undefined') return null;
   const year = props.year === 2024 ? 2024 : 2020;
 
-  const hasFocuses = focuses && Object.values(focuses).some(value => value === Focus.Yes);
+  const hasFocuses = getHasFocuses(focuses);
 
   // When any state has been allocated, change the style from None to Unallocated.
   const hasAllocations = Object.values(allocations).some(allocation => allocation !== 'n');

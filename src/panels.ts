@@ -1,15 +1,20 @@
+import React, { createElement } from 'react';
 import type { PanelDefinition } from '@abcnews/scrollyteller';
-import { PRESETS, StateId, STATES } from './constants';
-import { getStateAllocations } from './utils';
+import { Allocation, PRESETS, StateId, STATES } from './constants';
+import { getHasFocuses, getStateAllocations } from './utils';
 import blockStyles from './components/Block/styles.scss';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
+import { render } from 'react-dom';
+import TextState from './components/TextState/TextState';
 
 const SORTED_STATES = STATES.sort((a, b) => b.name.length - a.name.length);
 
 export function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraphicProps>[]) {
   const stateIntroductionTracker: { [key: string]: boolean } = {};
 
-  panels.forEach(({ data, nodes }) => {
+  panels.forEach(({ data, nodes }, i) => {
+    const stateIntroductionTrackerPanel: { [key: string]: boolean } = {};
+    const hasFocuses = getHasFocuses(data.focuses);
     const textNodes = nodes.reduce<Node[]>((memo, node) => memo.concat(textNodesUnder(node)), []);
 
     textNodes.forEach(node => {
@@ -40,35 +45,49 @@ export function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraph
         }
 
         const state = STATES.find(({ name }) => name === part);
+        const stateId = state ? StateId[state.id] : null;
 
-        if (!state) {
+        // If this isn't a state, or we've seen this state before
+        if (!stateId || stateIntroductionTrackerPanel[stateId]) {
           return parentEl.insertBefore(partTextNode, node);
         }
+        stateIntroductionTrackerPanel[stateId] = true;
 
         const partWrapperNode = document.createElement('span');
-        const stateId = StateId[state.id];
         const { allocations, relative } = data as GraphicProps;
-        const stateMainAllocation = allocations && getStateAllocations(stateId, allocations)[0];
+        let stateMainAllocation = allocations && getStateAllocations(stateId, allocations)[0];
+        if (stateMainAllocation === 'n' && hasFocuses) {
+          stateMainAllocation = Allocation.UnallocatedFocused;
+        }
         const relativeAllocations = relative && PRESETS[relative]?.allocations;
         const stateRelativeMainAllocation = relativeAllocations && getStateAllocations(stateId, relativeAllocations)[0];
 
-        if (!stateIntroductionTracker[stateId]) {
-          stateIntroductionTracker[stateId] = true;
-          partWrapperNode.setAttribute('data-is-first-encounter', '');
-        }
-
-        if (stateMainAllocation) {
-          partWrapperNode.setAttribute('data-main-allocation', stateMainAllocation);
-        }
-
-        if (stateRelativeMainAllocation) {
-          partWrapperNode.setAttribute('data-relative-main-allocation', stateRelativeMainAllocation);
-        }
-
-        partWrapperNode.setAttribute('data-state', stateId);
-        partWrapperNode.className = blockStyles.state;
-        partWrapperNode.appendChild(partTextNode);
         parentEl.insertBefore(partWrapperNode, node);
+
+        const isFirstEncounter = !stateIntroductionTracker[stateId];
+        stateIntroductionTracker[stateId] = true;
+        render(
+          createElement(TextState, {
+            name: state.name,
+            id: stateId,
+            allocation: stateMainAllocation,
+            showAbbr: isFirstEncounter
+          }),
+          partWrapperNode
+        );
+
+        // if (stateMainAllocation) {
+        //   partWrapperNode.setAttribute('data-main-allocation', stateMainAllocation);
+        // }
+
+        // if (stateRelativeMainAllocation) {
+        //   partWrapperNode.setAttribute('data-relative-main-allocation', stateRelativeMainAllocation);
+        // }
+
+        // partWrapperNode.setAttribute('data-state', stateId);
+        // partWrapperNode.className = blockStyles.state;
+        // partWrapperNode.appendChild(partTextNode);
+        // parentEl.insertBefore(partWrapperNode, node);
       });
 
       parentEl.removeChild(node);

@@ -1,5 +1,4 @@
 import acto from '@abcnews/alternating-case-to-object';
-import { getTier, TIERS } from '@abcnews/env-utils';
 import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
 // @ts-ignore
 import { loadScrollyteller } from '@abcnews/svelte-scrollyteller/wc';
@@ -9,7 +8,6 @@ import { applyColourToPanels } from './panels';
 import { alternatingCaseToGraphicProps, decodeAllocations, decodeFocuses } from './utils';
 import Blanks from './components/Blanks';
 import Block from './components/Block';
-import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
 import Graphic from './components/Graphic';
 import Illustration, { IllustrationName } from './components/Illustration';
 import Live from './components/Live';
@@ -20,7 +18,6 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
     const liveMounts = selectMounts('eclive');
     const scrollytellerMounts = selectMounts('scrollytellerNAME', { markAsUsed: false });
 
-    console.log({ scrollytellerMounts });
     const names = scrollytellerMounts
       .map(mountEl => (getMountValue(mountEl).match(/NAME([a-z]+)/) || [])[1])
       .filter(name => typeof name === 'string');

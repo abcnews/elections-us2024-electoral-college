@@ -1,0 +1,98 @@
+@import '../../constants.scss';
+.text-state {
+  display: inline-flex;
+  align-items: stretch;
+  background-color: $color_None;
+  white-space: nowrap;
+  color: black;
+
+  border-radius: 4px;
+  font-family: ABCSans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 27px */
+  padding: 0.1em calc(6rem / 16) 0;
+  height: 1.4em;
+}
+.text-state__inner,
+.text-state__acronym {
+  display: inline-flex;
+  align-items: center;
+}
+
+.text-state__inner {
+}
+
+.text-state__acronym {
+  padding: 0 calc(6rem / 16);
+  margin-left: calc(8rem / 16);
+  margin-right: calc(-6rem / 16);
+  margin-top: -0.1em;
+  padding-top: 0.1em;
+  box-shadow: -2px 0 white;
+}
+
+.text-state[data-main-allocation='#{$Allocation_Dem}'] {
+  background-color: $color_Dem;
+}
+
+.text-state[data-main-allocation='#{$Allocation_LikelyDem}'] {
+  background-color: #a0c3f3;
+  color: #003e94;
+}
+
+.text-state[data-main-allocation='#{$Allocation_Unallocated}'] {
+  background-color: #7a7a7a;
+  color: white;
+  .text-state__acronym {
+    box-sizing: border-box;
+    color: #525252;
+    background: #ebebeb;
+    border-radius: 0px calc(4rem / 16) calc(4rem / 16) 0px;
+    border: 2px solid #7a7a7a;
+
+    line-height: calc(150% - 4px); /* 27px */
+  }
+}
+
+.text-state[data-main-allocation='#{$Allocation_UnallocatedFocused}'] {
+  background-color: #ebebeb;
+  color: #000;
+  .text-state__acronym {
+    box-sizing: border-box;
+    background-color: white;
+    color: #000;
+    border-radius: 0px calc(4rem / 16) calc(4rem / 16) 0px;
+    border: 2px solid #000;
+
+    line-height: calc(150% - 4px); /* 27px */
+  }
+}
+
+.text-state[data-main-allocation='#{$Allocation_LikelyGOP}'] {
+  background-color: $color_LikelyGOP;
+}
+
+.text-state[data-main-allocation='#{$Allocation_GOP}'] {
+  background-color: $color_GOP;
+}
+
+.text-state[data-relative-main-allocation='#{$Allocation_Dem}'] {
+  border-color: $color_Dem;
+}
+
+.text-state[data-relative-main-allocation='#{$Allocation_GOP}'] {
+  border-color: $color_GOP;
+}
+
+.text-state[data-main-allocation='#{$Allocation_Dem}'],
+.text-state[data-main-allocation='#{$Allocation_GOP}'],
+.text-state[data-main-allocation='#{$Allocation_Unallocated}'] {
+  color: $color_BG;
+}
+
+.text-state[data-main-allocation='#{$Allocation_Dem}'],
+.text-state[data-main-allocation='#{$Allocation_GOP}'] {
+  border-color: transparent;
+}

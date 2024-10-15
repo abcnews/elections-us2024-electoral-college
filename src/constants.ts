@@ -24,7 +24,8 @@ export enum Allocation {
   LikelyDem = 's',
   LikelyGOP = 'e',
   GOP = 'r',
-  Unallocated = 'u'
+  Unallocated = 'u',
+  UnallocatedFocused = 'f'
 }
 
 export const ALLOCATIONS: string[] = Object.keys(Allocation).map(x => Allocation[x]);
