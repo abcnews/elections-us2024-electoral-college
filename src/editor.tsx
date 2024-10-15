@@ -3,5 +3,6 @@ import { selectMounts } from '@abcnews/mount-utils';
 import React from 'react';
 import { render } from 'react-dom';
 import Builder from './components/Builder';
+import './global.scss';
 
 whenDOMReady.then(() => render(<Builder />, selectMounts('eceditor')[0]));
