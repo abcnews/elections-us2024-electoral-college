@@ -63,7 +63,7 @@ export default function Tilegram(props: TilegramProps) {
               data={us2024}
               allocations={newAllocations}
               focuses={hasFocuses && focuses}
-              hexBorders={hexborders}
+              hexBorders={!hasAllocations && !hasFocuses && hexborders}
               hexflip={hexflip}
               hexani={hexani}
               isVisible={year === 2024}
@@ -75,7 +75,7 @@ export default function Tilegram(props: TilegramProps) {
               data={us2020}
               allocations={newAllocations}
               focuses={hasFocuses && focuses}
-              hexBorders={hexborders}
+              hexBorders={!hasAllocations && !hasFocuses && hexborders}
               hexflip={hexflip}
               hexani={hexani}
               isVisible={year !== 2024}
