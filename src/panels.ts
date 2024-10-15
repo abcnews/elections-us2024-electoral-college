@@ -2,7 +2,6 @@ import React, { createElement } from 'react';
 import type { PanelDefinition } from '@abcnews/scrollyteller';
 import { Allocation, PRESETS, StateId, STATES } from './constants';
 import { getHasFocuses, getStateAllocations } from './utils';
-import blockStyles from './components/Block/styles.scss';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
 import { render } from 'react-dom';
 import TextState from './components/TextState/TextState';
@@ -68,7 +67,7 @@ export function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraph
         stateIntroductionTracker[stateId] = true;
         render(
           createElement(TextState, {
-            name: state.name,
+            name: state?.name,
             id: stateId,
             allocation: stateMainAllocation,
             showAbbr: isFirstEncounter
