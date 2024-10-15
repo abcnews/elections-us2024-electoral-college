@@ -26,8 +26,8 @@
 }
 
 [data-mount][id^='ecgraphic']:not(:global(.u-pull)) > .root {
-  border: 0.0625rem solid $color_Grey;
-  background-color: $color_BG;
+  border: 0.0625rem solid #ebebeb;
+  background-color: white;
   padding: 0.5rem;
 }
 

@@ -16,7 +16,7 @@
 }
 
 .graphic {
-  [data-focus='#{$Focus_No}'] * {
+  [data-focus='n'] * {
     cursor: default !important;
   }
 }

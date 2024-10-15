@@ -2,7 +2,7 @@
 .text-state {
   display: inline-flex;
   align-items: stretch;
-  background-color: $color_None;
+  background-color: white;
   white-space: nowrap;
   color: black;
 

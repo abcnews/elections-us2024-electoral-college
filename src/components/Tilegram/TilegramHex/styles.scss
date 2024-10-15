@@ -1,11 +1,11 @@
 @import '../../../constants.scss';
 .root {
-  --allocation-r: #{$color_GOP};
-  --allocation-e: #{$color_LikelyGOP};
-  --allocation-d: #{$color_Dem};
-  --allocation-s: #{$color_LikelyDem};
-  --allocation-u: #{$color_Unallocated};
+  --allocation-d: var(--Democrat-Called);
+  --allocation-e: var(--Republican-Likely);
   --allocation-n: white;
+  --allocation-r: var(--Republican-Called);
+  --allocation-s: var(--Democrat-Likely);
+  --allocation-u: var(--De-emphasis);
 }
 .hex {
   transition: fill 1s, stroke 1s, opacity 1s;

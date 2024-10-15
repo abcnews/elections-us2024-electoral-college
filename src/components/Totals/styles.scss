@@ -47,11 +47,11 @@
 }
 
 .side[data-allocation='#{$Allocation_GOP}'] {
-  color: $color_GOP;
+  color: var(--Republican-Called);
 }
 
 .side[data-allocation='#{$Allocation_Dem}'] {
-  color: $color_Dem;
+  color: var(--Democrat-Called);
 }
 
 .midpointLabel {
@@ -111,21 +111,21 @@
 }
 
 .root[data-consistent-incumbent] .bar {
-  transition: transform $allocationTransitionDuration;
+  transition: transform 0.75s;
 }
 
 .bar[data-allocation='#{$Allocation_GOP}'] {
-  background-color: $color_GOP;
+  background-color: var(--Republican-Called);
 }
 
 .bar[data-allocation='#{$Allocation_Dem}'] {
-  background-color: $color_Dem;
+  background-color: var(--Democrat-Called);
 }
 
 .bar[data-allocation='#{$Allocation_LikelyGOP}'] {
-  background-color: $color_LikelyGOP;
+  background-color: var(--Republican-Likely);
 }
 
 .bar[data-allocation='#{$Allocation_LikelyDem}'] {
-  background-color: $color_LikelyDem;
+  background-color: var(--Democrat-Likely);
 }

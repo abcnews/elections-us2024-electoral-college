@@ -81,16 +81,16 @@
   margin-right: 0.25em;
   width: 1em;
   height: 1em;
-  background-color: $color_Black;
+  background-color: black;
   display: inline-block;
 }
 
 .result[data-allocation='#{$Allocation_Dem}']::before {
-  background-color: $color_Dem;
+  background-color: var(--Democrat-Called);
 }
 
 .result[data-allocation='#{$Allocation_GOP}']::before {
-  background-color: $color_GOP;
+  background-color: var(--Republican-Called);
 }
 
 .name {

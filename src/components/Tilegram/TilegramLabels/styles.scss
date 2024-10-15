@@ -44,19 +44,19 @@
 }
 
 .label-outline--r {
-  stroke: #{$color_GOP};
+  stroke: var(--Republican-Called);
 }
 .label-outline--d {
-  stroke: #{$color_Dem};
+  stroke: var(--Democrat-Called);
 }
 .label-outline--u {
-  stroke: #{$color_Unallocated};
+  stroke: var(--Stroke-De-emphasis);
 }
 .label-outline--e {
-  stroke: #{$color_LikelyGOP};
+  stroke: var(--Republican-Likely);
 }
 .label-outline--s {
-  stroke: #{$color_LikelyDem};
+  stroke: var(--Democrat-Likely);
 }
 
 .hidden {
