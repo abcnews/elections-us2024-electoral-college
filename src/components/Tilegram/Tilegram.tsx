@@ -1,7 +1,7 @@
 import React from 'react';
 import mapData from '../../../data/generated__mapdata.json';
 import styles from './styles.scss';
-import { Allocation, Allocations, Focus, Focuses, getStateIdForGroupId } from '../../constants';
+import { Allocation, Allocations, Focuses, getStateIdForGroupId } from '../../constants';
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
 import AddRemoves from './AddRemoves/AddRemoves';
