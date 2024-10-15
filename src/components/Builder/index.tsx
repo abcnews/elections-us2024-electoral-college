@@ -85,6 +85,7 @@ const Builder: React.FC = () => {
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [counting, setCounting] = useState(initialUrlParamProps.counting);
   const [hexBorders, setHexBorders] = useState(initialUrlParamProps.hexborders);
+  const [showcheck, setshowcheck] = useState(initialUrlParamProps.showcheck);
   const [hexflip, setHexflip] = useState(initialUrlParamProps.hexflip);
   const [hexani, setHexani] = useState(initialUrlParamProps.hexani);
   const [candidatesoverride, setCandidatesoverride] = useState<string | undefined>(
@@ -147,6 +148,7 @@ const Builder: React.FC = () => {
     setRelative(Number(graphicProps.relative) || DEFAULT_GRAPHIC_PROPS.relative);
     setCounting(graphicProps.counting || DEFAULT_GRAPHIC_PROPS.counting);
     setHexBorders(graphicProps.hexborders || DEFAULT_GRAPHIC_PROPS.hexborders);
+    setshowcheck(graphicProps.showcheck || DEFAULT_GRAPHIC_PROPS.showcheck);
     setHexflip(graphicProps.hexflip || DEFAULT_GRAPHIC_PROPS.hexflip);
     setHexani(graphicProps.hexani || DEFAULT_GRAPHIC_PROPS.hexani);
     setAddremoves(graphicProps.addremoves || DEFAULT_GRAPHIC_PROPS.addremoves);
@@ -175,12 +177,25 @@ const Builder: React.FC = () => {
       relative: relative,
       counting,
       hexborders: hexBorders,
+      showcheck: showcheck,
       hexflip,
       hexani,
       addremoves: Object.keys(addremoves).length > 0 ? addremoves : undefined,
       candidatesoverride: candidatesoverride
     }),
-    [allocations, focuses, year, relative, counting, hexBorders, hexflip, hexani, addremoves, candidatesoverride]
+    [
+      allocations,
+      focuses,
+      year,
+      relative,
+      counting,
+      hexBorders,
+      showcheck,
+      hexflip,
+      hexani,
+      addremoves,
+      candidatesoverride
+    ]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(
@@ -305,6 +320,20 @@ const Builder: React.FC = () => {
                 onChange={() => setHexBorders(!hexBorders)}
               ></input>
               Show hexagon borders
+            </label>
+          </span>
+        </div>
+        <div className={styles.flexRow}>
+          <span key="none">
+            <label>
+              <input
+                type="checkbox"
+                name="showcheck"
+                value="showcheck"
+                checked={showcheck}
+                onChange={() => setshowcheck(!showcheck)}
+              ></input>
+              Show winner checkmark
             </label>
           </span>
         </div>

@@ -1,96 +1,50 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import type { Allocations } from '../../constants';
 import {
-  Allocation,
   CANDIDATES,
   candidatesForYear,
   DEFAULT_ELECTION_YEAR,
-  ELECTION_YEARS_ALLOCATIONS_CANDIDATES
+  ELECTION_YEARS_ALLOCATIONS_CANDIDATES,
+  VOTES_TO_WIN
 } from '../../constants';
 import { getVoteCountsForAllocations } from '../../utils';
 import styles from './styles.scss';
-
-const MAX_VOTES = 538;
-const WIN_VOTES = Math.ceil((MAX_VOTES + 1) / 2);
-
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
+import Bar from './Bar/Bar';
 
 export type TotalsProps = {
   candidatesoverride?: string;
   year?: number;
   allocations?: Allocations;
+  showcheck?: boolean;
 };
 
 const Totals: React.FC<TotalsProps> = props => {
-  const { candidatesoverride, allocations, year } = props;
+  const { candidatesoverride, allocations, year, showcheck } = props;
   const voteCounts = useMemo(() => getVoteCountsForAllocations(allocations || {}, year), [allocations, year]);
   const sides = useMemo(() => ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year || DEFAULT_ELECTION_YEAR], [year]);
-  const incumbent = useMemo(() => Object.keys(sides)[0], [sides]);
-  const previousIncumbent = usePrevious(incumbent);
+
   const _candidatesoverride = candidatesoverride ? candidatesoverride.split('') : candidatesForYear(year);
 
-  const tX = (votes: number, side: Allocation) =>
-    side === incumbent ? (votes / MAX_VOTES) * 100 - 100 : (votes / MAX_VOTES) * -100 + 100;
   return (
-    <div
-      className={styles.root}
-      data-incumbent={incumbent}
-      data-consistent-incumbent={incumbent === previousIncumbent ? '' : undefined}
-    >
+    <div className={styles.root}>
       <div className={styles.text}>
         {Object.keys(sides).map((allocation, i) => (
           <div key={allocation} className={styles.side} data-allocation={allocation}>
+            {voteCounts[allocation] >= VOTES_TO_WIN && (
+              <span className={styles.winnerCheck}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+                  <circle cx="13" cy="13.1538" r="12.75" fill="#F5D989" />
+                  <path d="M19.3748 8.19547L10.1665 17.4038L5.9165 13.1538" stroke="black" stroke-width="2.83333" />
+                </svg>
+              </span>
+            )}
             <span className={styles.sideLabel}>{CANDIDATES[_candidatesoverride[i]]}</span>&nbsp;
             <span className={styles.sideValue}>{voteCounts[allocation]}</span>
           </div>
         ))}
       </div>
-      <div className={styles.midpointLabel}>{`${WIN_VOTES} to win`}</div>
-      <div className={styles.trackRoot}>
-        <div className={styles.midpoint}></div>
-        <div className={styles.track}>
-          <div
-            className={styles.bar}
-            title={`Likely Dem.: ${voteCounts[Allocation.LikelyDem]}`}
-            data-allocation={Allocation.LikelyDem}
-            style={{
-              transform: `translate(${tX(
-                voteCounts[Allocation.Dem] + voteCounts[Allocation.LikelyDem],
-                Allocation.Dem
-              )}%, 0)`
-            }}
-          ></div>
-          <div
-            className={styles.bar}
-            title={`Likely GOP: ${voteCounts[Allocation.LikelyGOP]}`}
-            data-allocation={Allocation.LikelyGOP}
-            style={{
-              transform: `translate(${tX(
-                voteCounts[Allocation.GOP] + voteCounts[Allocation.LikelyGOP],
-                Allocation.GOP
-              )}%, 0)`
-            }}
-          ></div>
-          <div
-            className={styles.bar}
-            title={`Dem.: ${voteCounts[Allocation.Dem]}`}
-            data-allocation={Allocation.Dem}
-            style={{ transform: `translate(${tX(voteCounts[Allocation.Dem], Allocation.Dem)}%, 0)` }}
-          ></div>
-          <div
-            className={styles.bar}
-            title={`GOP: ${voteCounts[Allocation.GOP]}`}
-            data-allocation={Allocation.GOP}
-            style={{ transform: `translate(${tX(voteCounts[Allocation.GOP], Allocation.GOP)}%, 0)` }}
-          ></div>
-        </div>
-      </div>
+
+      <Bar sides={sides} voteCounts={voteCounts} />
     </div>
   );
 };

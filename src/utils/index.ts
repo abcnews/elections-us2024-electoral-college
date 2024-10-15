@@ -128,6 +128,7 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string): GraphicP
     graphicProps.relative = null;
   }
   graphicProps.hexborders = !!graphicProps.hexborders;
+  graphicProps.showcheck = !!graphicProps.showcheck;
   graphicProps.hexflip = graphicProps.hexflip;
   graphicProps.hexani = graphicProps.hexani;
   graphicProps.addremoves = graphicProps.addremoves ? JSON.parse(decode(graphicProps.addremoves)) : {};
@@ -199,6 +200,10 @@ export const legactyUrlQueryToGraphicProps = (urlQuery: string) => {
 
   if (typeof graphicProps.hexborders === 'string') {
     graphicProps.hexborders = graphicProps.hexborders === 'true';
+  }
+
+  if (typeof graphicProps.showcheck === 'string') {
+    graphicProps.showcheck = graphicProps.showcheck === 'true';
   }
 
   if (typeof graphicProps.tappableLayer === 'string') {

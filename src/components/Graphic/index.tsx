@@ -24,6 +24,7 @@ export const DEFAULT_PROPS = {
   relative: null,
   counting: true,
   hexborders: false,
+  showcheck: false,
   hexflip: 'fade',
   hexani: 'none',
   addremoves: {},

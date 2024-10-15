@@ -1,5 +1,7 @@
 import mapData from '../data/generated__mapdata.json';
 
+export const VOTES_TO_WIN = 270;
+
 /** Turn a group ID into a state ID. I.e. Turn ME_1 into ME */
 export const getStateIdForGroupId = (groupId: string) => {
   return groupId.split('_')[0];

@@ -1,15 +1,16 @@
 @import '../../constants.scss';
 
 .root {
-  --trackHeight: 1rem;
+  --trackHeight: 16px;
   --radius: 4px;
-  --underBar: 15rem;
-  --underNumbers: 0.5rem;
+  --underBar: 0.5rem;
+  --underNumbers: 0.375rem;
 
   --sideSize: 28px;
   --sideLabelSize: 16px;
-  --midpointSize: 26px;
+  --midpointSize: 14px;
 
+  --checkGap: 0.5rem;
   overflow: hidden;
 
   @media (min-width: 46.5rem) {
@@ -18,36 +19,44 @@
     --sideSize: 40px;
     --sideLabelSize: 24px;
     --midpointSize: 16px;
+    --checkGap: 0.765625rem;
   }
 }
 
 .text {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  width: 100%;
-  background: hotpink;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .side {
-  border: 5px solid orange;
   display: flex;
+  align-items: baseline;
+  text-align: center;
+  font-family: ABCSans;
+  font-size: var(--sideSize);
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  letter-spacing: 0.84px;
   flex-direction: row-reverse;
-  background: limegreen;
-  justify-content: flex-end;
 }
 .side + .side {
-  border: 5px solid yellow;
   flex-direction: row;
 }
 .sideLabel {
-  border: 1px solid green;
+  font-size: var(--sideLabelSize);
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  font-family: ABCSerif;
 }
 
 .side[data-allocation='#{$Allocation_GOP}'] {
-  color: var(--Republican-Called);
+  color: $color_GOP;
 }
 
 .side[data-allocation='#{$Allocation_Dem}'] {
-  color: var(--Democrat-Called);
+  color: $color_Dem;
 }
 
 .midpointLabel {
@@ -107,23 +116,23 @@
 }
 
 .root[data-consistent-incumbent] .bar {
-  transition: transform 0.75s;
+  transition: transform $allocationTransitionDuration;
 }
 
 .bar[data-allocation='#{$Allocation_GOP}'] {
-  background-color: var(--Republican-Called);
+  background-color: $color_GOP;
 }
 
 .bar[data-allocation='#{$Allocation_Dem}'] {
-  background-color: var(--Democrat-Called);
+  background-color: $color_Dem;
 }
 
 .bar[data-allocation='#{$Allocation_LikelyGOP}'] {
-  background-color: var(--Republican-Likely);
+  background-color: $color_LikelyGOP;
 }
 
 .bar[data-allocation='#{$Allocation_LikelyDem}'] {
-  background-color: var(--Democrat-Likely);
+  background-color: $color_LikelyDem;
 }
 
 .winnerCheck {
