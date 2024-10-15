@@ -70,7 +70,8 @@
 }
 
 .text-state[data-main-allocation='#{$Allocation_LikelyGOP}'] {
-  background-color: $color_LikelyGOP;
+  color: var(--Republican-Label-Supp, #6b0002);
+  background: var(--Republican-Likely, #f5b7b2);
 }
 
 .text-state[data-main-allocation='#{$Allocation_GOP}'] {

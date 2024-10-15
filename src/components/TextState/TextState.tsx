@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import styles from './TextState.css';
 export default function TextState({ name, id, allocation, showAbbr }) {
   return (
