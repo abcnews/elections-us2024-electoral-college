@@ -1,0 +1,90 @@
+@import '../../../constants.scss';
+.root {
+  --trackHeight: 1rem;
+
+  // tablet
+  @media (min-width: 46.5rem) {
+    --trackHeight: calc(24rem / 16);
+  }
+}
+.bar__text {
+  color: var(--Secondary-lablels, #525252);
+  text-align: center;
+  font-family: ABCSans;
+  font-size: calc(14rem / 16);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 14px */
+
+  margin-bottom: calc(8rem / 16);
+
+  @media (min-width: 744px) {
+    font-size: 1rem;
+  }
+}
+
+.track {
+  border-radius: var(--size-radius-xs, 4px);
+  overflow: hidden;
+  height: var(--trackHeight);
+  position: relative;
+  background: var(--De-emphasis, #ebebeb);
+  display: flex;
+}
+
+.bar {
+  background: rgba(0, 0, 0, 0.1);
+  height: 100%;
+  margin-bottom: -100%;
+  transition: width 0.5s;
+}
+
+.bar[data-allocation='#{$Allocation_Dem}'] {
+  background-color: var(--Democrat-Called);
+}
+.bar[data-allocation='#{$Allocation_LikelyDem}'] {
+  background-color: var(--Democrat-Likely);
+}
+.bar[data-allocation='#{$Allocation_LikelyGOP}'] {
+  background-color: var(--Republican-Likely);
+}
+.bar[data-allocation='#{$Allocation_GOP}'] {
+  background-color: var(--Republican-Called);
+}
+.bar[data-allocation='u'] {
+  flex: 1;
+}
+
+.accessible-hide {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.midpoint {
+  &:after,
+  &:before {
+    content: '';
+    display: block;
+    width: 1px;
+    position: absolute;
+    left: 50%;
+    background: #575757;
+  }
+  &:before {
+    height: calc(var(--trackHeight) + 10px);
+    translate: 0 -7px;
+  }
+  &:after {
+    z-index: 10;
+    height: var(--trackHeight);
+    translate: none;
+    background: #999;
+    mix-blend-mode: luminosity;
+    translate: 0 0;
+  }
+}
