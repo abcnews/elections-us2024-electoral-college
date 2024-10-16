@@ -25,21 +25,74 @@
   display: grid;
   grid-template-columns: 50% 50%;
   width: 100%;
-  background: hotpink;
+  margin-bottom: -1.5rem;
 }
 .side {
-  border: 5px solid orange;
-  display: flex;
-  flex-direction: row-reverse;
-  background: limegreen;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  width: fit-content;
 }
-.side + .side {
-  border: 5px solid yellow;
-  flex-direction: row;
+.side > * {
+  display: flex;
+  align-items: center;
 }
 .sideLabel {
-  border: 1px solid green;
+  text-align: center;
+  font-family: ABCSerif;
+  font-size: calc(14rem / 16);
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  min-height: 1.8rem;
+}
+.sideValue {
+  text-align: center;
+  font-family: ABCSans;
+  font-size: calc(24rem / 16);
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  grid-column-start: 1;
+  grid-row-start: 2;
+  align-items: flex-start;
+  margin-top: -0.4rem;
+}
+
+.winnerCheck {
+  scale: 0.75;
+  transform-origin: bottom center;
+  grid-column-start: 2;
+  grid-row-start: 1;
+  margin: 0 0 0 calc(4rem / 16);
+  animation: fadeIn 0.3s;
+  transform-origin: center;
+
+  @media (min-width: 46.5rem) {
+    margin: 0 0.765625rem;
+    scale: 1;
+  }
+}
+
+.side + .side {
+  margin-left: auto;
+  text-align: right;
+  & > * {
+    justify-content: flex-end;
+  }
+  .sideLabel {
+    grid-column-start: 2;
+    grid-row-start: 1;
+  }
+  .sideValue {
+    grid-column-start: 2;
+    grid-row-start: 2;
+  }
+  .winnerCheck {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    margin: 0 calc(4rem / 16);
+  }
 }
 
 .side[data-allocation='#{$Allocation_GOP}'] {
@@ -50,89 +103,12 @@
   color: var(--Democrat-Called);
 }
 
-.midpointLabel {
-  color: #575757;
-  text-align: center;
-  font-family: 'ABCSans';
-  font-size: var(--midpointSize);
-  font-style: normal;
-  font-weight: 700;
-  height: 2rem;
-  margin-top: -2.3rem;
-  margin-bottom: var(--underNumbers);
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  pointer-events: none;
-}
-.midpoint {
-  &:after,
-  &:before {
-    content: '';
-    display: block;
-    width: 1px;
-    position: absolute;
-    left: 50%;
-    background: #575757;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    scale: 0.5;
   }
-  &:before {
-    height: calc(var(--trackHeight) + 10px);
-    translate: 0 -7px;
-  }
-  &:after {
-    z-index: 10;
-    height: var(--trackHeight);
-    translate: none;
-    background: #999;
-    mix-blend-mode: luminosity;
-    translate: 0 0;
-  }
-}
-
-.track {
-  background: #ebebeb;
-  border-radius: var(--radius);
-  height: var(--trackHeight);
-  position: relative;
-  overflow: hidden;
-  margin-bottom: var(--underBar);
-}
-
-.bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.root[data-consistent-incumbent] .bar {
-  transition: transform 0.75s;
-}
-
-.bar[data-allocation='#{$Allocation_GOP}'] {
-  background-color: var(--Republican-Called);
-}
-
-.bar[data-allocation='#{$Allocation_Dem}'] {
-  background-color: var(--Democrat-Called);
-}
-
-.bar[data-allocation='#{$Allocation_LikelyGOP}'] {
-  background-color: var(--Republican-Likely);
-}
-
-.bar[data-allocation='#{$Allocation_LikelyDem}'] {
-  background-color: var(--Democrat-Likely);
-}
-
-.winnerCheck {
-  margin: 0 0.5rem;
-  scale: 0.75;
-  transform-origin: bottom center;
-
-  @media (min-width: 46.5rem) {
-    margin: 0 0.765625rem;
-    scale: 1;
+  to {
+    opacity: 1;
   }
 }
