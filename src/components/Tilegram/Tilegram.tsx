@@ -90,6 +90,7 @@ export default function Tilegram(props: TilegramProps) {
               allocations={allocations}
               focuses={hasFocuses && focuses}
               hexani={hexani}
+              hasAllocations={hasAllocations}
             />
           </g>
         </svg>

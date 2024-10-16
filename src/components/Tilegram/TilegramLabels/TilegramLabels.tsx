@@ -4,13 +4,14 @@ import { getStateAllocations } from '../../../utils';
 import { Focus } from '../../../constants';
 import { getStyleDelays } from '../util';
 
-export function TilegramLabels({ data, allocations, focuses, hexani }) {
+export function TilegramLabels({ data, allocations, focuses, hexani, hasAllocations }) {
   const { STATES_DELEGATE_HEXES, labels } = data;
   return (
     <>
       {Object.entries(STATES_DELEGATE_HEXES).map(([state, paths]) => {
         const stateAllocations = allocations && getStateAllocations(state, allocations);
-        const stateMainAllocation = stateAllocations && stateAllocations[0];
+        // 'default' doesn't exist, but the labels are black by default.
+        const stateMainAllocation = !hasAllocations ? 'default' : stateAllocations && stateAllocations[0];
         const [labelX, labelY] = labels[state];
         const style = {
           ...getStyleDelays(labelX, labelY, hexani),

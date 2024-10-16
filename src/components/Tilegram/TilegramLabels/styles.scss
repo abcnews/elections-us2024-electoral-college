@@ -25,14 +25,15 @@
 .label--d {
   fill: white;
 }
-.label--u {
-  fill: #575757;
+
+.label--n {
+  fill: var(--Secondary-lablels);
 }
 .label-s {
-  fill: #003e94;
+  stroke: var(--Democrat-Label-Supp);
 }
 .label--e {
-  fill: #6b0002;
+  stroke: var(--Republican-Label-Supp);
 }
 
 .label-outline {
