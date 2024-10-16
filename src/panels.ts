@@ -6,8 +6,6 @@ import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Gra
 import { render } from 'react-dom';
 import TextState from './components/TextState/TextState';
 
-const SORTED_STATES = STATES.sort((a, b) => b.name.length - a.name.length);
-
 export function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraphicProps>[]) {
   panels.forEach(({ data, nodes }, i) => {
     const hasFocuses = getHasFocuses(data.focuses);

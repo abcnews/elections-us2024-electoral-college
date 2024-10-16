@@ -149,15 +149,15 @@ export const MIXINS: Presets = {
     name: 'Safe Dem.',
     allocations: {
       CA: Allocation.Dem,
+      CO: Allocation.Dem,
       CT: Allocation.Dem,
       DE: Allocation.Dem,
       DC: Allocation.Dem,
       HI: Allocation.Dem,
       IL: Allocation.Dem,
-      ME_1: Allocation.Dem,
+      ME_2: Allocation.Dem,
       MD: Allocation.Dem,
       MA: Allocation.Dem,
-      NM: Allocation.Dem,
       NJ: Allocation.Dem,
       NY: Allocation.Dem,
       OR: Allocation.Dem,
@@ -174,22 +174,47 @@ export const MIXINS: Presets = {
       AK: Allocation.GOP,
       AR: Allocation.GOP,
       ID: Allocation.GOP,
+      IN: Allocation.GOP,
+      IA: Allocation.GOP,
       KS: Allocation.GOP,
       KY: Allocation.GOP,
       LA: Allocation.GOP,
       MS: Allocation.GOP,
+      MO: Allocation.GOP,
       MT: Allocation.GOP,
       NE_0: Allocation.GOP,
-      NE_1: Allocation.GOP,
+      NE_2: Allocation.GOP,
       NE_3: Allocation.GOP,
       ND: Allocation.GOP,
+      OH: Allocation.GOP,
       OK: Allocation.GOP,
       SC: Allocation.GOP,
       SD: Allocation.GOP,
       TN: Allocation.GOP,
-      TX: Allocation.GOP,
+      UT: Allocation.GOP,
       WV: Allocation.GOP,
       WY: Allocation.GOP
+    },
+    focuses: {}
+  },
+  likelydem: {
+    name: 'Likely Dem',
+    allocations: {
+      ME_0: Allocation.LikelyDem,
+      MN: Allocation.LikelyDem,
+      NH: Allocation.LikelyDem,
+      NM: Allocation.LikelyDem,
+      VA: Allocation.LikelyDem,
+      NE_1: Allocation.LikelyDem
+    },
+    focuses: {}
+  },
+  likelygop: {
+    name: 'Likely GOP',
+    allocations: {
+      FL: Allocation.LikelyGOP,
+      ME_1: Allocation.LikelyGOP,
+      TX: Allocation.LikelyGOP
     },
     focuses: {}
   },
@@ -397,6 +422,16 @@ export const PRESETS: Presets = {
     allocations: {
       ...MIXINS.safedem.allocations,
       ...MIXINS.safegop.allocations
+    },
+    focuses: {}
+  },
+  safeLikely: {
+    name: 'Safe & likely',
+    allocations: {
+      ...MIXINS.safedem.allocations,
+      ...MIXINS.safegop.allocations,
+      ...MIXINS.likelydem.allocations,
+      ...MIXINS.likelygop.allocations
     },
     focuses: {}
   },

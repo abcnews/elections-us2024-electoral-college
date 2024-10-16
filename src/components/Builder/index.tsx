@@ -12,7 +12,9 @@ import {
   HEX_ANIMATIONS,
   HEX_ANIMATION_STYLES,
   GROUPS,
-  candidatesForYear
+  candidatesForYear,
+  STATES,
+  StateId
 } from '../../constants';
 import CandidateDropdown from './CandidateDropdown/CandidateDropdown';
 import { loadData } from '../../data';
