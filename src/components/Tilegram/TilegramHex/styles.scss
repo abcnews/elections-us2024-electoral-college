@@ -8,7 +8,7 @@
   --allocation-u: var(--De-emphasis);
 }
 .hex {
-  transition: fill 1s, stroke 1s, opacity 1s;
+  transition: fill 1s, stroke 1s, opacity 1s, scale 1s;
   stroke: transparent;
   fill: var(--to);
   //  Make the hexes slightly larger so they fill the gaps a little more
@@ -77,6 +77,7 @@
 
 .defocused {
   opacity: 0.08 !important;
+  scale: 1 !important;
 }
 
 .defocusedgrey {

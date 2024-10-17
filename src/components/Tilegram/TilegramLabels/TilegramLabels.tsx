@@ -11,7 +11,7 @@ export function TilegramLabels({ data, allocations, focuses, hexani, hasAllocati
       {Object.entries(STATES_DELEGATE_HEXES).map(([state, paths]) => {
         const stateAllocations = allocations && getStateAllocations(state, allocations);
         // 'default' doesn't exist, but the labels are black by default.
-        const stateMainAllocation = !hasAllocations ? 'default' : stateAllocations && stateAllocations[0];
+        const stateMainAllocation = !hasAllocations ? 'default' : (stateAllocations && stateAllocations[0]) || 'x';
         const [labelX, labelY] = labels[state];
         const style = {
           ...getStyleDelays(labelX, labelY, hexani),

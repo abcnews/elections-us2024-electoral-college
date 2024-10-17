@@ -29,15 +29,24 @@
 .label--n {
   fill: var(--Secondary-lablels);
 }
-.label-s {
-  stroke: var(--Democrat-Label-Supp);
+.label--r {
+  fill: white;
+}
+.label--d {
+  fill: white;
+}
+.label--u {
+  fill: var(--Stroke-De-emphasis);
+}
+.label--s {
+  fill: var(--Democrat-Label-Supp);
 }
 .label--e {
-  stroke: var(--Republican-Label-Supp);
+  fill: var(--Republican-Label-Supp);
 }
 
 .label-outline {
-  stroke: transparent;
+  stroke: white;
   stroke-opacity: 0.5;
   stroke-width: 4;
   stroke-linecap: round;
