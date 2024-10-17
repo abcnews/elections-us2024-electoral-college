@@ -27,9 +27,9 @@ export default function Bar({ sides, voteCounts }) {
     const width = allocation === Allocation.Unallocated ? 'auto' : Math.round((count / MAX_VOTES) * 100) + '%';
     const fullAltText = `${altText}: ${count} votes/${width}`;
     return (
-      // We key these by index (i) because when we reverse them, we don't want
+      // Don't key these because when we reverse them, we don't want
       // to rerender everything.
-      <div key={i} className={styles.bar} style={{ width }} data-allocation={allocation}>
+      <div className={styles.bar} style={{ width }} data-allocation={allocation}>
         <span className={styles.accessibleHide}>{fullAltText}</span>
       </div>
     );
