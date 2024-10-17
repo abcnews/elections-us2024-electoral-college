@@ -16,25 +16,28 @@ export default function Bar({ sides, voteCounts }) {
   const incumbent = useMemo(() => Object.keys(sides)[0], [sides]);
   const previousIncumbent = usePrevious(incumbent);
 
-  const tX = (votes: number, side) =>
-    side === incumbent ? (votes / MAX_VOTES) * 100 - 100 : (votes / MAX_VOTES) * -100 + 100;
-
   const bars = [
     [Allocation.Dem, 'Democrat'],
     [Allocation.LikelyDem, 'Likely Democrat'],
     [Allocation.Unallocated, 'Unallocated'],
     [Allocation.LikelyGOP, 'Likely GOP'],
     [Allocation.GOP, 'GOP']
-  ].map(([allocation, altText]) => {
+  ].map(([allocation, altText], i) => {
     const count = voteCounts[allocation];
     const width = allocation === Allocation.Unallocated ? 'auto' : Math.round((count / MAX_VOTES) * 100) + '%';
     const fullAltText = `${altText}: ${count} votes/${width}`;
     return (
-      <div key={allocation} className={styles.bar} style={{ width }} data-allocation={allocation}>
+      // We key these by index (i) because when we reverse them, we don't want
+      // to rerender everything.
+      <div key={i} className={styles.bar} style={{ width }} data-allocation={allocation}>
         <span className={styles.accessibleHide}>{fullAltText}</span>
       </div>
     );
   });
+
+  if (Object.keys(sides)[0] === 'r') {
+    bars.reverse();
+  }
 
   return (
     <div

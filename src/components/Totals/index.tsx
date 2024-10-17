@@ -24,13 +24,14 @@ const Totals: React.FC<TotalsProps> = props => {
   const sides = useMemo(() => ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year || DEFAULT_ELECTION_YEAR], [year]);
 
   const _candidatesoverride = candidatesoverride ? candidatesoverride.split('') : candidatesForYear(year);
+  console.log({ sides });
 
   return (
     <div className={styles.root}>
       <div className={styles.text}>
         {Object.keys(sides).map((allocation, i) => (
           <div key={allocation} className={styles.side} data-allocation={allocation}>
-            {voteCounts[allocation] >= VOTES_TO_WIN && (
+            {voteCounts[allocation] >= VOTES_TO_WIN && showcheck && (
               <span className={styles.winnerCheck}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                   <circle cx="13" cy="13.1538" r="12.75" fill="#F5D989" />
