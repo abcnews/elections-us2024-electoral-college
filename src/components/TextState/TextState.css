@@ -8,12 +8,13 @@
 
   border-radius: 4px;
   font-family: ABCSans;
-  font-size: 18px;
+  font-size: calc(1em - 2px);
   font-style: normal;
   font-weight: 700;
   line-height: 150%; /* 27px */
   padding: 0.1em calc(6rem / 16) 0;
   height: 1.4em;
+  margin: 0 0.1rem;
 }
 .text-state__inner,
 .text-state__acronym {
