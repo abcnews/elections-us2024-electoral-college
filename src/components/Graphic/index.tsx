@@ -32,13 +32,13 @@ export const DEFAULT_PROPS = {
 };
 
 const Graphic: React.FC<GraphicProps> = props => {
-  const { candidatesoverride, title, counting, year, allocations, children, ...otherTilegramProps } = props;
+  const { candidatesoverride, title, counting, year, allocations, children, showcheck, ...otherTilegramProps } = props;
   const isCounting = typeof counting !== 'boolean' || counting;
 
   return (
     <div className={styles.root} title={title}>
       <header className={styles.header} data-is-counting={isCounting ? '' : undefined}>
-        <Totals candidatesoverride={candidatesoverride} allocations={allocations} year={year} />
+        <Totals candidatesoverride={candidatesoverride} allocations={allocations} year={year} showcheck={showcheck} />
       </header>
       <Tilegram allocations={allocations} year={year} {...otherTilegramProps} />
     </div>

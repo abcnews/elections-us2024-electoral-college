@@ -24,7 +24,6 @@ const Totals: React.FC<TotalsProps> = props => {
   const sides = useMemo(() => ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year || DEFAULT_ELECTION_YEAR], [year]);
 
   const _candidatesoverride = candidatesoverride ? candidatesoverride.split('') : candidatesForYear(year);
-  console.log({ sides });
 
   return (
     <div className={styles.root}>

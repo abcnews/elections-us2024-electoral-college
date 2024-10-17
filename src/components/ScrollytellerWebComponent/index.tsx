@@ -18,10 +18,8 @@ function tryUntil(condition, action, interval = 100) {
 /** Portals children into the given DOM node */
 function ScrollytellerPortalChild({ domNode, children }) {
   if (!domNode) {
-    console.log('portal - no dom node, not rendering');
     return null;
   }
-  console.log('portal - found child, rendering in', domNode);
   return createPortal(children, domNode);
 }
 
