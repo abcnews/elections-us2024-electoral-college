@@ -25,7 +25,7 @@
   .text {
     display: flex;
     justify-content: space-between;
-    margin-bottom: -1.5rem;
+    margin-bottom: -1.3rem;
   }
   .side {
     display: flex;
@@ -55,12 +55,14 @@
     transform: translateY(0.2rem);
   }
 }
+
+// mobile
 @media (max-width: 46.5rem) {
   .text {
     display: grid;
     grid-template-columns: 50% 50%;
     width: 100%;
-    margin-bottom: -1.5rem;
+    margin-bottom: -1.1rem;
   }
   .side {
     display: grid;
@@ -91,7 +93,7 @@
     grid-column-start: 1;
     grid-row-start: 2;
     align-items: flex-start;
-    margin-top: -0.4rem;
+    margin-top: -0.1rem;
   }
 
   .winnerCheck {
