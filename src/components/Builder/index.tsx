@@ -494,7 +494,7 @@ const Builder: React.FC = () => {
           </DialogHeader>
 
           {Object.entries(Allocation)
-            .slice(0, -1)
+            .slice(0, -2)
             .map(([name, value]) => (
               <DialogLabel>
                 <input
