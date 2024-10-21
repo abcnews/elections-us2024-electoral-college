@@ -29,10 +29,8 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
       scrollytellerMounts.forEach(mount => mount.style.setProperty('--color-panel-opacity-inactive', 0.6));
     }
 
-    if (window.location.hash.includes('loosen')) {
-      //@ts-ignore
-      scrollytellerMounts.forEach(mount => mount.style.setProperty('--color-panel-margin', '40vh'));
-    }
+    //@ts-ignore
+    scrollytellerMounts.forEach(mount => mount.style.setProperty('--color-panel-margin', '40vh'));
 
     const scrollytellerDefinitions: any[] = [];
 
