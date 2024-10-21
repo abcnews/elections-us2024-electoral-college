@@ -11,8 +11,6 @@ interface BlockProps {
 }
 
 const Block: React.FC<BlockProps> = ({ panels }) => {
-  const { subscribe, unsubscribe } = getOdyssey().scheduler;
-  const graphicRef = useRef<HTMLDivElement>(null);
   const [graphicProps, setGraphicProps] = useState(panels[0].data);
   const onMarker = useCallback(graphicProps => {
     setGraphicProps(graphicProps);

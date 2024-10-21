@@ -33,7 +33,7 @@ export const getGroupIdsForStateId = (stateId: string) => {
 
 export const getVoteCountsForAllocations = (
   allocations: Allocations,
-  year: number = 2024
+  year: number = DEFAULT_ELECTION_YEAR
 ): { [key: string]: number } => {
   return ALLOCATIONS.reduce((memo, allocation) => {
     memo[allocation] = GROUPS.filter(({ id }) => allocations[id] === allocation).reduce((memo, current) => {

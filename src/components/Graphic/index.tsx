@@ -1,5 +1,5 @@
 import React from 'react';
-import { DEFAULT_ELECTION_YEAR } from '../../constants';
+import { DEFAULT_ELECTION_YEAR, DEFAULT_RELATIVE_ELECTION_YEAR } from '../../constants';
 import type { TilegramProps } from '../Tilegram/Tilegram';
 import Tilegram from '../Tilegram/Tilegram';
 import type { TotalsProps } from '../Totals';
@@ -32,7 +32,16 @@ export const DEFAULT_PROPS = {
 };
 
 const Graphic: React.FC<GraphicProps> = props => {
-  const { candidatesoverride, title, counting, year, allocations, children, showcheck, ...otherTilegramProps } = props;
+  const {
+    candidatesoverride,
+    title,
+    counting,
+    year = DEFAULT_ELECTION_YEAR,
+    allocations,
+    children,
+    showcheck,
+    ...otherTilegramProps
+  } = props;
   const isCounting = typeof counting !== 'boolean' || counting;
 
   return (

@@ -38,7 +38,6 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
 
     for (const name of names) {
       let scrollytellerDefinition: any;
-      console.log('load scrollytellering', name);
 
       try {
         scrollytellerDefinition = loadScrollyteller(name, 'u-full');
@@ -118,6 +117,7 @@ whenOdysseyLoaded.then(() => {
 
   standaloneGraphicMounts.forEach(mount => {
     const graphicProps = alternatingCaseToGraphicProps(getMountValue(mount));
+    console.log({ graphicProps });
 
     mount.classList.add('u-pull');
     render(<Graphic {...graphicProps} />, mount);
