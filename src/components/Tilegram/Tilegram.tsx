@@ -56,7 +56,7 @@ export default function Tilegram(props: TilegramProps) {
   return (
     <>
       <div className={styles.root} onClick={clickHandler} data-year={year}>
-        <svg viewBox="0 0 1043 759">
+        <svg viewBox="-2 0 1043 759">
           <g id="hex-2024" className={styles.tiles2024}>
             <TilegramHexes
               id="2024"
