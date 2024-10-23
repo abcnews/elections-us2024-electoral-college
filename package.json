@@ -1,6 +1,6 @@
 {
 	"name": "elections-us2024-electoral-college",
-	"version": "1.0.45",
+	"version": "1.0.46",
 	"description": " Successor of https://github.com/abcnews/elections-us2020-electoral-college",
 	"license": "MIT",
 	"private": true,
