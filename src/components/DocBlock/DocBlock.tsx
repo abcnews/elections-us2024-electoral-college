@@ -10,6 +10,7 @@ import Block from '../Block';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from '../Graphic';
 import Live from '../Live';
 import './minimal-odyssey';
+import fallbacks from './fallbacks';
 
 const urlQueryToGraphicProps = string => string;
 const LOAD_SCROLLYTELLER_ARGS = { name: 'ecblock', markerName: 'mark' };
@@ -31,6 +32,8 @@ const preprocessCoreEl = el => {
 
     pEl.textContent = `#${markerPrefix}${graphicPropsToAlternatingCase(graphicProps)}`;
 
+    console.log('processed', pEl.textContent);
+
     return pEl;
   }
 
@@ -44,7 +47,6 @@ const postprocessScrollytellerDefinition = scrollytellerDefinition => {
 
     nodes.forEach(el => {
       if (isMount(el, 'eclive')) {
-        console.log({ acto });
         //@ts-ignore
         const { state, test, hide } = acto(el.id || '');
 
@@ -68,9 +70,7 @@ const renderFallbackImagesButton = ({ panels }) => (
       const buttonEl = event.target;
 
       if (panels) {
-        import(/* webpackChunkName: "fallbacks" */ './fallbacks').then(module =>
-          module.default(buttonEl, panels as PanelDefinition<GraphicProps>[])
-        );
+        fallbacks(buttonEl, panels as PanelDefinition<GraphicProps>[]);
       }
     }}
   >

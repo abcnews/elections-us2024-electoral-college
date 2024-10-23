@@ -4,6 +4,7 @@ import JSZip from 'jszip';
 import graphicStyles from '../Graphic/styles.scss';
 import tilegramStyles from '../Tilegram/styles.scss';
 import { DEFAULT_PROPS, GraphicProps } from '../Graphic';
+import { graphicPropsToAlternatingCase } from '../../utils';
 
 const graphicPropsToUrlQuery = ({}, {}) => '';
 
@@ -12,6 +13,7 @@ export default function run(initiatingElement, panels) {
   const filenames: string[] = [];
 
   function processPanel({ data, nodes }) {
+    console.log({ data });
     graphicsProps.push({
       ...DEFAULT_PROPS,
       ...data
@@ -27,25 +29,26 @@ export default function run(initiatingElement, panels) {
     });
   }
 
-  const imageURLs = graphicsProps.map(
-    graphicProps =>
-      `https://cors-anywhere.herokuapp.com/https://fallback-automation.drzax.now.sh/api?url=${encodeURIComponent(
-        `${__webpack_public_path__}editor/${graphicPropsToUrlQuery(graphicProps, DEFAULT_PROPS)}`
-      )}&width=600&selector=.${graphicProps.counting ? graphicStyles.root : tilegramStyles.root}`
-  );
-
-  // When developing, fallback-automation.drzax.now.sh needs a public URL
+  //  2020 edition
   // const imageURLs = graphicsProps.map(
   //   graphicProps =>
   //     `https://cors-anywhere.herokuapp.com/https://fallback-automation.drzax.now.sh/api?url=${encodeURIComponent(
-  //       `https://www.abc.net.au/res/sites/news-projects/elections-us2020-electoral-college/1.2.0/editor/${graphicPropsToUrlQuery(
-  //         graphicProps,
-  //         DEFAULT_GRAPHIC_PROPS
-  //       )}`
-  //     )}&width=600&selector=.${graphicProps.counting ? '_1Ykpoi' : '_3-hRFt'}`
+  //       `${__webpack_public_path__}editor/${graphicPropsToUrlQuery(graphicProps, DEFAULT_PROPS)}`
+  //     )}&width=600&selector=.${graphicProps.counting ? graphicStyles.root : tilegramStyles.root}`
   // );
 
+  // 2024 edition
+  // const urlRoot = `https://www.abc.net.au/res/sites/news-projects/elections-us2024-electoral-college/1.0.43/editor/`;
+  const urlRoot = `${__webpack_public_path__}editor/`;
+  const imageURLs = graphicsProps.map(
+    graphicProps =>
+      `https://fallback-automation-inky.vercel.app/api?url=${encodeURIComponent(
+        `${urlRoot}#${graphicPropsToAlternatingCase(graphicProps)}`
+      )}&width=600&selector=.${graphicProps.counting ? graphicStyles.root : tilegramStyles.root}`
+  );
+
   const zip = new JSZip();
+  console.log({ imageURLs });
   const imageBlobPromises = imageURLs.map(url => fetch(url).then(response => response.blob()));
 
   (initiatingElement as HTMLElement).style.pointerEvents = 'none';
