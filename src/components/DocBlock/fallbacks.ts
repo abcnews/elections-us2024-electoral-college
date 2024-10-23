@@ -6,7 +6,7 @@ import tilegramStyles from '../Tilegram/styles.scss';
 import { DEFAULT_PROPS, GraphicProps } from '../Graphic';
 import { graphicPropsToAlternatingCase } from '../../utils';
 
-export default function run(initiatingElement, panels) {
+export default async function run(initiatingElement, panels) {
   const graphicsProps: GraphicProps[] = [];
   const filenames: string[] = [];
 
@@ -43,7 +43,12 @@ export default function run(initiatingElement, panels) {
     [
       imgServiceRoot,
       new URLSearchParams({
-        url: `${urlRoot}#${graphicPropsToAlternatingCase(graphicProps)}`,
+        url: `${urlRoot}#${graphicPropsToAlternatingCase({
+          ...graphicProps,
+          // Disable animations otherwise we can get partial screenshots
+          hexani: undefined,
+          hexflip: undefined
+        })}`,
         selector: '.' + graphicProps.counting ? graphicStyles.root : tilegramStyles.root
       }).toString()
     ].join('?')
@@ -59,39 +64,27 @@ export default function run(initiatingElement, panels) {
     })
   );
 
-  (initiatingElement as HTMLElement).style.pointerEvents = 'none';
-
-  const end = () => {
-    (initiatingElement as HTMLElement).style.pointerEvents = 'initial';
-  };
-
   const missing: string[] = [];
 
-  Promise.all(imageBlobPromises)
-    .then(blobs => {
-      blobs.forEach((blob, index) => {
-        const filename = `${String(index).padStart(3, '0')}-${filenames[index]}.png`;
-        if (blob) {
-          zip.file(filename, blob);
-        } else {
-          missing.push(filename);
-        }
-      });
-
-      if (missing.length === imageBlobPromises.length) {
-        alert('Could not download files. The fallback service may not be running.');
-        return;
-      } else if (missing.length) {
-        alert('Error: could not download some files. These might be missing from the zip:\n\n' + missing.join('\n'));
+  return Promise.all(imageBlobPromises).then(blobs => {
+    blobs.forEach((blob, index) => {
+      const filename = `${String(index).padStart(3, '0')}-${filenames[index]}.png`;
+      if (blob) {
+        zip.file(filename, blob);
+      } else {
+        missing.push(filename);
       }
+    });
 
-      zip
-        .generateAsync({ type: 'blob' })
-        .then(content => {
-          saveAs(content, `ec-fallback-bundle-${Date.now()}.zip`);
-          end();
-        })
-        .catch(end);
-    })
-    .catch(end);
+    if (missing.length === imageBlobPromises.length) {
+      alert('Could not download files. The fallback service may not be running.');
+      return;
+    } else if (missing.length) {
+      alert('Error: could not download some files. These might be missing from the zip:\n\n' + missing.join('\n'));
+    }
+
+    return zip.generateAsync({ type: 'blob' }).then(content => {
+      saveAs(content, `ec-fallback-bundle-${Date.now()}.zip`);
+    });
+  });
 }

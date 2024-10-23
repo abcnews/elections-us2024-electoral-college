@@ -2,7 +2,7 @@ import * as acto from '@abcnews/alternating-case-to-object';
 import GoogleDocScrollyteller from '@abcnews/google-doc-scrollyteller';
 import { isMount } from '@abcnews/mount-utils';
 import type { PanelDefinition } from '@abcnews/scrollyteller';
-import React from 'react';
+import React, { useState } from 'react';
 import { render } from 'react-dom';
 import { applyColourToPanels } from '../../panels';
 import { decodeAllocations, decodeFocuses, graphicPropsToAlternatingCase } from '../../utils';
@@ -64,24 +64,41 @@ const postprocessScrollytellerDefinition = scrollytellerDefinition => {
 
 const renderPreview = ({ panels }) => <Block panels={panels as PanelDefinition<GraphicProps>[]} />;
 
-const renderFallbackImagesButton = ({ panels }) => (
-  <button
-    onClick={event => {
-      const buttonEl = event.target;
+function renderFallbackImagesButton({ panels }) {
+  return (
+    <button
+      onClick={event => {
+        const buttonEl = event.target as HTMLButtonElement;
 
-      if (panels) {
-        fallbacks(buttonEl, panels as PanelDefinition<GraphicProps>[]);
-      }
-    }}
-  >
-    Fallback Images
-  </button>
-);
+        function setIsLoading(isLoading) {
+          buttonEl.innerHTML = isLoading ? 'Thinking…' : 'Fallback Images';
+          buttonEl.disabled = isLoading;
+        }
+
+        if (panels) {
+          setIsLoading(true);
+          fallbacks(buttonEl, panels as PanelDefinition<GraphicProps>[])
+            .then(() => setIsLoading(false))
+            .catch(() => {
+              setIsLoading(false);
+            });
+        }
+      }}
+    >
+      Fallback Images
+    </button>
+  );
+}
 
 const DocBlock: React.FC = () => (
   <GoogleDocScrollyteller<PossiblyEncodedGraphicProps>
     loadScrollytellerArgs={LOAD_SCROLLYTELLER_ARGS}
-    {...{ preprocessCoreEl, postprocessScrollytellerDefinition, renderPreview, renderFallbackImagesButton }}
+    {...{
+      preprocessCoreEl,
+      postprocessScrollytellerDefinition,
+      renderPreview,
+      renderFallbackImagesButton
+    }}
   />
 );
 
