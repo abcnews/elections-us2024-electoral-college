@@ -6,14 +6,11 @@ import tilegramStyles from '../Tilegram/styles.scss';
 import { DEFAULT_PROPS, GraphicProps } from '../Graphic';
 import { graphicPropsToAlternatingCase } from '../../utils';
 
-const graphicPropsToUrlQuery = ({}, {}) => '';
-
 export default function run(initiatingElement, panels) {
   const graphicsProps: GraphicProps[] = [];
   const filenames: string[] = [];
 
   function processPanel({ data, nodes }) {
-    console.log({ data });
     graphicsProps.push({
       ...DEFAULT_PROPS,
       ...data
@@ -40,16 +37,27 @@ export default function run(initiatingElement, panels) {
   // 2024 edition
   // const urlRoot = `https://www.abc.net.au/res/sites/news-projects/elections-us2024-electoral-college/1.0.43/editor/`;
   const urlRoot = `${__webpack_public_path__}editor/`;
-  const imageURLs = graphicsProps.map(
-    graphicProps =>
-      `https://fallback-automation-inky.vercel.app/api?url=${encodeURIComponent(
-        `${urlRoot}#${graphicPropsToAlternatingCase(graphicProps)}`
-      )}&width=600&selector=.${graphicProps.counting ? graphicStyles.root : tilegramStyles.root}`
+  const imgServiceRoot = 'https://fallback-automation-inky.vercel.app/api';
+  // const imgServiceRoot = 'http://localhost:5173/api';
+  const imageURLs = graphicsProps.map(graphicProps =>
+    [
+      imgServiceRoot,
+      new URLSearchParams({
+        url: `${urlRoot}#${graphicPropsToAlternatingCase(graphicProps)}`,
+        selector: '.' + graphicProps.counting ? graphicStyles.root : tilegramStyles.root
+      }).toString()
+    ].join('?')
   );
 
   const zip = new JSZip();
-  console.log({ imageURLs });
-  const imageBlobPromises = imageURLs.map(url => fetch(url).then(response => response.blob()));
+  const imageBlobPromises = imageURLs.map(url =>
+    fetch(url).then(response => {
+      if (response.status !== 200) {
+        return null;
+      }
+      return response.blob();
+    })
+  );
 
   (initiatingElement as HTMLElement).style.pointerEvents = 'none';
 
@@ -57,13 +65,26 @@ export default function run(initiatingElement, panels) {
     (initiatingElement as HTMLElement).style.pointerEvents = 'initial';
   };
 
+  const missing: string[] = [];
+
   Promise.all(imageBlobPromises)
     .then(blobs => {
       blobs.forEach((blob, index) => {
+        const filename = `${String(index).padStart(3, '0')}-${filenames[index]}.png`;
         if (blob) {
-          zip.file(`${String(index).padStart(3, '0')}-${filenames[index]}.png`, blob);
+          zip.file(filename, blob);
+        } else {
+          missing.push(filename);
         }
       });
+
+      if (missing.length === imageBlobPromises.length) {
+        alert('Could not download files. The fallback service may not be running.');
+        return;
+      } else if (missing.length) {
+        alert('Error: could not download some files. These might be missing from the zip:\n\n' + missing.join('\n'));
+      }
+
       zip
         .generateAsync({ type: 'blob' })
         .then(content => {
