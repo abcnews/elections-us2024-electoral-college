@@ -49,7 +49,7 @@ export default async function run(initiatingElement, panels) {
           hexani: undefined,
           hexflip: undefined
         })}`,
-        selector: '.' + graphicProps.counting ? graphicStyles.root : tilegramStyles.root
+        selector: `.${graphicProps.counting ? graphicStyles.root : tilegramStyles.root}`
       }).toString()
     ].join('?')
   );
