@@ -37,7 +37,7 @@ export default async function run(initiatingElement, panels) {
   // 2024 edition
   // const urlRoot = `https://www.abc.net.au/res/sites/news-projects/elections-us2024-electoral-college/1.0.43/editor/`;
   const urlRoot = `${__webpack_public_path__}editor/`;
-  const imgServiceRoot = 'https://fallback-automation-inky.vercel.app/api';
+  const imgServiceRoot = 'https://fallbacks.abcnewsdigital.com/api';
   // const imgServiceRoot = 'http://localhost:5173/api';
   const imageURLs = graphicsProps.map(graphicProps =>
     [
