@@ -9,7 +9,7 @@ import { alternatingCaseToGraphicProps, decodeAllocations, decodeFocuses } from 
 import Blanks from './components/Blanks';
 import Block from './components/Block';
 import Graphic from './components/Graphic';
-import Illustration, { IllustrationName } from './components/Illustration';
+import Illustration from './components/Illustration';
 import Live from './components/Live';
 import { whenOdysseyLoaded } from './utils/getOdyssey';
 import './global.scss';
@@ -95,11 +95,6 @@ whenOdysseyLoaded.then(() => {
     }
 
     const { name } = acto(getMountValue(mount));
-    const isIllustrationName = (name: any): name is IllustrationName =>
-      name && Object.values(IllustrationName).includes(name);
-    if (!isIllustrationName(name)) {
-      return;
-    }
 
     const titleEl = parentEl.querySelector('h1');
 
@@ -115,7 +110,6 @@ whenOdysseyLoaded.then(() => {
 
   standaloneGraphicMounts.forEach(mount => {
     const graphicProps = alternatingCaseToGraphicProps(getMountValue(mount));
-    console.log({ graphicProps });
 
     mount.classList.add('u-pull');
     render(<Graphic {...graphicProps} />, mount);

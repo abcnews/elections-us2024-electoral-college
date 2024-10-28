@@ -5,7 +5,7 @@ import { Allocation, Allocations, Focuses, getStateIdForGroupId } from '../../co
 import { TilegramHexes } from './TilegramHexes/TilegramHexes';
 import { TilegramLabels } from './TilegramLabels/TilegramLabels';
 import AddRemoves from './AddRemoves/AddRemoves';
-import { getHasFocuses } from '../../utils';
+import { getHasAllocations, getHasFocuses } from '../../utils';
 const { us2020, us2024 } = mapData;
 
 export type AddRemoves = {
@@ -32,14 +32,20 @@ export default function Tilegram(props: TilegramProps) {
   const hasFocuses = getHasFocuses(focuses);
 
   // When any state has been allocated, change the style from None to Unallocated.
-  const hasAllocations = Object.values(allocations).some(allocation => allocation !== 'n');
+  const hasAllocations = getHasAllocations(allocations);
   const newAllocations = { ...allocations };
+  console.log('tilegram', { hasAllocations });
   if (hasAllocations) {
     Object.entries(newAllocations).forEach(([key, value]) => {
+      console.log('running', key);
       // If focused, leave the original style/don't turn unallocated states grey
       const isFocused = focuses[getStateIdForGroupId(key)] !== 'n';
+      console.log({ isFocused }, focuses[getStateIdForGroupId(key)]);
       if (isFocused) return;
-      newAllocations[key] = value === Allocation.None ? Allocation.Unallocated : value;
+      console.log('replacing value', value);
+      if (value === Allocation.None) {
+        newAllocations[key] = Allocation.Unallocated;
+      }
     });
   }
 

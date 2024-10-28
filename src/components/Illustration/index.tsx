@@ -1,42 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.scss';
+import coinflipSrc from './illustrations/coinflip.svg';
+import shimmerSrc from './illustrations/shimmer.svg';
+import { createPortal } from 'react-dom';
 
-export enum IllustrationName {
-  Preview = 'preview',
-  Unallocated = 'Unallocated',
-  TrumpFlip = 'trumpflip',
-  BidenFlip = 'bidenflip',
-  BidenAhead = 'bidenahead',
-  BidenWin = 'bidenwin',
-  Hand = 'hand'
-}
-
-const ASPECT_OVERRIDES = {
-  [IllustrationName.BidenAhead]: '3:2',
-  [IllustrationName.BidenWin]: '3:2'
+const illustrations = {
+  shimmer: {
+    props: {},
+    src: shimmerSrc
+  },
+  coinflip: {
+    props: {},
+    src: coinflipSrc
+  }
 };
 
-const EXTENSION_OVERRIDES = {
-  [IllustrationName.BidenAhead]: 'jpg',
-  [IllustrationName.BidenWin]: 'jpg'
-};
+export default function Illustration({ name }) {
+  const illustrationDefs = illustrations[name];
 
-export type IllustrationProps = {
-  name?: IllustrationName;
-};
-
-const Illustration: React.FC<IllustrationProps> = ({ name }) => {
-  const aspect = (name && ASPECT_OVERRIDES[name]) || '1:1';
-  const extension = (name && EXTENSION_OVERRIDES[name]) || 'svg';
-  const src = `${__webpack_public_path__}illustration/${name || IllustrationName.Preview}.${extension}`;
+  if (!illustrationDefs) return null;
 
   return (
-    <div className={styles.root} data-aspect={aspect}>
-      <div className={styles.graphic}>
-        {extension === 'svg' ? <iframe frameBorder="0" src={src} /> : <img src={src} />}
-      </div>
+    <div className={styles.root}>
+      <iframe
+        sandbox="allow-scripts"
+        className={styles.frame}
+        src={illustrationDefs.src}
+        width="380"
+        height="380"
+      ></iframe>
     </div>
   );
-};
-
-export default Illustration;
+}

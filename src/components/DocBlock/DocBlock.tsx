@@ -32,8 +32,6 @@ const preprocessCoreEl = el => {
 
     pEl.textContent = `#${markerPrefix}${graphicPropsToAlternatingCase(graphicProps)}`;
 
-    console.log('processed', pEl.textContent);
-
     return pEl;
   }
 

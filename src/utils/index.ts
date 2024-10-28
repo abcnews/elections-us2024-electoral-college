@@ -268,3 +268,8 @@ export const liveResultsToGraphicProps = data =>
 export function getHasFocuses(focuses) {
   return focuses && Object.values(focuses).some(value => value === Focus.Yes);
 }
+
+/** Have any of these been allocated yet? */
+export function getHasAllocations(allocations) {
+  return Object.values(allocations).some(allocation => !['n', 'u'].includes(allocation));
+}

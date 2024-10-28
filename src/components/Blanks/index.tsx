@@ -9,10 +9,11 @@ import {
   PRESETS
 } from '../../constants';
 import { loadData } from '../../data';
-import { liveResultsToGraphicProps } from '../../utils';
+import { getHasAllocations, liveResultsToGraphicProps } from '../../utils';
 import Graphic, { GraphicProps } from '../Graphic';
 import Live from '../Live';
 import styles from './styles.scss';
+import '../../global.scss';
 
 export type BlanksProps = {
   isLive?: boolean;
@@ -26,6 +27,7 @@ const defaultGraphicProps = {
 };
 
 const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphicProps }) => {
+  isLive = false;
   const [fixedGraphicProps, setFixedGraphicProps] = useState<GraphicProps>(defaultGraphicProps);
   const [audienceAllocations, setAudienceAllocations] = useState<Allocations>({});
   const [liveStateCode, setLiveStateCode] = useState('');
@@ -137,7 +139,7 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
         nextAudienceAllocations[groupId] = relativeChallengerAllocation;
         break;
       case relativeChallengerAllocation:
-        nextAudienceAllocations[groupId] = Allocation.Unallocated;
+        nextAudienceAllocations[groupId] = Allocation.None;
         break;
       default:
         nextAudienceAllocations[groupId] = relativeIncumbentAllocation;
@@ -170,8 +172,8 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
         const stateId = getStateIdForGroupId(groupId);
 
         allocations[groupId] =
-          allocation === Allocation.Dem || allocation === Allocation.GOP ? allocation : Allocation.Unallocated;
-        focuses[stateId] = allocation === Allocation.Dem || allocation === Allocation.GOP ? Focus.No : Focus.Yes;
+          allocation === Allocation.Dem || allocation === Allocation.GOP ? allocation : Allocation.None;
+        focuses[stateId] = Focus.No;
       });
 
       setFixedGraphicProps({
@@ -194,11 +196,11 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
     <div className={styles.root}>
       <div className={styles.graphic} onMouseMove={updateResults} onTouchMove={updateResults}>
         <Graphic {...graphicProps} />
-        {isLive && hasStatesResults && (
+        {/* {isLive && hasStatesResults && (
           <div className={styles.live}>
             <Live stateCode={liveStateCode} />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
