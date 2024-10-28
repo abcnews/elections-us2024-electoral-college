@@ -271,5 +271,5 @@ export function getHasFocuses(focuses) {
 
 /** Have any of these been allocated yet? */
 export function getHasAllocations(allocations) {
-  return Object.values(allocations).some(allocation => !['n', 'u'].includes(allocation));
+  return Object.values(allocations).some(allocation => !['n', 'u'].includes(allocation as string));
 }
