@@ -52,8 +52,21 @@
   .winnerCheck {
     margin: 0 calc(8rem / 16);
     animation: fadeIn 0.3s;
+    animation-delay: 0.5s;
+    animation-fill-mode: both;
+    transform-origin: center;
     transform: translateY(0.2rem);
   }
+}
+.winnerText {
+  display: inline-flex;
+  overflow: hidden;
+  animation: winnerText 0.5s;
+  width: 2.65em;
+  transition: width 0.5s;
+}
+.WinnerTextInactive {
+  width: 0;
 }
 
 // mobile
@@ -98,11 +111,12 @@
 
   .winnerCheck {
     scale: 0.75;
-    transform-origin: center;
     grid-column-start: 2;
     grid-row-start: 1;
     margin: 0 0 0 calc(4rem / 16);
     animation: fadeIn 0.3s;
+    animation-delay: 0.5s;
+    animation-fill-mode: both;
 
     @media (min-width: 46.5rem) {
       margin: 0 0.765625rem;
