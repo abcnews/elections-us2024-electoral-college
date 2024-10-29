@@ -34,15 +34,11 @@ export default function Tilegram(props: TilegramProps) {
   // When any state has been allocated, change the style from None to Unallocated.
   const hasAllocations = getHasAllocations(allocations);
   const newAllocations = { ...allocations };
-  console.log('tilegram', { hasAllocations });
   if (hasAllocations) {
     Object.entries(newAllocations).forEach(([key, value]) => {
-      console.log('running', key);
       // If focused, leave the original style/don't turn unallocated states grey
       const isFocused = focuses[getStateIdForGroupId(key)] !== 'n';
-      console.log({ isFocused }, focuses[getStateIdForGroupId(key)]);
       if (isFocused) return;
-      console.log('replacing value', value);
       if (value === Allocation.None) {
         newAllocations[key] = Allocation.Unallocated;
       }
