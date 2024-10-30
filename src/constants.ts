@@ -11,6 +11,11 @@ export const GROUPS = mapData.groupCounts as Group[];
 
 export const GROUP_IDS = GROUPS.map(group => group.id);
 
+export const GROUPS_BY_ID = GROUPS.reduce((groups, group) => {
+  groups[group.id] = group;
+  return groups;
+}, {});
+
 export type Group = {
   id: string;
   name: string;

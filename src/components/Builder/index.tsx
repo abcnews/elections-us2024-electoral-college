@@ -11,10 +11,8 @@ import {
   ELECTION_YEARS,
   HEX_ANIMATIONS,
   HEX_ANIMATION_STYLES,
-  GROUPS,
   candidatesForYear,
-  STATES,
-  StateId
+  GROUPS_BY_ID
 } from '../../constants';
 import CandidateDropdown from './CandidateDropdown/CandidateDropdown';
 import { loadData } from '../../data';
@@ -98,7 +96,7 @@ const Builder: React.FC = () => {
   const [snapshots, setSnapshots] = useState(getSnapshots());
   const [lastTapped, setLastTapped] = useState<LastTapped | null>(null);
   const lastTappedHexCode = [lastTapped?.groupId, lastTapped?.hexId].join();
-  const lastTappedGroup = GROUPS.find(group => group.id === lastTapped?.groupId);
+  const lastTappedGroup = GROUPS_BY_ID[lastTapped?.groupId];
 
   const createSnapshot = (name: string, urlQuery: string) => {
     const nextSnapshots = {

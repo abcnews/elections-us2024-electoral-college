@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 import type { Allocations } from '../../constants';
 import {
+  Allocation,
   CANDIDATES,
   candidatesForYear,
   DEFAULT_ELECTION_YEAR,
   ELECTION_YEARS_ALLOCATIONS_CANDIDATES,
+  GROUPS_BY_ID,
   VOTES_TO_WIN
 } from '../../constants';
-import { getVoteCountsForAllocations } from '../../utils';
 import styles from './styles.scss';
 import Bar from './Bar/Bar';
 
@@ -17,6 +18,23 @@ export type TotalsProps = {
   allocations?: Allocations;
   showcheck?: boolean;
 };
+
+function getVoteCountsForAllocations(
+  allocations: Allocations,
+  year: number = DEFAULT_ELECTION_YEAR
+): { [key: string]: number } {
+  // Map these allocations so the output is a total of both called and likely
+  const allocationMap = {
+    [Allocation.LikelyDem]: Allocation.Dem,
+    [Allocation.LikelyGOP]: Allocation.GOP
+  };
+  return Object.entries(allocations).reduce((summedAllocations, [state, allocation]) => {
+    const count = GROUPS_BY_ID[state].count[year <= 2020 ? 2020 : 2024];
+    const summedAllocation = allocationMap[allocation] || allocation;
+    summedAllocations[summedAllocation] = (summedAllocations[summedAllocation] || 0) + count;
+    return summedAllocations;
+  }, {});
+}
 
 const Totals: React.FC<TotalsProps> = props => {
   const { candidatesoverride, allocations, year, showcheck } = props;

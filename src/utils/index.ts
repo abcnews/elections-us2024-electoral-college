@@ -4,9 +4,7 @@ import {
   Allocation,
   Allocations,
   ALLOCATIONS,
-  Group,
   GROUP_IDS,
-  GROUPS,
   STATE_IDS,
   Focus,
   Focuses,
@@ -29,20 +27,6 @@ export const getGroupIdForStateIdAndDelegateIndex = (stateId: string, delegateIn
 
 export const getGroupIdsForStateId = (stateId: string) => {
   return GROUP_IDS.filter(groupId => groupId.indexOf(stateId) === 0);
-};
-
-export const getVoteCountsForAllocations = (
-  allocations: Allocations,
-  year: number = DEFAULT_ELECTION_YEAR
-): { [key: string]: number } => {
-  return ALLOCATIONS.reduce((memo, allocation) => {
-    memo[allocation] = GROUPS.filter(({ id }) => allocations[id] === allocation).reduce((memo, current) => {
-      const count = current.count[year <= 2020 ? 2020 : 2024];
-      return memo + count;
-    }, 0);
-
-    return memo;
-  }, {});
 };
 
 export const getStateAllocations = (stateId: string, allocations: Allocations) => {
