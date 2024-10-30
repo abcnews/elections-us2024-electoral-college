@@ -8,10 +8,7 @@ import {
   getStateIdForGroupId,
   PRESETS
 } from '../../constants';
-import { loadData } from '../../data';
-import { getHasAllocations, liveResultsToGraphicProps } from '../../utils';
 import Graphic, { GraphicProps } from '../Graphic';
-import Live from '../Live';
 import styles from './styles.scss';
 import '../../global.scss';
 
@@ -26,11 +23,9 @@ const defaultGraphicProps = {
   relative: DEFAULT_RELATIVE_ELECTION_YEAR
 };
 
-const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphicProps }) => {
-  isLive = false;
+const Blanks: React.FC<BlanksProps> = ({ hasStatesResults, initialGraphicProps }) => {
   const [fixedGraphicProps, setFixedGraphicProps] = useState<GraphicProps>(defaultGraphicProps);
   const [audienceAllocations, setAudienceAllocations] = useState<Allocations>({});
-  const [liveStateCode, setLiveStateCode] = useState('');
 
   const updateResults = useMemo(
     () => event => {
@@ -50,14 +45,6 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
       ) {
         return;
       }
-
-      const stateId = getStateIdForGroupId(groupId);
-
-      if (!stateId) {
-        return;
-      }
-
-      setLiveStateCode(stateId);
     },
     [hasStatesResults, fixedGraphicProps]
   );
@@ -79,43 +66,22 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
       ...audienceAllocations
     };
 
-    // Strategy 1)
-    // Cycle to the next Allocation in the enum (or the first if we don't recognise it)
-    // const allocationIndex = ALLOCATIONS.indexOf(allocation);
-    // nextAudienceAllocations[groupId] = ALLOCATIONS[
-    //   allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
-    // ] as Allocation;
+    // Strategy 5)
+    // Cycle between relative incumbent, challenger and Unallocated
+    const relativeIncumbentAllocation =
+      PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupId] || Allocation.Dem;
 
-    // Strategy 2)
-    // If not allocated to either party, allocate to the incumbent (if we have a relative year) or Dem.
-    // If alloated to a party, allocate to the other.
-    // const relativeAllocation = PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupId] || Allocation.Dem
-    // nextAudienceAllocations[groupId] =
-    //   allocation === Allocation.Dem
-    //     ? Allocation.GOP
-    //     : allocation === Allocation.GOP
-    //     ? Allocation.Dem
-    //     : relativeAllocation;
+    const allocationMap = {
+      [Allocation.None]: Allocation.LikelyDem,
+      [Allocation.LikelyDem]: Allocation.LikelyGOP,
+      [Allocation.LikelyGOP]: Allocation.None
+    };
+    nextAudienceAllocations[groupId] = allocationMap[allocation];
+    if (!nextAudienceAllocations[groupId]) throw new Error('ohno');
 
-    // Strategy 3)
-    // Same as Strategy 2, but allocates Likely{X} instead
-    // const relativeAllocation =
-    //   PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupId] || Allocation.Dem;
-    // nextAudienceAllocations[groupId] =
-    //   allocation === Allocation.LikelyDem
-    //     ? Allocation.LikelyGOP
-    //     : allocation === Allocation.LikelyGOP
-    //     ? Allocation.LikelyDem
-    //     : relativeAllocation === Allocation.Dem
-    //     ? Allocation.LikelyDem
-    //     : Allocation.LikelyGOP;
-
-    // Strategy 4)
-    // Cycle between relative incumbent, challenger and None
-    // const relativeIncumbentAllocation =
-    //   PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupId] || Allocation.Dem;
     // const relativeChallengerAllocation =
-    //   relativeIncumbentAllocation === Allocation.Dem ? Allocation.GOP : Allocation.Dem;
+    //   relativeIncumbentAllocation === Allocation.LikelyDem ? Allocation.LikelyGOP : Allocation.LikelyDem;
+
     // switch (allocation) {
     //   case relativeIncumbentAllocation:
     //     nextAudienceAllocations[groupId] = relativeChallengerAllocation;
@@ -127,24 +93,6 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
     //     nextAudienceAllocations[groupId] = relativeIncumbentAllocation;
     //     break;
     // }
-
-    // Strategy 5)
-    // Cycle between relative incumbent, challenger and Unallocated
-    const relativeIncumbentAllocation =
-      PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupId] || Allocation.Dem;
-    const relativeChallengerAllocation =
-      relativeIncumbentAllocation === Allocation.Dem ? Allocation.GOP : Allocation.Dem;
-    switch (allocation) {
-      case relativeIncumbentAllocation:
-        nextAudienceAllocations[groupId] = relativeChallengerAllocation;
-        break;
-      case relativeChallengerAllocation:
-        nextAudienceAllocations[groupId] = Allocation.None;
-        break;
-      default:
-        nextAudienceAllocations[groupId] = relativeIncumbentAllocation;
-        break;
-    }
 
     setAudienceAllocations(nextAudienceAllocations);
   };
@@ -185,10 +133,6 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
 
     if (initialGraphicProps) {
       registerFixedGraphicsProps(initialGraphicProps);
-    } else if (isLive) {
-      loadData({}).then(data => registerFixedGraphicsProps(liveResultsToGraphicProps(data)));
-    } else {
-      console.error('No graphic props to register');
     }
   }, []);
 
@@ -196,11 +140,6 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
     <div className={styles.root}>
       <div className={styles.graphic} onMouseMove={updateResults} onTouchMove={updateResults}>
         <Graphic {...graphicProps} />
-        {/* {isLive && hasStatesResults && (
-          <div className={styles.live}>
-            <Live stateCode={liveStateCode} />
-          </div>
-        )} */}
       </div>
     </div>
   );

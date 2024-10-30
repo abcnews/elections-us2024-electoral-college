@@ -119,12 +119,10 @@ whenOdysseyLoaded.then(() => {
 
   blanksMounts.forEach(mount => {
     const mountValue = getMountValue(mount);
-    const blanksProps =
-      mountValue.indexOf('LIVE') > -1
-        ? { isLive: true, hasStatesResults: mountValue.indexOf('STATES') > -1 }
-        : { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) };
+    const blanksProps = { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) };
 
     mount.classList.add('u-pull');
+    console;
     render(<Blanks {...blanksProps} />, mount);
   });
 });

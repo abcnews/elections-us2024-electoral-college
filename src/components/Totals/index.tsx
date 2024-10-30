@@ -57,7 +57,7 @@ const Totals: React.FC<TotalsProps> = props => {
               <span className={styles.winnerCheck}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                   <circle cx="13" cy="13.1538" r="12.75" fill="#F5D989" />
-                  <path d="M19.3748 8.19547L10.1665 17.4038L5.9165 13.1538" stroke="black" stroke-width="2.83333" />
+                  <path d="M19.3748 8.19547L10.1665 17.4038L5.9165 13.1538" stroke="black" strokeWidth="2.83333" />
                 </svg>
               </span>
             )}
