@@ -23,7 +23,7 @@ export default function Bar({ sides, voteCounts }) {
     [Allocation.LikelyGOP, 'Likely GOP'],
     [Allocation.GOP, 'GOP']
   ].map(([allocation, altText], i) => {
-    const count = voteCounts[allocation];
+    const count = voteCounts[allocation] || 0;
     const width = allocation === Allocation.Unallocated ? 'auto' : Math.round((count / MAX_VOTES) * 100) + '%';
     const fullAltText = `${altText}: ${count} votes/${width}`;
     return (

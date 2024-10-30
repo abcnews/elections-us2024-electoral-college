@@ -21,13 +21,9 @@ export type TotalsProps = {
 
 function getVoteCountsForAllocations(
   allocations: Allocations,
-  year: number = DEFAULT_ELECTION_YEAR
+  year: number = DEFAULT_ELECTION_YEAR,
+  allocationMap
 ): { [key: string]: number } {
-  // Map these allocations so the output is a total of both called and likely
-  const allocationMap = {
-    [Allocation.LikelyDem]: Allocation.Dem,
-    [Allocation.LikelyGOP]: Allocation.GOP
-  };
   return Object.entries(allocations).reduce((summedAllocations, [state, allocation]) => {
     const count = GROUPS_BY_ID[state].count[year <= 2020 ? 2020 : 2024];
     const summedAllocation = allocationMap[allocation] || allocation;
@@ -38,14 +34,18 @@ function getVoteCountsForAllocations(
 
 const Totals: React.FC<TotalsProps> = props => {
   const { candidatesoverride, allocations, year, showcheck } = props;
-  const voteCounts = useMemo(() => getVoteCountsForAllocations(allocations || {}, year), [allocations, year]);
+  const voteCountsTotals = getVoteCountsForAllocations(allocations || {}, year, {
+    [Allocation.LikelyDem]: Allocation.Dem,
+    [Allocation.LikelyGOP]: Allocation.GOP
+  });
+  const voteCountsGranular = getVoteCountsForAllocations(allocations || {}, year, {});
   const _candidatesoverride = candidatesoverride ? candidatesoverride.split('') : candidatesForYear(year);
   const sides = ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year || DEFAULT_ELECTION_YEAR];
   const candidates = Object.keys(sides).map((allocation, i) => ({
     allocation,
     label: CANDIDATES[_candidatesoverride[i]],
-    count: voteCounts[allocation],
-    showWinnerCheck: voteCounts[allocation] >= VOTES_TO_WIN && showcheck
+    count: voteCountsTotals[allocation],
+    showWinnerCheck: voteCountsTotals[allocation] >= VOTES_TO_WIN && showcheck
   }));
 
   return (
@@ -79,7 +79,7 @@ const Totals: React.FC<TotalsProps> = props => {
         ))}
       </div>
 
-      <Bar sides={sides} voteCounts={voteCounts} />
+      <Bar sides={sides} voteCounts={voteCountsGranular} />
     </div>
   );
 };
