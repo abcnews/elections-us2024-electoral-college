@@ -19,3 +19,7 @@
   white-space: nowrap;
   width: 1px;
 }
+
+:global(.st-panel-root li) {
+  margin-bottom: calc(8rem / 16);
+}
