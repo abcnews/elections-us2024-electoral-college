@@ -23,7 +23,7 @@ export function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraph
     (nodes as HTMLElement[]).forEach(node =>
       node.querySelectorAll('strong').forEach(stronk => {
         const textContent = String(stronk.textContent).trim();
-        const magicWords = ['solid', 'likely'];
+        const magicWords = ['solid', 'likely', 'lean', 'leans', 'leaning'];
 
         if (magicWords.includes(textContent.toLowerCase())) {
           const redWords = ['trump', 'donald', 'republican'];
