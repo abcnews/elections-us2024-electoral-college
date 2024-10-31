@@ -60,6 +60,7 @@ export default function Tilegram(props: TilegramProps) {
       <a
         className="us24-accessible-hide"
         href="#graphic-bottom"
+        //@ts-ignore
         onClick={() => document.querySelector('#graphic-bottom')?.focus()}
       >
         Skip graphic

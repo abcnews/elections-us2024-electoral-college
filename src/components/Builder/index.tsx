@@ -96,7 +96,7 @@ const Builder: React.FC = () => {
   const [snapshots, setSnapshots] = useState(getSnapshots());
   const [lastTapped, setLastTapped] = useState<LastTapped | null>(null);
   const lastTappedHexCode = [lastTapped?.groupId, lastTapped?.hexId].join();
-  const lastTappedGroup = GROUPS_BY_ID[lastTapped?.groupId];
+  const lastTappedGroup = GROUPS_BY_ID[lastTapped?.groupId || ''];
 
   const createSnapshot = (name: string, urlQuery: string) => {
     const nextSnapshots = {
