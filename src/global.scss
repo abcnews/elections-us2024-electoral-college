@@ -9,3 +9,13 @@
   --Secondary-labels: #525252;
   --Stroke-De-emphasis: #7a7a7a;
 }
+
+:global(.us24-accessible-hide) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

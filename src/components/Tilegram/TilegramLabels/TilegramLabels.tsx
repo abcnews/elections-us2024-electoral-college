@@ -21,6 +21,7 @@ export function TilegramLabels({ data, allocations, focuses, hexani, hasAllocati
         return (
           <React.Fragment key={state}>
             <text
+              aria-hidden="true"
               className={[
                 styles.labelOutline,
                 focuses && focuses[state] === Focus.No && styles.hidden,
@@ -35,6 +36,7 @@ export function TilegramLabels({ data, allocations, focuses, hexani, hasAllocati
               {state}
             </text>
             <text
+              aria-hidden="true"
               className={[
                 styles.label,
                 focuses && focuses[state] === Focus.No && styles.hidden,

@@ -57,7 +57,14 @@ export default function Tilegram(props: TilegramProps) {
   }
   return (
     <>
-      <div className={styles.root} onClick={clickHandler} data-year={year}>
+      <a
+        className="us24-accessible-hide"
+        href="#graphic-bottom"
+        onClick={() => document.querySelector('#graphic-bottom')?.focus()}
+      >
+        Skip graphic
+      </a>
+      <div className={styles.root} onClick={clickHandler} data-year={year} aria-hidden="true">
         <svg viewBox="-2 0 1043 759">
           <g id="hex-2024" className={styles.tiles2024}>
             <TilegramHexes
@@ -97,6 +104,7 @@ export default function Tilegram(props: TilegramProps) {
           </g>
         </svg>
       </div>
+      <a id="graphic-bottom" href="#"></a>
     </>
   );
 }

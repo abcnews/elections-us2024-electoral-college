@@ -1,6 +1,7 @@
 @import '../../../constants.scss';
 .root {
   --trackHeight: 1rem;
+  position: relative;
 
   // tablet
   @media (min-width: 46.5rem) {
@@ -53,16 +54,6 @@
 }
 .bar[data-allocation='u'] {
   flex: 1;
-}
-
-.accessible-hide {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
 }
 
 .midpoint {

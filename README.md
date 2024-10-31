@@ -32,7 +32,6 @@ Under the hood, webpack is building multiple source entry points into many distr
 | `editor.js`     | `src/editor.tsx`     | An editor used for building graphics for standalone / scrollyteller / fill-in-the-blanks usage in stories. Will generate mount points, as well as raster images for syndication | [/editor/](https://localhost:8000/editor/)         |
 | `standalone.js` | `src/standalone.tsx` | Loads graphics into `#ecgraphic` mount points                                                                                                                                   | [/standalone/](https://localhost:8000/standalone/) |
 | `blanks.js`     | `src/blanks.tsx`     | Loads fill-in-the-blanks graphics (with or without live results) into `#ecblanks` mount points                                                                                  | [/blanks/](https://localhost:8000/blanks/)         |
-| `live.js`       | `src/live.tsx`       | Loads a live results dashboard (graphic + all state results modules) into an `#ecalllive` mount point                                                                           | [/live/](https://localhost:8000/live/)             |
 
 All live results data comes from Andrew Kesper's live results service, which may not always be available.
 

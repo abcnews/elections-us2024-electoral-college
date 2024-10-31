@@ -25,12 +25,19 @@ export default function Bar({ sides, voteCounts }) {
   ].map(([allocation, altText], i) => {
     const count = voteCounts[allocation] || 0;
     const width = allocation === Allocation.Unallocated ? 'auto' : Math.round((count / MAX_VOTES) * 100) + '%';
-    const fullAltText = `${altText}: ${count} votes/${width}`;
+    const fullAltText = count ? `${altText}: ${count} votes/${width}` : '';
     return (
       // Don't key these because when we reverse them, we don't want
       // to rerender everything.
-      <div className={styles.bar} style={{ width }} data-allocation={allocation}>
-        <span className={styles.accessibleHide}>{fullAltText}</span>
+      <div
+        className={styles.bar}
+        style={{
+          width,
+          pointerEvents: 'none'
+        }}
+        data-allocation={allocation}
+      >
+        <span className="us24-accessible-hide">{fullAltText}</span>
       </div>
     );
   });

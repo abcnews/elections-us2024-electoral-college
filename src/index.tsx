@@ -10,13 +10,11 @@ import Blanks from './components/Blanks';
 import Block from './components/Block';
 import Graphic from './components/Graphic';
 import Illustration from './components/Illustration';
-import Live from './components/Live';
 import { whenOdysseyLoaded } from './utils/getOdyssey';
 import './global.scss';
 
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
-    const liveMounts = selectMounts('eclive');
     const scrollytellerMounts = selectMounts('scrollytellerNAME', { markAsUsed: false });
 
     const names = scrollytellerMounts
@@ -61,17 +59,6 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
 
       scrollytellerDefinitions.push(scrollytellerDefinition);
     }
-
-    // Upgrade all scrollytellers' content to show live results
-    liveMounts.forEach(mount => {
-      const { state, hide } = acto(getMountValue(mount));
-
-      if (typeof hide === 'boolean' && hide) {
-        return ((mount as unknown as HTMLElement).style.display = 'none');
-      }
-
-      render(<Live stateCode={String(state).toUpperCase()} />, mount);
-    });
 
     // Return scrollyteller definitions
     resolve(scrollytellerDefinitions);

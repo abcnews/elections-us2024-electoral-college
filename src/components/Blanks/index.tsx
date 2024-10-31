@@ -6,11 +6,14 @@ import {
   DEFAULT_RELATIVE_ELECTION_YEAR,
   Focus,
   getStateIdForGroupId,
+  GROUPS,
   PRESETS
 } from '../../constants';
 import Graphic, { GraphicProps } from '../Graphic';
 import styles from './styles.scss';
 import '../../global.scss';
+import DropdownRow from './DropdownRow/DropdownRow';
+import Finger from './Finger/Finger';
 
 export type BlanksProps = {
   isLive?: boolean;
@@ -68,8 +71,6 @@ const Blanks: React.FC<BlanksProps> = ({ hasStatesResults, initialGraphicProps }
 
     // Strategy 5)
     // Cycle between relative incumbent, challenger and Unallocated
-    const relativeIncumbentAllocation =
-      PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupId] || Allocation.Dem;
 
     const allocationMap = {
       [Allocation.None]: Allocation.LikelyDem,
@@ -77,22 +78,6 @@ const Blanks: React.FC<BlanksProps> = ({ hasStatesResults, initialGraphicProps }
       [Allocation.LikelyGOP]: Allocation.None
     };
     nextAudienceAllocations[groupId] = allocationMap[allocation];
-    if (!nextAudienceAllocations[groupId]) throw new Error('ohno');
-
-    // const relativeChallengerAllocation =
-    //   relativeIncumbentAllocation === Allocation.LikelyDem ? Allocation.LikelyGOP : Allocation.LikelyDem;
-
-    // switch (allocation) {
-    //   case relativeIncumbentAllocation:
-    //     nextAudienceAllocations[groupId] = relativeChallengerAllocation;
-    //     break;
-    //   case relativeChallengerAllocation:
-    //     nextAudienceAllocations[groupId] = Allocation.None;
-    //     break;
-    //   default:
-    //     nextAudienceAllocations[groupId] = relativeIncumbentAllocation;
-    //     break;
-    // }
 
     setAudienceAllocations(nextAudienceAllocations);
   };
@@ -138,8 +123,58 @@ const Blanks: React.FC<BlanksProps> = ({ hasStatesResults, initialGraphicProps }
 
   return (
     <div className={styles.root}>
-      <div className={styles.graphic} onMouseMove={updateResults} onTouchMove={updateResults}>
-        <Graphic {...graphicProps} />
+      <div className={styles.container}>
+        <div className={styles.containerA}>
+          <div className={styles.graphic} onMouseMove={updateResults} onTouchMove={updateResults}>
+            <Graphic {...graphicProps} srAnnounce={true} showcheck={true}>
+              <div className={[styles.description, styles.descriptionMobileInside, styles.mobileOnly].join(' ')}>
+                <Finger />
+                <p className={styles.instructions}>Tap undecided states to cycle through possible outcomes:</p>
+              </div>
+            </Graphic>
+          </div>
+        </div>
+
+        <div className={styles.containerB}>
+          <div className={[styles.description, styles.desktopOnly].join(' ')}>
+            <Finger />
+            <p className={styles.instructions}>
+              Tap undecided states to cycle through possible outcomes, or select outcomes for each state from the
+              dropdown menus:
+            </p>
+          </div>
+
+          <p
+            className={[styles.instructions, styles.instructionsMobileBottom, styles.mobileOnly, styles.centre].join(
+              ' '
+            )}
+          >
+            Or select outcomes for each state here:
+          </p>
+          <ul className={styles.semantic}>
+            {GROUPS.map(group => {
+              const isLocked = fixedGraphicProps?.allocations?.[group.id] !== Allocation.None;
+              if (isLocked) {
+                return null;
+              }
+              return (
+                <li key={group.id}>
+                  <DropdownRow
+                    code={group.id}
+                    year={graphicProps.year}
+                    value={audienceAllocations[group.id]}
+                    onChange={value =>
+                      setAudienceAllocations({
+                        ...audienceAllocations,
+                        [group.id]: value
+                      })
+                    }
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   );

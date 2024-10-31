@@ -17,6 +17,7 @@ export type TotalsProps = {
   year?: number;
   allocations?: Allocations;
   showcheck?: boolean;
+  srAnnounce?: boolean;
 };
 
 function getVoteCountsForAllocations(
@@ -33,7 +34,7 @@ function getVoteCountsForAllocations(
 }
 
 const Totals: React.FC<TotalsProps> = props => {
-  const { candidatesoverride, allocations, year, showcheck } = props;
+  const { candidatesoverride, allocations, year, showcheck, srAnnounce = false } = props;
   const voteCountsTotals = getVoteCountsForAllocations(allocations || {}, year, {
     [Allocation.LikelyDem]: Allocation.Dem,
     [Allocation.LikelyGOP]: Allocation.GOP
@@ -48,39 +49,48 @@ const Totals: React.FC<TotalsProps> = props => {
     showWinnerCheck: voteCountsTotals[allocation] >= VOTES_TO_WIN && showcheck
   }));
 
+  const altText = candidates.reduce((text, current) => {
+    return text + `${current.label} ${current.showWinnerCheck ? 'wins with' : 'has'} ${current.count} votes. `;
+  }, '');
+
   return (
-    <div className={styles.root}>
-      <div className={styles.text}>
-        {candidates.map(({ allocation, showWinnerCheck, label, count }) => (
-          <div key={allocation} className={styles.side} data-allocation={allocation}>
-            {showWinnerCheck && (
-              <span className={styles.winnerCheck}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
-                  <circle cx="13" cy="13.1538" r="12.75" fill="#F5D989" />
-                  <path d="M19.3748 8.19547L10.1665 17.4038L5.9165 13.1538" stroke="black" strokeWidth="2.83333" />
-                </svg>
-              </span>
-            )}
-            <span className={styles.sideLabel}>
-              {label}
-              {showcheck && (
-                <span
-                  className={[styles.winnerText, !showWinnerCheck && styles.WinnerTextInactive]
-                    .filter(Boolean)
-                    .join(' ')}
-                >
-                  {showWinnerCheck && <>&nbsp;wins</>}
+    <>
+      <div className="us24-accessible-hide" {...(srAnnounce ? { 'aria-live': 'assertive' } : {})}>
+        {altText}
+      </div>
+      <div className={styles.root}>
+        <div className={styles.text}>
+          {candidates.map(({ allocation, showWinnerCheck, label, count }) => (
+            <div key={allocation} className={styles.side} data-allocation={allocation}>
+              {showWinnerCheck && (
+                <span className={styles.winnerCheck}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+                    <circle cx="13" cy="13.1538" r="12.75" fill="#F5D989" />
+                    <path d="M19.3748 8.19547L10.1665 17.4038L5.9165 13.1538" stroke="black" strokeWidth="2.83333" />
+                  </svg>
                 </span>
               )}
-            </span>
-            &nbsp;
-            <span className={styles.sideValue}>{count}</span>
-          </div>
-        ))}
-      </div>
+              <span className={styles.sideLabel}>
+                {label}
+                {showcheck && (
+                  <span
+                    className={[styles.winnerText, !showWinnerCheck && styles.WinnerTextInactive]
+                      .filter(Boolean)
+                      .join(' ')}
+                  >
+                    {showWinnerCheck && <>&nbsp;wins</>}
+                  </span>
+                )}
+              </span>
+              &nbsp;
+              <span className={styles.sideValue}>{count}</span>
+            </div>
+          ))}
+        </div>
 
-      <Bar sides={sides} voteCounts={voteCountsGranular} />
-    </div>
+        <Bar sides={sides} voteCounts={voteCountsGranular} />
+      </div>
+    </>
   );
 };
 

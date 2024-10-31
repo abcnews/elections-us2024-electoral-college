@@ -8,7 +8,6 @@ import { applyColourToPanels } from '../../panels';
 import { decodeAllocations, decodeFocuses, graphicPropsToAlternatingCase } from '../../utils';
 import Block from '../Block';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from '../Graphic';
-import Live from '../Live';
 import './minimal-odyssey';
 import fallbacks from './fallbacks';
 
@@ -42,17 +41,6 @@ const postprocessScrollytellerDefinition = scrollytellerDefinition => {
   scrollytellerDefinition.panels.forEach(({ data, nodes }) => {
     data.allocations = decodeAllocations((data.allocations as string) || '');
     data.focuses = decodeFocuses((data.focuses as string) || '');
-
-    nodes.forEach(el => {
-      if (isMount(el, 'eclive')) {
-        //@ts-ignore
-        const { state, test, hide } = acto(el.id || '');
-
-        if (typeof hide !== 'boolean' || !hide) {
-          render(<Live stateCode={state.toUpperCase()} test={test} />, el);
-        }
-      }
-    });
   });
 
   applyColourToPanels(scrollytellerDefinition.panels);

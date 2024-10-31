@@ -3,54 +3,75 @@
 .root {
   padding: 0 1rem;
   margin: 0 auto 2rem;
-  max-width: 59.5rem;
+  container-type: inline-size;
+}
 
-  @media (min-width: 668px) {
-    padding: 0;
-    max-width: 57.5rem;
+.description {
+  display: flex;
+  align-items: center;
+  gap: calc(12rem / 16);
+  :global(path) {
+    fill: var(--Secondary-labels);
+  }
+  :global(svg) {
+    min-width: 20px;
+  }
+  &.desktop-only {
+    margin-bottom: calc(32rem / 16);
   }
 }
 
-.graphic {
-  position: relative;
+.instructions {
+  color: var(--Secondary-labels, #525252);
+  font-family: ABCSans;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 19.2px */
+  margin: 0;
 }
-
-.graphic {
-  [data-focus='n'] * {
-    cursor: default !important;
-  }
+.centre {
+  text-align: center;
 }
-
-.live {
+.instructions__mobile-bottom {
+  margin: calc(32rem / 16) 0 1rem;
+}
+.description__mobile-inside {
+  margin: calc(28rem / 16) 0 0.5rem;
+}
+.desktop-only .instructions {
   margin-top: 1rem;
-  min-height: 5rem;
+}
 
-  @media only screen and (min-width: 1023px) {
-    position: absolute;
-    top: 6.75rem;
-    left: 50%;
-    margin-top: 0;
-    transform: translate(-50%, 0);
+.semantic {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  @container (width > 75em) {
+    flex-direction: row-reverse;
+    justify-content: stretch;
+    gap: calc(80rem / 16);
+    .containerA {
+      flex: 1;
+    }
+    .containerB {
+      max-width: 33%;
+    }
   }
+}
 
-  > div {
-    margin: 0 auto !important;
-    padding: 0.625rem 0.75rem !important;
-    max-width: 28rem;
-    font-size: 0.6875rem !important;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.26);
-
-    @media only screen and (min-width: 1023px) {
-      width: 28rem;
-      box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.26);
-    }
-
-    &:empty {
-      box-shadow: none;
-    }
-
-    & > div > h4 {
-      font-size: 1.125rem !important;
-    }
+.mobile-only {
+  @container (width >= 75em) {
+    display: none;
+  }
+}
+.desktop-only {
+  @container (width < 75em) {
+    display: none;
   }
 }

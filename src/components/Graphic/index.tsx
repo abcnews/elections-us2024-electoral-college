@@ -40,6 +40,7 @@ const Graphic: React.FC<GraphicProps> = props => {
     allocations,
     children,
     showcheck,
+    srAnnounce,
     ...otherTilegramProps
   } = props;
   const isCounting = typeof counting !== 'boolean' || counting;
@@ -47,8 +48,15 @@ const Graphic: React.FC<GraphicProps> = props => {
   return (
     <div className={styles.root} title={title}>
       <header className={styles.header} data-is-counting={isCounting ? '' : undefined}>
-        <Totals candidatesoverride={candidatesoverride} allocations={allocations} year={year} showcheck={showcheck} />
+        <Totals
+          candidatesoverride={candidatesoverride}
+          allocations={allocations}
+          year={year}
+          showcheck={showcheck}
+          srAnnounce={srAnnounce}
+        />
       </header>
+      {children}
       <Tilegram allocations={allocations} year={year} {...otherTilegramProps} />
     </div>
   );

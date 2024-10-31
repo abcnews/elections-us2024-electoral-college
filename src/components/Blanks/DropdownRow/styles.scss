@@ -1,0 +1,87 @@
+.dropdown {
+  position: relative;
+  margin-bottom: calc(12rem / 16);
+}
+.dropdown__row {
+  display: flex;
+  overflow: hidden;
+  border-radius: calc(12rem / 16);
+  background: rgba(235, 235, 235, 0.5);
+  color: var(--Secondary-labels, #525252);
+  text-overflow: ellipsis;
+  font-family: ABCSans;
+  font-size: calc(18rem / 16);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 27px */
+  align-items: stretch;
+  min-height: calc(40rem / 16);
+}
+.dropdown__row > * {
+  display: flex;
+  align-items: center;
+}
+.dropdown__code {
+  padding: 0 calc(12rem / 16);
+  border-right: 2px solid white;
+  transition: all 0.5s;
+  min-width: calc(26rem / 16);
+}
+.dropdown__code[data-allocation='s'] {
+  background: var(--Democrat-Likely);
+  color: var(--Democrat-Label-Supp);
+}
+.dropdown__code[data-allocation='e'] {
+  background: var(--Republican-Likely);
+  color: var(--Republican-Label-Supp);
+}
+.dropdown__name {
+  padding: 0 calc(12rem / 16);
+  flex: 1;
+}
+
+.dropdown__value {
+  text-transform: uppercase;
+  text-align: right;
+  font-size: calc(14rem / 16);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 21px */
+  letter-spacing: 0.42px;
+}
+
+.dropdown__value[data-allocation='s'] {
+  color: var(--Democrat-Called, #0062d1);
+}
+.dropdown__value[data-allocation='e'] {
+  color: var(--Republican-Called, #cd1819);
+}
+
+.dropdown__chevron {
+  margin: 0 calc(12rem / 16) 0 calc(8rem / 16);
+}
+
+.dropdown__select {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+  cursor: pointer;
+  -webkit-appearance: menulist-button;
+}
+
+.dropdown__select:focus-visible + .dropdown__row {
+  outline: 2px solid black;
+}
+
+.dropdown__select:focus-visible + .dropdown__row .dropdown__chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown__select:hover + .dropdown__row,
+.dropdown__row:hover {
+  outline: 2px solid black;
+}
