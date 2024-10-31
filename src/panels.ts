@@ -25,7 +25,7 @@ export function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraph
         const textContent = String(stronk.textContent).trim();
         const magicWords = ['solid', 'likely'];
 
-        if (magicWords.includes(textContent)) {
+        if (magicWords.includes(textContent.toLowerCase())) {
           const redWords = ['trump', 'donald', 'republican'];
           const blueWords = ['harris', 'kamala', 'democrat'];
           const blockText = String(node.textContent).toLowerCase();
