@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.scss';
+import parentStyles from '../styles.scss';
 import {
   Allocation,
   DEFAULT_ELECTION_YEAR,
@@ -20,6 +21,20 @@ export default function DropdownRow({ code, year, value = Allocation.None, onCha
 
   const id = `us24-dropdown-${code}`;
 
+  console.log({ codeName });
+
+  let segments = codeName.split('District');
+  if (segments.length > 1) {
+    segments = [
+      segments[0],
+      <>
+        Dist<span className={parentStyles.desktopOnly}>rict</span>
+        <span className={parentStyles.mobileOnly}>.</span>
+      </>,
+      segments[1]
+    ];
+  }
+
   return (
     <div className={styles['dropdown']}>
       <label htmlFor={id} className="us24-accessible-hide">
@@ -39,7 +54,7 @@ export default function DropdownRow({ code, year, value = Allocation.None, onCha
           {getStateIdForGroupId(code)}
         </div>
         <div className={styles['dropdown__name']}>
-          <span className={styles['dropdown__name-truncate']}>{codeName}</span>
+          <span className={styles['dropdown__name-truncate']}>{segments}</span>
         </div>
         <div className={styles['dropdown__value']} data-allocation={value}>
           {valueName}
