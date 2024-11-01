@@ -38,7 +38,9 @@ export default function DropdownRow({ code, year, value = Allocation.None, onCha
         <div className={styles['dropdown__code']} data-allocation={value}>
           {getStateIdForGroupId(code)}
         </div>
-        <div className={styles['dropdown__name']}>{codeName}</div>
+        <div className={styles['dropdown__name']}>
+          <span className={styles['dropdown__name-truncate']}>{codeName}</span>
+        </div>
         <div className={styles['dropdown__value']} data-allocation={value}>
           {valueName}
         </div>

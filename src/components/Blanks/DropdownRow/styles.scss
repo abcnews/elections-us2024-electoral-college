@@ -36,8 +36,19 @@
   color: var(--Republican-Label-Supp);
 }
 .dropdown__name {
-  padding: 0 calc(12rem / 16);
   flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.dropdown__name-truncate {
+  position: absolute;
+  left: 0.75rem;
+  width: calc(100% - 1.5rem);
+  text-wrap: nowrap;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .dropdown__value {
