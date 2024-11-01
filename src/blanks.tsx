@@ -16,7 +16,8 @@ whenDOMReady.then(() => {
         ? { isLive: true, hasStatesResults: mountValue.indexOf('STATES') > -1 }
         : { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) };
 
-    mount.classList.add('u-pull');
+    mount.classList.add('u-full');
+    console.log('adding full to', mount);
     render(<Blanks {...blanksProps} />, mount);
   });
 });

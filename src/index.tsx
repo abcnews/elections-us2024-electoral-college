@@ -108,8 +108,7 @@ whenOdysseyLoaded.then(() => {
     const mountValue = getMountValue(mount);
     const blanksProps = { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) };
 
-    mount.classList.add('u-pull');
-    console;
+    mount.classList.add('u-full');
     render(<Blanks {...blanksProps} />, mount);
   });
 });

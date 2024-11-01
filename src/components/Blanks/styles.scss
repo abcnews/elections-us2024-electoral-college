@@ -4,6 +4,10 @@
   padding: 0 1rem;
   margin: 0 auto 2rem;
   container-type: inline-size;
+  margin: 0 calc(24rem / 16);
+  @media (min-width: 75em) {
+    margin: 0 calc(48rem / 16);
+  }
 }
 
 .description {
@@ -52,15 +56,17 @@
 .container {
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   @container (width > 75em) {
     flex-direction: row-reverse;
     justify-content: stretch;
     gap: calc(80rem / 16);
     .containerA {
       flex: 1;
+      max-width: min(90vh, 80vw);
     }
     .containerB {
-      max-width: 33%;
+      max-width: calc(457rem / 16);
     }
   }
 }
