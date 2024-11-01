@@ -61,9 +61,9 @@
     flex-direction: row-reverse;
     justify-content: stretch;
     gap: calc(80rem / 16);
+    max-width: calc(calc(457rem / 16) + min(90vh, 80vw));
     .containerA {
       flex: 1;
-      max-width: min(90vh, 80vw);
     }
     .containerB {
       max-width: calc(457rem / 16);
