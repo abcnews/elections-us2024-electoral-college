@@ -26,6 +26,34 @@ const defaultGraphicProps = {
   relative: DEFAULT_RELATIVE_ELECTION_YEAR
 };
 
+function getClosestGroup({ fixedAllocations, groupId }) {
+  const stateGroup = getStateIdForGroupId(groupId);
+  if (stateGroup === groupId) {
+    return groupId;
+  }
+
+  // filter through unallocated states & find ones taht have the same stateGroup
+  // as we just clicked.
+  const unallocatedGroups = Object.entries(fixedAllocations)
+    .map(([thisGroupId, allocation]) => allocation === Allocation.None && thisGroupId)
+    .filter(thisGroupId => thisGroupId && getStateIdForGroupId(thisGroupId) === stateGroup);
+
+  // There are no unallocated groups in this state so there's not much we can do
+  if (!unallocatedGroups.length) {
+    return groupId;
+  }
+
+  // If there's more than one, this is a case we hadn't planned for. Just return
+  // whatever we clicked.
+  if (unallocatedGroups.length > 1) {
+    return groupId;
+  }
+
+  // Otherwise this is the only unallocated group in the state, so clicking
+  // anywhere in the state will toggle this one.
+  return unallocatedGroups[0];
+}
+
 const Blanks: React.FC<BlanksProps> = ({ hasStatesResults, initialGraphicProps }) => {
   const [fixedGraphicProps, setFixedGraphicProps] = useState<GraphicProps>(defaultGraphicProps);
   const [audienceAllocations, setAudienceAllocations] = useState<Allocations>({});
@@ -53,18 +81,22 @@ const Blanks: React.FC<BlanksProps> = ({ hasStatesResults, initialGraphicProps }
   );
 
   const onClick = ({ groupId }) => {
+    const actualGroupId = getClosestGroup({
+      fixedAllocations: fixedGraphicProps.allocations,
+      groupId
+    });
     if (!fixedGraphicProps || !fixedGraphicProps.allocations) {
       return console.error('No fixed results yet');
     }
 
     if (
-      fixedGraphicProps.allocations[groupId] === Allocation.Dem ||
-      fixedGraphicProps.allocations[groupId] === Allocation.GOP
+      fixedGraphicProps.allocations[actualGroupId] === Allocation.Dem ||
+      fixedGraphicProps.allocations[actualGroupId] === Allocation.GOP
     ) {
-      return console.error(`${groupId} is already called`);
+      return console.error(`${actualGroupId} is already called`);
     }
 
-    const allocation = audienceAllocations[groupId] || Allocation.None;
+    const allocation = audienceAllocations[actualGroupId] || Allocation.None;
     const nextAudienceAllocations = {
       ...audienceAllocations
     };
@@ -77,7 +109,7 @@ const Blanks: React.FC<BlanksProps> = ({ hasStatesResults, initialGraphicProps }
       [Allocation.LikelyDem]: Allocation.LikelyGOP,
       [Allocation.LikelyGOP]: Allocation.None
     };
-    nextAudienceAllocations[groupId] = allocationMap[allocation];
+    nextAudienceAllocations[actualGroupId] = allocationMap[allocation];
 
     setAudienceAllocations(nextAudienceAllocations);
   };
