@@ -22,14 +22,14 @@
   align-items: center;
 }
 .dropdown__code {
-  padding: 0 calc(12rem / 16);
   border-right: 2px solid white;
   transition: all 0.5s;
   // Some folks are seeing this not being applied, so uh, try all of them 🤣
-  min-width: calc(26rem / 16);
-  width: calc(26rem / 16);
-  max-width: calc(26rem / 16);
+  min-width: calc(50rem / 16);
+  width: calc(50rem / 16);
+  max-width: calc(50rem / 16);
   overflow: hidden;
+  justify-content: center;
 }
 .dropdown__code[data-allocation='s'] {
   background: var(--Democrat-Likely);
