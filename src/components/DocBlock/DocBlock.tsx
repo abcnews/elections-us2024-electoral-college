@@ -1,15 +1,13 @@
-import * as acto from '@abcnews/alternating-case-to-object';
 import GoogleDocScrollyteller from '@abcnews/google-doc-scrollyteller';
-import { isMount } from '@abcnews/mount-utils';
 import type { PanelDefinition } from '@abcnews/scrollyteller';
 import React, { useState } from 'react';
-import { render } from 'react-dom';
 import { applyColourToPanels } from '../../panels';
 import { decodeAllocations, decodeFocuses, graphicPropsToAlternatingCase } from '../../utils';
 import Block from '../Block';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from '../Graphic';
 import './minimal-odyssey';
 import fallbacks from './fallbacks';
+import NewVersionCheck from '../NewVersionCheck/NewVersionCheck';
 
 const urlQueryToGraphicProps = string => string;
 const LOAD_SCROLLYTELLER_ARGS = { name: 'ecblock', markerName: 'mark' };
@@ -77,15 +75,18 @@ function renderFallbackImagesButton({ panels }) {
 }
 
 const DocBlock: React.FC = () => (
-  <GoogleDocScrollyteller<PossiblyEncodedGraphicProps>
-    loadScrollytellerArgs={LOAD_SCROLLYTELLER_ARGS}
-    {...{
-      preprocessCoreEl,
-      postprocessScrollytellerDefinition,
-      renderPreview,
-      renderFallbackImagesButton
-    }}
-  />
+  <>
+    <NewVersionCheck />
+    <GoogleDocScrollyteller<PossiblyEncodedGraphicProps>
+      loadScrollytellerArgs={LOAD_SCROLLYTELLER_ARGS}
+      {...{
+        preprocessCoreEl,
+        postprocessScrollytellerDefinition,
+        renderPreview,
+        renderFallbackImagesButton
+      }}
+    />
+  </>
 );
 
 export default DocBlock;

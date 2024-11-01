@@ -28,7 +28,7 @@ import Icon from '../Icon';
 import styles from './styles.scss';
 import { Dialog, DialogDivider, DialogHeader, DialogLabel } from './Dialog/dialog';
 import { AddRemoves } from '../Tilegram/Tilegram';
-import NewVersionCheck from './NewVersionCheck';
+import NewVersionCheck from '../NewVersionCheck/NewVersionCheck';
 
 type LastTapped = {
   stateId: string;
