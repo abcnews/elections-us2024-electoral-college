@@ -85,7 +85,7 @@
   },
   {
     "id": "ME_1",
-    "name": "Maine (District 1)",
+    "name": "Dist. 1 Maine",
     "count": {
       "2020": 1,
       "2024": 1
@@ -93,7 +93,7 @@
   },
   {
     "id": "ME_2",
-    "name": "Maine (District 2)",
+    "name": "Dist. 2 Maine",
     "count": {
       "2020": 1,
       "2024": 1
@@ -137,7 +137,7 @@
   },
   {
     "id": "NE_1",
-    "name": "Nebraska (District 1)",
+    "name": "Dist. 1 Nebraska",
     "count": {
       "2020": 1,
       "2024": 1
@@ -145,7 +145,7 @@
   },
   {
     "id": "NE_2",
-    "name": "Nebraska (District 2)",
+    "name": "Dist. 2 Nebraska",
     "count": {
       "2020": 1,
       "2024": 1
@@ -153,7 +153,7 @@
   },
   {
     "id": "NE_3",
-    "name": "Nebraska (District 3)",
+    "name": "Dist. 3 Nebraska",
     "count": {
       "2020": 1,
       "2024": 1
