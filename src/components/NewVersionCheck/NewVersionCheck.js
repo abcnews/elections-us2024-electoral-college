@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './newVersionCheck.scss';
 
+const baseUrl = 'https://www.abc.net.au/res/sites/news-projects/elections-us2024-electoral-college/';
+
 async function fetchAndRetryWithCache(version) {
-  const baseUrl = 'https://www.abc.net.au/res/sites/news-projects/elections-us2024-electoral-college/';
   const firstRes = await fetch(`${baseUrl}${version}/?v=${Math.round(Date.now() / 1000 / 60)}`, {
     cache: 'reload'
   }).catch(e => false);
