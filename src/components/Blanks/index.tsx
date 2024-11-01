@@ -181,7 +181,7 @@ const Blanks: React.FC<BlanksProps> = ({ hasStatesResults, initialGraphicProps }
               ' '
             )}
           >
-            Or select outcomes for each state here:
+            Or select outcomes for each state&nbsp;here:
           </p>
           <ul className={styles.semantic}>
             {GROUPS.map(group => {
