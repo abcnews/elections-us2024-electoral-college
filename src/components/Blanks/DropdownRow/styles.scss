@@ -58,11 +58,9 @@
 .dropdown__value {
   text-transform: uppercase;
   text-align: right;
-  font-size: calc(14rem / 16);
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%; /* 21px */
-  letter-spacing: 0.42px;
+  @container (width <= 75em) {
+    font-size: calc(14rem / 16);
+  }
 }
 
 .dropdown__value[data-allocation='s'] {
