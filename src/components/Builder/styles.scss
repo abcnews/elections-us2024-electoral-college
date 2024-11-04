@@ -153,6 +153,7 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 0.25rem;
+  flex-wrap: wrap;
 }
 
 .flexRow > div {

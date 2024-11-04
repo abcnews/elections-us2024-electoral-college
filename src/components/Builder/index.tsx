@@ -156,11 +156,8 @@ const Builder: React.FC = () => {
   };
 
   const loadLiveResults = () => {
-    loadData({ forceRefresh: true }).then(data => {
-      const graphicProps = liveResultsToGraphicProps(data);
-
-      replaceGraphicProps(graphicProps);
-      setRelative(graphicProps.relative || DEFAULT_GRAPHIC_PROPS.relative);
+    loadData().then(data => {
+      setAllocations({ ...INITIAL_ALLOCATIONS, ...data });
     });
   };
 

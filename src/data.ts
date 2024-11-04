@@ -1,28 +1,47 @@
-import type { Combined } from 'elections-us2020-results-data';
+import { Allocation, GROUP_IDS } from './constants';
 
-const ABC_URL_BASE = 'https://www.abc.net.au/dat/news/elections/international/us-2020/';
-const FIREBASE_URL_BASE = 'https://elections-us2020-results-data.web.app/';
+function getAllocationFromString(string) {
+  if (!string) return Allocation.None;
+  if (string === 'gop') return Allocation.GOP;
+  if (string === 'dem') return Allocation.Dem;
+  if (string === 'oth') return Allocation.None;
+  alert('Error: encountered unknown winner, ' + string);
+}
 
-type DataPromises = {
-  [key: string]: Promise<Combined.Results>;
-};
+export async function loadData() {
+  const data = await fetch('https://static.abc-cdn.net.au/datafiles/uselection2024/output/latest.json').then(res =>
+    res.json()
+  );
 
-const dataPromises: DataPromises = {};
+  const results = {};
+  const missing = [];
+  GROUP_IDS.forEach(id => {
+    const [groupName, groupId = '0'] = id.split('_');
+    const voter = data.s?.[groupName]?.u?.[groupId];
+    if (!voter) {
+      console.error('voter missing', groupName, groupId);
+      missing.push(id);
+    }
+    const allocation = getAllocationFromString(voter?.w);
+    results[id] = allocation;
+  });
 
-type LoadDataOptions = {
-  server?: 'abc' | 'firebase';
-  forceRefresh?: boolean;
-  test?: number;
-};
-
-export const loadData = ({ server, forceRefresh, test }: LoadDataOptions) => {
-  const id = typeof test === 'number' && server === 'abc' ? `test/${test}` : 'latest';
-
-  if (!dataPromises[id] || forceRefresh) {
-    dataPromises[id] = fetch(`${server === 'abc' ? ABC_URL_BASE : FIREBASE_URL_BASE}${id}.json`).then(response =>
-      response.json()
-    );
+  if (missing.length) {
+    alert('Error: missing groups: ' + missing.join());
   }
 
-  return dataPromises[id];
-};
+  setTimeout(() => {
+    const pubTime = data.t;
+
+    const ageSeconds = Math.round((Date.now() - Number(new Date(pubTime))) / 1000);
+    const ageText =
+      ageSeconds <= 90
+        ? `${ageSeconds} seconds ago`
+        : ageSeconds / 60 < 90
+        ? `${Math.round(ageSeconds / 60)} minutes ago`
+        : `${Math.round(ageSeconds / 60 / 60)} hours ago`;
+    alert(`Fetched latest results. Data is from ${ageText}`);
+  }, 500);
+
+  return results;
+}
