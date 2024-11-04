@@ -24,7 +24,7 @@ export default function Bar({ sides, voteCounts }) {
     [Allocation.GOP, 'GOP']
   ].map(([allocation, altText], i) => {
     const count = voteCounts[allocation] || 0;
-    const width = allocation === Allocation.Unallocated ? 'auto' : Math.round((count / MAX_VOTES) * 100) + '%';
+    const width = allocation === Allocation.Unallocated ? 'auto' : Math.round((count / MAX_VOTES) * 10000) / 100 + '%';
     const fullAltText = count ? `${altText}: ${count} votes/${width}` : '';
     return (
       // Don't key these because when we reverse them, we don't want
