@@ -21,7 +21,7 @@ const illustrations = {
       <img
         className={styles.img}
         src={harrisWinsSrc}
-        alt="Photographic illustration of Kamala Harris and Tim Walz celebrating in front of the white house."
+        alt="Photographic illustration of Kamala Harris and Tim Walz celebrating in front of the White House."
         width="1304"
         height="1120"
       />
@@ -32,7 +32,7 @@ const illustrations = {
       <img
         className={styles.img}
         src={trumpWinsSrc}
-        alt="Photographic illustration of Donald Trump and JD Vance celebrating in front of the white house."
+        alt="Photographic illustration of Donald Trump and JD Vance celebrating in front of the White House."
         width="1304"
         height="1121"
       />
