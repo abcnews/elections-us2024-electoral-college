@@ -23,3 +23,34 @@
 :global(.st-panel-root li) {
   margin-bottom: calc(8rem / 16);
 }
+
+:global(#content div[class*='ContentAlignment_outdentDesktop']) {
+  transform: none !important;
+  margin-right: 0 !important;
+}
+
+:global(.us24-split) {
+  & > div {
+    width: calc(100% - 2rem);
+    margin: 0 auto;
+  }
+}
+@media (min-width: 62rem) {
+  :global(.us24-split) {
+    position: relative;
+    // child of the root, turn it into a grid
+    & > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 2rem;
+      width: calc(100% - 4rem);
+      max-width: calc(1270rem / 16);
+      margin: 0 auto;
+
+      // Children: remove any margins
+      & > * {
+        margin: 0 !important;
+      }
+    }
+  }
+}

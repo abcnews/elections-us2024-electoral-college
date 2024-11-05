@@ -107,6 +107,17 @@ whenScrollytellersLoaded.then(scrollytellerDefinitions => {
   );
 });
 
+whenScrollytellersLoaded.then(() => {
+  document.querySelectorAll('[data-key="split"]').forEach(split => {
+    const newParent = document.createElement('div');
+
+    newParent.classList.add('us24-split');
+    newParent.classList.add('u-full');
+    split.parentNode.replaceChild(newParent, split);
+    newParent.appendChild(split);
+  });
+});
+
 whenOdysseyLoaded.then(() => {
   const illustrationMounts = selectMounts('ecillustration');
 
