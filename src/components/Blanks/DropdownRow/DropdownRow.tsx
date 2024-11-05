@@ -21,8 +21,6 @@ export default function DropdownRow({ code, year, value = Allocation.None, onCha
 
   const id = `us24-dropdown-${code}`;
 
-  console.log({ codeName });
-
   let segments = codeName.split('District');
   if (segments.length > 1) {
     segments = [
