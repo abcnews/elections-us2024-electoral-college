@@ -52,6 +52,7 @@ const Graphic: React.FC<GraphicProps> = props => {
       style={{
         aspectRatio: children ? undefined : '10/8.8'
       }}
+      data-us24-root="true"
     >
       <header className={styles.header} data-is-counting={isCounting ? '' : undefined}>
         <Totals

@@ -13,6 +13,22 @@ import Illustration from './components/Illustration';
 import { whenOdysseyLoaded } from './utils/getOdyssey';
 import './global.scss';
 
+// App is crashing, maybe on the animations. Let's turn them off and see.
+(() => {
+  const isApp = !document.querySelectorAll('[data-component="MastheadBox"]');
+  const isAndroid = navigator.userAgent.includes('Android');
+  if (isApp && isAndroid) {
+    const style = document.createElement('style');
+    style.setAttribute('id', 'us24-abc-app-hack');
+    style.setAttribute('type', 'text/css');
+    style.innerHTML = `
+[data-us24-root="true"] *{
+transition:none !important;
+}`;
+    document.head.appendChild(style);
+  }
+})();
+
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
     const scrollytellerMounts = selectMounts('scrollytellerNAME', { markAsUsed: false });
