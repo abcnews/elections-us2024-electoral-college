@@ -21,7 +21,7 @@
   }
 }
 
-@media (min-width: 46.501rem) {
+@mixin desktop {
   .text {
     display: flex;
     justify-content: space-between;
@@ -58,19 +58,8 @@
     transform: translateY(0.2rem);
   }
 }
-.winnerText {
-  display: inline-flex;
-  overflow: hidden;
-  animation: winnerText 0.5s;
-  width: 2.65em;
-  transition: width 0.5s;
-}
-.WinnerTextInactive {
-  width: 0;
-}
 
-// mobile
-@media (max-width: 46.5rem) {
+@mixin mobile {
   .text {
     display: grid;
     grid-template-columns: 50% 50%;
@@ -144,6 +133,23 @@
       margin: 0 calc(4rem / 16);
     }
   }
+}
+
+@container (max-width:590px) {
+  @include mobile;
+}
+@container (min-width:590px) {
+  @include desktop;
+}
+.winnerText {
+  display: inline-flex;
+  overflow: hidden;
+  animation: winnerText 0.5s;
+  width: 2.65em;
+  transition: width 0.5s;
+}
+.WinnerTextInactive {
+  width: 0;
 }
 
 .side[data-allocation='#{$Allocation_GOP}'] {
