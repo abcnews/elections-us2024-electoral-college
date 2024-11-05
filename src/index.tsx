@@ -26,6 +26,26 @@ import './global.scss';
 transition:none !important;
 }`;
     document.head.appendChild(style);
+
+    let count = 0;
+    let timer;
+
+    const handler = () => {
+      count++;
+      if (timer) {
+        clearTimeout(timer);
+      }
+      if (count === 10) {
+        document.head.removeChild(style);
+        document.body.removeEventListener('click', handler);
+        return;
+      }
+
+      timer = setTimeout(() => {
+        count = 0;
+      }, 1000);
+    };
+    document.body.addEventListener('click', handler);
   }
 })();
 
