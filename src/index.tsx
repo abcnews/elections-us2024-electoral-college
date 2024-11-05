@@ -113,6 +113,9 @@ whenScrollytellersLoaded.then(() => {
 
     newParent.classList.add('us24-split');
     newParent.classList.add('u-full');
+    if (!split.parentNode) {
+      return;
+    }
     split.parentNode.replaceChild(newParent, split);
     newParent.appendChild(split);
   });
