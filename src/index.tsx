@@ -15,7 +15,7 @@ import './global.scss';
 
 // App is crashing, maybe on the animations. Let's turn them off and see.
 (() => {
-  const isApp = !document.querySelectorAll('[data-component="MastheadBox"]');
+  const isApp = location.host.includes('newsapp.');
   const isAndroid = navigator.userAgent.includes('Android');
   if (isApp && isAndroid) {
     const style = document.createElement('style');
