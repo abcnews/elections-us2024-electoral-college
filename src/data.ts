@@ -14,7 +14,7 @@ export async function loadData() {
   );
 
   const results = {};
-  const missing = [];
+  const missing: string[] = [];
   GROUP_IDS.forEach(id => {
     const [groupName, groupId = '0'] = id.split('_');
     const voter = data.s?.[groupName]?.u?.[groupId];
