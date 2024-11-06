@@ -156,48 +156,49 @@ const Blanks: React.FC<BlanksProps> = ({ hasStatesResults, initialGraphicProps }
                 <Finger />
                 <p className={styles.instructions}>Tap undecided states to cycle through possible outcomes:</p>
               </div>
+
+              <button
+                className={[
+                  styles.resetButton,
+                  Object.keys(audienceAllocations).length > 0 ? styles.resetButtonVisible : styles.resetButtonHidden
+                ].join(' ')}
+                aria-hidden={Object.keys(audienceAllocations).length === 0}
+                onClick={() => setAudienceAllocations({})}
+              >
+                Reset{' '}
+                <svg
+                  className={styles.mobileOnly}
+                  width="18"
+                  height="19"
+                  viewBox="0 0 18 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M6.43774 6.15869L1.38511 6.15869L1.38511 1.10606" stroke="#7A7A7A" stroke-width="2" />
+                  <path
+                    d="M1.38507 9.52719C1.38507 13.7129 4.77828 17.1061 8.96402 17.1061C13.1498 17.1061 16.543 13.7129 16.543 9.52719C16.543 5.34145 13.1498 1.94824 8.96402 1.94824C6.86752 1.94824 4.96983 2.79949 3.59775 4.17522L1.80613 6.15877"
+                    stroke="#7A7A7A"
+                    stroke-width="2"
+                  />
+                </svg>
+                <svg
+                  className={styles.desktopOnly}
+                  width="23"
+                  height="23"
+                  viewBox="0 0 23 23"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M8.70081 7.73413L2.38502 7.73413L2.38502 1.41834" stroke="#7A7A7A" stroke-width="2" />
+                  <path
+                    d="M2.38497 11.9448C2.38497 17.1769 6.62648 21.4184 11.8587 21.4184C17.0908 21.4184 21.3323 17.1769 21.3323 11.9448C21.3323 6.71258 17.0908 2.47107 11.8587 2.47107C9.23802 2.47107 6.86592 3.53513 5.15082 5.25479L2.91128 7.73423"
+                    stroke="#7A7A7A"
+                    stroke-width="3"
+                  />
+                </svg>
+              </button>
             </Graphic>
           </div>
-          <button
-            className={[
-              styles.resetButton,
-              Object.keys(audienceAllocations).length > 0 ? styles.resetButtonVisible : styles.resetButtonHidden
-            ].join(' ')}
-            aria-hidden={Object.keys(audienceAllocations).length === 0}
-            onClick={() => setAudienceAllocations({})}
-          >
-            Reset{' '}
-            <svg
-              className={styles.mobileOnly}
-              width="18"
-              height="19"
-              viewBox="0 0 18 19"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M6.43774 6.15869L1.38511 6.15869L1.38511 1.10606" stroke="#7A7A7A" stroke-width="2" />
-              <path
-                d="M1.38507 9.52719C1.38507 13.7129 4.77828 17.1061 8.96402 17.1061C13.1498 17.1061 16.543 13.7129 16.543 9.52719C16.543 5.34145 13.1498 1.94824 8.96402 1.94824C6.86752 1.94824 4.96983 2.79949 3.59775 4.17522L1.80613 6.15877"
-                stroke="#7A7A7A"
-                stroke-width="2"
-              />
-            </svg>
-            <svg
-              className={styles.desktopOnly}
-              width="23"
-              height="23"
-              viewBox="0 0 23 23"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M8.70081 7.73413L2.38502 7.73413L2.38502 1.41834" stroke="#7A7A7A" stroke-width="2" />
-              <path
-                d="M2.38497 11.9448C2.38497 17.1769 6.62648 21.4184 11.8587 21.4184C17.0908 21.4184 21.3323 17.1769 21.3323 11.9448C21.3323 6.71258 17.0908 2.47107 11.8587 2.47107C9.23802 2.47107 6.86592 3.53513 5.15082 5.25479L2.91128 7.73423"
-                stroke="#7A7A7A"
-                stroke-width="3"
-              />
-            </svg>
-          </button>
         </div>
 
         <div className={styles.containerB}>
