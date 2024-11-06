@@ -156,8 +156,12 @@ const Builder: React.FC = () => {
   };
 
   const loadLiveResults = () => {
-    loadData().then(data => {
-      setAllocations({ ...INITIAL_ALLOCATIONS, ...data });
+    loadData().then(({ results, status }) => {
+      setAllocations({ ...INITIAL_ALLOCATIONS, ...results });
+
+      setTimeout(() => {
+        alert(status);
+      }, 500);
     });
   };
 

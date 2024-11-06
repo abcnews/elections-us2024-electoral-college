@@ -30,18 +30,16 @@ export async function loadData() {
     alert('Error: missing groups: ' + missing.join());
   }
 
-  setTimeout(() => {
-    const pubTime = data.t;
+  const pubTime = data.t;
 
-    const ageSeconds = Math.round((Date.now() - Number(new Date(pubTime))) / 1000);
-    const ageText =
-      ageSeconds <= 90
-        ? `${ageSeconds} seconds ago`
-        : ageSeconds / 60 < 90
-        ? `${Math.round(ageSeconds / 60)} minutes ago`
-        : `${Math.round(ageSeconds / 60 / 60)} hours ago`;
-    alert(`Fetched latest results. Data is from ${ageText}`);
-  }, 500);
+  const ageSeconds = Math.round((Date.now() - Number(new Date(pubTime))) / 1000);
+  const ageText =
+    ageSeconds <= 90
+      ? `${ageSeconds} seconds ago`
+      : ageSeconds / 60 < 90
+      ? `${Math.round(ageSeconds / 60)} minutes ago`
+      : `${Math.round(ageSeconds / 60 / 60)} hours ago`;
+  const status = `Fetched latest results. Data is from ${ageText}`;
 
-  return results;
+  return { results, status };
 }
