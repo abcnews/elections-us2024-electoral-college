@@ -1,6 +1,7 @@
 .dropdown {
   position: relative;
   margin-bottom: calc(12rem / 16);
+  container-type: inline-size;
 }
 .dropdown__row {
   display: flex;
@@ -58,13 +59,13 @@
 .dropdown__value {
   text-transform: uppercase;
   text-align: right;
-  @container (width <= 75em) {
+  @container (width <= 22rem) {
     font-size: calc(16rem / 16);
   }
 }
 .dropdown__value[data-allocation='n'] {
   font-size: 1rem;
-  @container (width <= 75em) {
+  @container (width <= 22rem) {
     font-size: calc(14rem / 16);
   }
 }
@@ -103,4 +104,15 @@
 .dropdown__select:hover + .dropdown__row,
 .dropdown__row:hover {
   outline: 2px solid black;
+}
+
+.mobile-only {
+  @container (width > 22rem) {
+    display: none;
+  }
+}
+.desktop-only {
+  @container (width <= 22rem) {
+    display: none;
+  }
 }

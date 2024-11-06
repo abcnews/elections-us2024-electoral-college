@@ -5,7 +5,7 @@
   margin: 0 auto 2rem;
   container-type: inline-size;
   margin: 0 calc(24rem / 16);
-  @media (min-width: 75rem) {
+  @media (min-width: 62rem) {
     margin: 0 calc(48rem / 16);
   }
 }
@@ -60,7 +60,7 @@
   .containerA {
     position: relative;
   }
-  @media (width >= 75rem) {
+  @media (width >= 62rem) {
     flex-direction: row-reverse;
     justify-content: stretch;
     gap: calc(80rem / 16);
@@ -69,18 +69,19 @@
       flex: 1;
     }
     .containerB {
-      max-width: calc(457rem / 16);
+      max-width: min(35%, calc(384rem / 16));
+      min-width: 18.563rem;
     }
   }
 }
 
 .mobile-only {
-  @media (width >= 75rem) {
+  @media (width >= 62rem) {
     display: none;
   }
 }
 .desktop-only {
-  @media (width < 75rem) {
+  @media (width < 62rem) {
     display: none;
   }
 }
@@ -111,7 +112,7 @@
     outline: 2px solid var(--Stroke-De-emphasis);
   }
 
-  @media (width >= 75rem) {
+  @media (width >= 62rem) {
     font-size: calc(18rem / 16);
     line-height: calc(24.3rem / 16);
   }

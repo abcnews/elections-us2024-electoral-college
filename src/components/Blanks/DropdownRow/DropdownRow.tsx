@@ -26,8 +26,8 @@ export default function DropdownRow({ code, year, value = Allocation.None, onCha
     segments = [
       segments[0],
       <>
-        Dist<span className={parentStyles.desktopOnly}>rict</span>
-        <span className={parentStyles.mobileOnly}>.</span>
+        Dist<span className={styles.desktopOnly}>rict</span>
+        <span className={styles.mobileOnly}>.</span>
       </>,
       segments[1]
     ];
