@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import mapData from '../../../data/generated__mapdata.json';
 import styles from './styles.scss';
 import { Allocation, Allocations, Focuses, getStateIdForGroupId } from '../../constants';
@@ -29,6 +29,13 @@ export default function Tilegram(props: TilegramProps) {
   if (typeof focuses === 'undefined' || typeof allocations === 'undefined') return null;
   const year = props.year === 2024 ? 2024 : 2020;
 
+  const [allowedYears, setAllowedYears] = useState([year]);
+  useEffect(() => {
+    if (!allowedYears.includes(year)) {
+      setAllowedYears([...allowedYears, year]);
+    }
+  }, [year]);
+
   const hasFocuses = getHasFocuses(focuses);
 
   // When any state has been allocated, change the style from None to Unallocated.
@@ -45,16 +52,20 @@ export default function Tilegram(props: TilegramProps) {
     });
   }
 
-  function clickHandler({ target, clientX, clientY }) {
-    if (!onClick || target.nodeName !== 'path') {
-      return;
-    }
-    const stateId = target.parentNode.parentNode.dataset.state;
-    const groupId = target.dataset.delegate;
-    const hexId = target.dataset.index;
+  const clickHandler = useMemo(
+    () =>
+      function clickHandler({ target, clientX, clientY }) {
+        if (!onClick || target.nodeName !== 'path') {
+          return;
+        }
+        const stateId = target.parentNode.parentNode.dataset.state;
+        const groupId = target.dataset.delegate;
+        const hexId = target.dataset.index;
 
-    onClick({ groupId, stateId, clientX, clientY, hexId });
-  }
+        onClick({ groupId, stateId, clientX, clientY, hexId });
+      },
+    [onClick]
+  );
   return (
     <>
       <a
@@ -68,28 +79,32 @@ export default function Tilegram(props: TilegramProps) {
       <div className={styles.root} onClick={clickHandler} data-year={year} aria-hidden="true">
         <svg viewBox="-2 0 1043 759">
           <g id="hex-2024" className={styles.tiles2024}>
-            <TilegramHexes
-              id="2024"
-              data={us2024}
-              allocations={newAllocations}
-              focuses={hasFocuses && focuses}
-              hexBorders={!hasAllocations && !hasFocuses && hexborders}
-              hexflip={hexflip}
-              hexani={hexani}
-              isVisible={year === 2024}
-            />
+            {!!allowedYears.includes(2024) && (
+              <TilegramHexes
+                id="2024"
+                data={us2024}
+                allocations={newAllocations}
+                focuses={hasFocuses && focuses}
+                hexBorders={!hasAllocations && !hasFocuses && hexborders}
+                hexflip={hexflip}
+                hexani={hexani}
+                isVisible={year === 2024}
+              />
+            )}
           </g>
           <g id="hex-2020" className={styles.tiles2020}>
-            <TilegramHexes
-              id="2020"
-              data={us2020}
-              allocations={newAllocations}
-              focuses={hasFocuses && focuses}
-              hexBorders={!hasAllocations && !hasFocuses && hexborders}
-              hexflip={hexflip}
-              hexani={hexani}
-              isVisible={year !== 2024}
-            />
+            {!!allowedYears.includes(2020) && (
+              <TilegramHexes
+                id="2020"
+                data={us2020}
+                allocations={newAllocations}
+                focuses={hasFocuses && focuses}
+                hexBorders={!hasAllocations && !hasFocuses && hexborders}
+                hexflip={hexflip}
+                hexani={hexani}
+                isVisible={year !== 2024}
+              />
+            )}
           </g>
           <g id="addremoves">
             <AddRemoves addremoves={addremoves} data={year === 2024 ? us2024 : us2020} />
