@@ -1,3 +1,4 @@
+//@ts-ignore
 import memoize from 'memoize';
 import type { PartyId } from 'elections-us2020-results-data';
 import acto from '@abcnews/alternating-case-to-object';
