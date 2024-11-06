@@ -1,3 +1,4 @@
+import memoize from 'memoize';
 import type { PartyId } from 'elections-us2020-results-data';
 import acto from '@abcnews/alternating-case-to-object';
 import {
@@ -25,9 +26,9 @@ export const getGroupIdForStateIdAndDelegateIndex = (stateId: string, delegateIn
   return stateId;
 };
 
-export const getGroupIdsForStateId = (stateId: string) => {
+export const getGroupIdsForStateId = memoize((stateId: string) => {
   return GROUP_IDS.filter(groupId => groupId.indexOf(stateId) === 0);
-};
+});
 
 export const getStateAllocations = (stateId: string, allocations: Allocations) => {
   const stateGroupIds = getGroupIdsForStateId(stateId);

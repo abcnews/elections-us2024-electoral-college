@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { DEFAULT_ELECTION_YEAR, DEFAULT_RELATIVE_ELECTION_YEAR } from '../../constants';
 import type { TilegramProps } from '../Tilegram/Tilegram';
 import Tilegram from '../Tilegram/Tilegram';
@@ -45,6 +45,8 @@ const Graphic: React.FC<GraphicProps> = props => {
   } = props;
   const isCounting = typeof counting !== 'boolean' || counting;
 
+  const transitionEnd = useMemo(() => e => e.preventDefault(), []);
+
   return (
     <div
       className={styles.root}
@@ -53,6 +55,7 @@ const Graphic: React.FC<GraphicProps> = props => {
         aspectRatio: children ? undefined : '10/8.8'
       }}
       data-us24-root="true"
+      onTransitionEnd={transitionEnd}
     >
       <header className={styles.header} data-is-counting={isCounting ? '' : undefined}>
         <Totals
