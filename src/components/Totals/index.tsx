@@ -83,7 +83,7 @@ const Totals: React.FC<TotalsProps> = props => {
                 )}
               </span>
               &nbsp;
-              <span className={styles.sideValue}>{count}</span>
+              <span className={styles.sideValue}>{count || '0'}</span>
             </div>
           ))}
         </div>
