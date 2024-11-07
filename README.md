@@ -17,6 +17,7 @@ Here's a list of stories based on this code:
 | How the swing states will decide the US election            | Scrollyteller   | https://www.abc.net.au/news/2024-11-05/us-election-states-polling-paths-to-victory/104557084       |
 | Explore the scale of Trump’s triumph                        | Interactive map | https://www.abc.net.au/news/2024-11-06/election-results-map-interactive/104557846                  |
 | How Donald Trump won the US election                        | Scrollyteller   | https://www.abc.net.au/news/2024-11-06/us-election-results-map-donald-trump-victory-path/104558036 |
+| Donald Trump’s ‘beautiful’ election map is back             | Static maps     | https://www.abc.net.au/news/2024-11-07/donald-trump-election-results-map-2016-2020-2024/104558542  |
 
 ## Development & deployment
 
