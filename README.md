@@ -10,14 +10,13 @@ The latest release should be accessible via:
 
 Here's a list of stories based on this code:
 
-| date       | story                                                                                                                                                       | elements used                                  |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| 2020/11/02 | [Where the US election will be won and lost](https://www.abc.net.au/news/2020-11-02/us-election-trump-biden-states-polling/12822296)                        | scrollyteller; illustration                    |
-| 2020/11/04 | [What we know (and don't know) about the US election result](https://www.abc.net.au/news/2020-11-05/trump-biden-us-election-results-explained-map/12844386) | scrollyteller; live results; illustration      |
-| 2020/11/05 | [Your very own US election touchscreen](https://www.abc.net.au/news/2020-11-05/trump-biden-us-election-touchscreen-interactive-paths-to-victory/12843474)   | fill-in-the-blanks; live results; illustration |
-| 2020/11/05 | [Biden has the edge, but Trump still has a path to victory](https://www.abc.net.au/news/2020-11-05/us-election-trump-biden-results-map-explained/12853338)  | scrollyteller; live results; illustration      |
-| 2020/11/06 | [Your simple guide to Trump and Biden’s chances from here](https://www.abc.net.au/news/2020-11-06/trump-biden-election-results-path-to-victory/12857296)    | scrollyteller; live results; illustration      |
-| 2020/11/08 | [How Trump’s ‘beautiful map’ turned against him](https://www.abc.net.au/news/2020-11-08/us-election-results-map-biden-trump-president/12861122)             | scrollyteller; live results; illustration      |
+| Title                                                       | Notes           | Url                                                                                                |
+| ----------------------------------------------------------- | --------------- | -------------------------------------------------------------------------------------------------- |
+| Every vote for Harris and Trump is not created equal        | Scrollyteller   | https://www.abc.net.au/news/2024-11-01/is-the-us-electoral-college-fair/104416594                  |
+| How the US electoral college can turn a loser into a winner | Scrollyteller   | https://www.abc.net.au/news/2024-11-04/how-does-the-us-electoral-college-work/104413680            |
+| How the swing states will decide the US election            | Scrollyteller   | https://www.abc.net.au/news/2024-11-05/us-election-states-polling-paths-to-victory/104557084       |
+| Explore the scale of Trump’s triumph                        | Interactive map | https://www.abc.net.au/news/2024-11-06/election-results-map-interactive/104557846                  |
+| How Donald Trump won the US election                        | Scrollyteller   | https://www.abc.net.au/news/2024-11-06/us-election-results-map-donald-trump-victory-path/104558036 |
 
 ## Development & deployment
 
@@ -25,22 +24,7 @@ This project was generated from [aunty](https://github.com/abcnews/aunty)'s `rea
 
 For those who are unfamiliar with aunty, running `npm install` and `npm start` should get you a development server up and running at [`https://localhost:8000/`](https://localhost:8000/).
 
-Under the hood, webpack is building multiple source entry points into many distributable scripts. Here's a quick mapping of outputs to inputs, and what they're for:
-
-| output          | entry / `import()`   | description                                                                                                                                                                     | example                                            |
-| --------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| `editor.js`     | `src/editor.tsx`     | An editor used for building graphics for standalone / scrollyteller / fill-in-the-blanks usage in stories. Will generate mount points, as well as raster images for syndication | [/editor/](https://localhost:8000/editor/)         |
-| `standalone.js` | `src/standalone.tsx` | Loads graphics into `#ecgraphic` mount points                                                                                                                                   | [/standalone/](https://localhost:8000/standalone/) |
-| `blanks.js`     | `src/blanks.tsx`     | Loads fill-in-the-blanks graphics (with or without live results) into `#ecblanks` mount points                                                                                  | [/blanks/](https://localhost:8000/blanks/)         |
-
-All live results data comes from Andrew Kesper's live results service, which may not always be available.
-
-When releases are made, we also overwrite some documents at a consistent URL (`/elections-us2024-electoral-college/latest/`) to facilitate a simple redicret. This means producers don't need to update their URLs (for accessing the editor). Please ensure the following URL is cached-busted upon new releases:
-
-```
-https://www.abc.net.au/res/sites/news-projects/elections-us2024-electoral-college/latest/index.js
-```
-
 ## Authors
 
+- Ash Kyd ([kyd.ashley@abc.net.au](mailto:kyd.ashley@abc.net.au))
 - Colin Gourlay ([gourlay.colin@abc.net.au](mailto:gourlay.colin@abc.net.au))
